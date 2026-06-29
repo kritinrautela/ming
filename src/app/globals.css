@@ -20,7 +20,7 @@ body {
   margin: 0;
   background: #fbfaf6;
   color: #171713;
-  font-family: Inter, "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   text-rendering: optimizeLegibility;
 }
 
@@ -4108,5 +4108,677 @@ a {
 
   .atlas-map {
     min-height: 240px;
+  }
+}
+
+/* CHAZEN luxury museum execution pass */
+.museum-home {
+  background:
+    radial-gradient(ellipse at 16% 4%, rgba(159, 63, 47, 0.08), transparent 32rem),
+    radial-gradient(ellipse at 88% 22%, rgba(82, 99, 79, 0.1), transparent 36rem),
+    linear-gradient(180deg, #f4eadb 0%, #fbf7ef 33%, #efe2d0 100%);
+}
+
+.museum-home::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(23, 23, 19, 0.024) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 23, 19, 0.018) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+  opacity: 0.42;
+}
+
+.cinema-hero {
+  min-height: 100svh;
+  isolation: isolate;
+}
+
+.cinema-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(251, 250, 246, 0.08) 0 1px, transparent 1px 22%),
+    radial-gradient(ellipse at 75% 38%, rgba(217, 189, 134, 0.16), transparent 28rem);
+  opacity: 0.6;
+}
+
+.cinema-hero-image {
+  object-position: 58% 50%;
+  filter: saturate(0.72) contrast(1.14) brightness(0.76);
+}
+
+.cinema-hero-shade {
+  background:
+    radial-gradient(ellipse at 67% 50%, rgba(16, 18, 15, 0.04), rgba(16, 18, 15, 0.38) 34%, rgba(16, 18, 15, 0.72) 68%),
+    linear-gradient(90deg, rgba(16, 18, 15, 0.98), rgba(16, 18, 15, 0.78) 36%, rgba(16, 18, 15, 0.24)),
+    linear-gradient(180deg, rgba(16, 18, 15, 0.34), rgba(16, 18, 15, 0.18) 34%, rgba(16, 18, 15, 0.96));
+}
+
+.cinema-hero-inner {
+  min-height: 100svh;
+  padding-top: clamp(5.5rem, 9vw, 9rem);
+}
+
+.cinema-title {
+  letter-spacing: 0;
+  text-shadow: 0 30px 80px rgba(0, 0, 0, 0.48);
+}
+
+.cinema-tagline {
+  max-width: 980px;
+}
+
+.cinema-tagline p {
+  max-width: 10ch;
+}
+
+.cinema-tagline p + p {
+  max-width: 15ch;
+}
+
+.museum-cta,
+.dark-cta,
+.museum-link-button,
+.text-link-button,
+.brand-footer-links a,
+.brand-footer-links button {
+  touch-action: manipulation;
+}
+
+.museum-cta {
+  min-height: 52px;
+  border-color: rgba(251, 250, 246, 0.42);
+  background: rgba(251, 250, 246, 0.16);
+  box-shadow: inset 0 1px 0 rgba(251, 250, 246, 0.2), 0 18px 42px rgba(0, 0, 0, 0.22);
+}
+
+.museum-cta-secondary {
+  background: rgba(16, 18, 15, 0.54);
+}
+
+.museum-section {
+  position: relative;
+  scroll-margin-top: 6rem;
+}
+
+.philosophy-panel,
+.history-timeline,
+.knowledge-grid article,
+.selected-object-panel,
+.song-room-card,
+.collection-panel,
+.gift-panel,
+.journal-panel,
+.wisdom-panel,
+.stillness-panel,
+.atlas-panel,
+.ritual-panel {
+  border-radius: 8px;
+}
+
+.philosophy-panel,
+.history-timeline,
+.knowledge-grid article,
+.song-room-card,
+.collection-panel,
+.gift-panel,
+.journal-panel,
+.wisdom-panel {
+  background:
+    linear-gradient(135deg, rgba(255, 252, 243, 0.92), rgba(242, 231, 214, 0.78)),
+    #fbfaf6;
+  box-shadow: 0 34px 90px rgba(48, 35, 24, 0.1);
+}
+
+.section-title-block {
+  position: relative;
+  max-width: 1080px;
+  padding-left: clamp(1.2rem, 3vw, 2.2rem);
+}
+
+.section-title-block::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(159, 63, 47, 0.62), rgba(23, 23, 19, 0.08));
+}
+
+.knowledge-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.knowledge-grid article {
+  position: relative;
+  min-height: 270px;
+  overflow: hidden;
+  border: 1px solid rgba(23, 23, 19, 0.1);
+  padding: 1.15rem;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.knowledge-grid article::after {
+  content: "";
+  position: absolute;
+  inset: auto 1rem 1rem auto;
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(159, 63, 47, 0.16);
+  border-radius: 50%;
+}
+
+.knowledge-grid article:hover {
+  transform: translateY(-3px);
+  border-color: rgba(116, 72, 45, 0.24);
+  background: #fffaf0;
+}
+
+.seal-mark {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(159, 63, 47, 0.4);
+  background:
+    linear-gradient(90deg, transparent 42%, rgba(159, 63, 47, 0.34) 42% 58%, transparent 58%),
+    linear-gradient(transparent 42%, rgba(159, 63, 47, 0.34) 42% 58%, transparent 58%);
+}
+
+.knowledge-grid h3 {
+  margin: 3.2rem 0 0.45rem;
+  color: #171713;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.35rem, 2vw, 2rem);
+  font-weight: 400;
+  line-height: 1.08;
+}
+
+.knowledge-grid strong {
+  color: #9f3f2f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+.knowledge-grid p {
+  margin: 0.9rem 0 1.2rem;
+  color: rgba(23, 23, 19, 0.62);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.tea-table-exhibit {
+  background:
+    linear-gradient(180deg, rgba(251, 247, 239, 0), rgba(236, 224, 206, 0.82) 28%, rgba(251, 247, 239, 0));
+}
+
+.tea-table-grid {
+  grid-template-columns: minmax(240px, 0.58fr) minmax(520px, 1.34fr) minmax(310px, 0.86fr);
+  gap: clamp(0.9rem, 1.6vw, 1.35rem);
+}
+
+.tool-selector,
+.selected-object-panel {
+  border-color: rgba(23, 23, 19, 0.13);
+  border-radius: 8px;
+}
+
+.tool-selector {
+  background: rgba(250, 243, 232, 0.86);
+  box-shadow: inset 0 1px 0 rgba(255, 252, 243, 0.72);
+}
+
+.tool-selector button {
+  min-height: 64px;
+  padding: 0.85rem 1rem;
+}
+
+.tool-selector button:hover,
+.tool-selector button.is-active {
+  background:
+    linear-gradient(90deg, rgba(159, 63, 47, 0.2), transparent 42%),
+    #171713;
+}
+
+.table-object-stage {
+  min-height: 720px;
+  border-radius: 8px;
+  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.36), 0 42px 110px rgba(48, 35, 24, 0.22);
+}
+
+.table-object-stage::before {
+  content: "";
+  position: absolute;
+  inset: 1rem;
+  z-index: 2;
+  border: 1px solid rgba(251, 250, 246, 0.1);
+  pointer-events: none;
+}
+
+.table-object-image {
+  filter: saturate(0.9) contrast(1.1) brightness(0.92);
+  transform: scale(1.03);
+}
+
+.table-object-shade {
+  background:
+    radial-gradient(circle at 50% 48%, rgba(255, 252, 243, 0.05), rgba(16, 18, 15, 0.08) 44%, rgba(16, 18, 15, 0.38)),
+    linear-gradient(180deg, rgba(16, 18, 15, 0.06), rgba(16, 18, 15, 0.42));
+}
+
+.table-annotation-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.table-annotation-layer path {
+  fill: none;
+  stroke: rgba(217, 189, 134, 0.42);
+  stroke-width: 0.12;
+  stroke-dasharray: 1.2 1.2;
+}
+
+.object-marker {
+  width: 46px;
+  height: 46px;
+  border-color: rgba(217, 189, 134, 0.58);
+  background: rgba(16, 18, 15, 0.62);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.24);
+}
+
+.object-marker::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 1px solid rgba(217, 189, 134, 0.12);
+  border-radius: 50%;
+}
+
+.object-marker.is-active::before,
+.object-marker:hover::before {
+  border-color: rgba(217, 189, 134, 0.38);
+}
+
+.object-marker em {
+  min-width: 4.6rem;
+}
+
+.selected-object-panel {
+  background:
+    linear-gradient(180deg, rgba(255, 252, 243, 0.96), rgba(239, 229, 213, 0.92)),
+    #fbfaf6;
+}
+
+.selected-object-panel h3 {
+  color: #9f3f2f;
+}
+
+.object-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.ritual-panel {
+  grid-template-columns: minmax(230px, 0.52fr) minmax(260px, 0.58fr) minmax(360px, 1fr);
+  border-radius: 8px;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.25);
+}
+
+.ritual-nav button,
+.ritual-filmstrip button {
+  border-radius: 6px;
+}
+
+.ritual-step-watch {
+  margin-top: 1.2rem;
+}
+
+.song-room-card,
+.collection-panel,
+.gift-panel {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+}
+
+.song-room-image,
+.collection-image,
+.gift-image {
+  min-height: 640px;
+}
+
+.song-room-card::before,
+.collection-panel::before,
+.gift-panel::before,
+.journal-panel::before,
+.wisdom-panel::before {
+  content: "";
+  position: absolute;
+}
+
+.song-room-card,
+.collection-panel,
+.gift-panel,
+.journal-panel,
+.wisdom-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.song-room-card::after,
+.collection-panel::after,
+.gift-panel::after,
+.journal-panel::after,
+.wisdom-panel::after {
+  content: "";
+  position: absolute;
+  right: 1.2rem;
+  top: 1.2rem;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(159, 63, 47, 0.24);
+  pointer-events: none;
+}
+
+.museum-duo-grid {
+  gap: 1.1rem;
+}
+
+.atlas-map {
+  min-height: 330px;
+  display: block;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgba(82, 99, 79, 0.14), transparent 25%),
+    radial-gradient(ellipse at 66% 56%, rgba(159, 63, 47, 0.12), transparent 18%),
+    linear-gradient(145deg, rgba(255, 252, 243, 0.86), rgba(228, 216, 196, 0.68));
+}
+
+.atlas-map button {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.atlas-map button:hover,
+.atlas-map button.is-active {
+  transform: translate(-50%, -52%);
+}
+
+.atlas-map button:nth-child(1) {
+  left: 31%;
+  top: 58%;
+}
+
+.atlas-map button:nth-child(2) {
+  left: 58%;
+  top: 52%;
+}
+
+.atlas-map button:nth-child(3) {
+  left: 55%;
+  top: 61%;
+}
+
+.atlas-map button:nth-child(4) {
+  left: 62%;
+  top: 45%;
+}
+
+.atlas-map button:nth-child(5) {
+  left: 48%;
+  top: 42%;
+}
+
+.atlas-map button:nth-child(6) {
+  left: 60%;
+  top: 70%;
+}
+
+.atlas-map button:nth-child(7) {
+  left: 74%;
+  top: 70%;
+}
+
+.atlas-map button:nth-child(8) {
+  left: 82%;
+  top: 36%;
+}
+
+.atlas-map::after {
+  content: "";
+  position: absolute;
+  inset: 16% 21% 13% 23%;
+  border: 1px solid rgba(23, 23, 19, 0.1);
+  border-radius: 54% 42% 48% 50%;
+  transform: rotate(-10deg);
+  pointer-events: none;
+}
+
+.stillness-panel {
+  box-shadow: inset 0 1px 0 rgba(251, 250, 246, 0.08), 0 34px 90px rgba(48, 35, 24, 0.1);
+}
+
+.bowl-stage::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: 280px;
+  height: 280px;
+  border: 1px solid rgba(217, 189, 134, 0.12);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: sound-ring 4s ease-in-out infinite;
+}
+
+.wisdom-grid {
+  grid-template-columns: 1.05fr 0.9fr 1.05fr;
+}
+
+.wisdom-grid button,
+.journal-grid button,
+.product-catalogue div,
+.song-mini-grid div {
+  border-radius: 8px;
+}
+
+.wisdom-grid button:nth-child(2),
+.wisdom-grid button:nth-child(5),
+.wisdom-grid button:nth-child(8) {
+  transform: translateY(1.2rem);
+}
+
+.wisdom-grid button:nth-child(2):hover,
+.wisdom-grid button:nth-child(5):hover,
+.wisdom-grid button:nth-child(8):hover {
+  transform: translateY(0.9rem);
+}
+
+.collection-copy .chapter-actions,
+.journal-head .museum-link-button {
+  margin-top: 1.4rem;
+}
+
+.journal-grid button {
+  min-height: 300px;
+}
+
+.video-modal-panel .media-modal-head h2 {
+  margin: 0.35rem 0 0;
+  color: #fbfaf6;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.35rem, 2.2vw, 2.3rem);
+  font-weight: 400;
+}
+
+.film-placeholder h3 {
+  margin: 0;
+  color: #fbfaf6;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 5vw, 5rem);
+  font-weight: 400;
+  line-height: 1.03;
+}
+
+.sound-dock.is-playing .sound-toggle {
+  border-color: rgba(217, 189, 134, 0.78);
+  background: rgba(45, 52, 39, 0.88);
+}
+
+.sound-dock.is-playing .sound-toggle::before,
+.sound-dock.is-playing .sound-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 1px solid rgba(217, 189, 134, 0.35);
+  border-radius: 50%;
+  animation: sound-ring 1.9s ease-out infinite;
+}
+
+.sound-dock.is-playing .sound-toggle::after {
+  animation-delay: 0.65s;
+}
+
+.sound-toggle {
+  position: relative;
+}
+
+.sound-menu button {
+  justify-content: space-between;
+}
+
+.sound-menu button svg {
+  flex: 0 0 auto;
+}
+
+.sound-menu button span {
+  margin-left: auto;
+  color: rgba(217, 189, 134, 0.74);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+@keyframes sound-ring {
+  0% {
+    opacity: 0.72;
+    transform: scale(0.86);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.24);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .knowledge-grid article,
+  .wisdom-grid button:nth-child(2),
+  .wisdom-grid button:nth-child(5),
+  .wisdom-grid button:nth-child(8) {
+    transform: none;
+  }
+
+  .bowl-stage::after,
+  .sound-dock.is-playing .sound-toggle::before,
+  .sound-dock.is-playing .sound-toggle::after {
+    animation: none;
+  }
+}
+
+@media (max-width: 1180px) {
+  .knowledge-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tea-table-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .table-object-stage {
+    min-height: 640px;
+  }
+}
+
+@media (max-width: 760px) {
+  .cinema-hero,
+  .cinema-hero-inner {
+    min-height: 100svh;
+  }
+
+  .cinema-hero-inner {
+    padding-top: 5.2rem;
+  }
+
+  .cinema-title {
+    font-size: clamp(3.3rem, 16vw, 4.9rem);
+  }
+
+  .knowledge-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .knowledge-grid article {
+    min-height: auto;
+  }
+
+  .table-object-stage {
+    min-height: 430px;
+  }
+
+  .table-object-stage::before,
+  .table-annotation-layer {
+    display: none;
+  }
+
+  .object-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .ritual-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .song-room-image,
+  .collection-image,
+  .gift-image {
+    min-height: 390px;
+  }
+
+  .atlas-map {
+    min-height: 300px;
+  }
+
+  .atlas-map button {
+    padding: 0.46rem 0.58rem;
+    font-size: 0.68rem;
+  }
+
+  .wisdom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wisdom-grid button:nth-child(2),
+  .wisdom-grid button:nth-child(5),
+  .wisdom-grid button:nth-child(8),
+  .wisdom-grid button:nth-child(2):hover,
+  .wisdom-grid button:nth-child(5):hover,
+  .wisdom-grid button:nth-child(8):hover {
+    transform: none;
+  }
+
+  .journal-grid button {
+    min-height: 220px;
   }
 }

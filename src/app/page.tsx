@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ChazenHomeExperience } from "@/components/ChazenHomeExperience";
-import { MediaModal } from "@/components/MediaModal";
+import { VideoModal } from "@/components/VideoModal";
 
 export default function Home() {
   const [filmOpen, setFilmOpen] = useState(false);
@@ -62,7 +62,7 @@ export default function Home() {
       </section>
 
       <ChazenHomeExperience />
-      <MediaModal
+      <VideoModal
         open={filmOpen}
         title="Ritual Film Coming Soon"
         src={`${basePath}/video/chazen-ritual-film.mp4`}
