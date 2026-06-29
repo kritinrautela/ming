@@ -1,7 +1,12 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import { ChazenHomeExperience } from "@/components/ChazenHomeExperience";
+import { MediaModal } from "@/components/MediaModal";
 
 export default function Home() {
+  const [filmOpen, setFilmOpen] = useState(false);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
   return (
@@ -37,9 +42,14 @@ export default function Home() {
               </p>
               <p lang="zh-Hant">一盞茶，一口氣，回到當下。</p>
             </div>
-            <a href="#tea-table" className="museum-cta">
-              Enter the Ritual
-            </a>
+            <div className="hero-actions">
+              <a href="#tea-table" className="museum-cta">
+                Enter the Ritual
+              </a>
+              <button type="button" className="museum-cta museum-cta-secondary" onClick={() => setFilmOpen(true)}>
+                Watch the Ritual Film
+              </button>
+            </div>
           </div>
           <div className="hero-scroll-cue" aria-hidden="true">
             <span />
@@ -52,6 +62,12 @@ export default function Home() {
       </section>
 
       <ChazenHomeExperience />
+      <MediaModal
+        open={filmOpen}
+        title="Ritual Film Coming Soon"
+        src={`${basePath}/video/chazen-ritual-film.mp4`}
+        onClose={() => setFilmOpen(false)}
+      />
     </main>
   );
 }
