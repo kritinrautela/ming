@@ -114,20 +114,20 @@ export function TeaTableInteractive({
                 <dd>{activeTool.purpose}</dd>
               </div>
               <div>
+                <dt>How To Use</dt>
+                <dd>{activeTool.used}</dd>
+              </div>
+              <div>
                 <dt>Ritual Meaning</dt>
                 <dd>{activeTool.meaning}</dd>
               </div>
               <div>
-                <dt>Used When</dt>
-                <dd>{activeTool.used}</dd>
+                <dt>Brewing Role</dt>
+                <dd>{activeTool.brewingRole}</dd>
               </div>
               <div>
                 <dt>Cultural Note</dt>
                 <dd>{activeTool.note}</dd>
-              </div>
-              <div>
-                <dt>Brewing Role</dt>
-                <dd>{activeTool.brewingRole}</dd>
               </div>
             </dl>
             <div className="object-actions">

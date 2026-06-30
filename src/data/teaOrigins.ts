@@ -10,6 +10,9 @@ export type TeaOrigin = {
   taste: string;
   brewing: string;
   ritual: string;
+  liquor: string;
+  aroma: string;
+  moment: string;
 };
 
 export const teaOrigins: TeaOrigin[] = [
@@ -24,7 +27,10 @@ export const teaOrigins: TeaOrigin[] = [
     process: "Sun-drying, compression, microbial aging.",
     taste: "Earth, camphor, dark fruit, long sweetness.",
     brewing: "Rinse once, then brew patiently through many short infusions.",
-    ritual: "Slow infusions and shared patience."
+    ritual: "Slow infusions and shared patience.",
+    liquor: "#6f3826",
+    aroma: "Damp wood, date, camphor",
+    moment: "After dinner, when conversation can deepen."
   },
   {
     name: "Fujian Wuyi",
@@ -37,7 +43,10 @@ export const teaOrigins: TeaOrigin[] = [
     process: "Withering, bruising, roasting, slow refinement.",
     taste: "Mineral depth, orchid, roast, returning sweetness.",
     brewing: "Use hot water, small cups, and short gongfu infusions.",
-    ritual: "Short gongfu infusions that reveal layers."
+    ritual: "Short gongfu infusions that reveal layers.",
+    liquor: "#9b4f2d",
+    aroma: "Roast, orchid, wet stone",
+    moment: "For ceremony, focus, and important guests."
   },
   {
     name: "Anxi",
@@ -50,7 +59,10 @@ export const teaOrigins: TeaOrigin[] = [
     process: "Rolled oolong with controlled oxidation.",
     taste: "Orchid, cream, green stem, bright finish.",
     brewing: "Wake the rolled leaf with a quick rinse and follow the fragrance arc.",
-    ritual: "Aroma cups and repeated awakening."
+    ritual: "Aroma cups and repeated awakening.",
+    liquor: "#d2b35f",
+    aroma: "Orchid, cream, green stem",
+    moment: "When hospitality should feel fragrant and generous."
   },
   {
     name: "Hangzhou",
@@ -63,7 +75,26 @@ export const teaOrigins: TeaOrigin[] = [
     process: "Pan-fired flat leaf craft.",
     taste: "Chestnut, bean, spring grass, clarity.",
     brewing: "Brew gently in glass or white porcelain to watch the leaf fall.",
-    ritual: "Glass or porcelain brewing to watch the leaf fall."
+    ritual: "Glass or porcelain brewing to watch the leaf fall.",
+    liquor: "#c9c36a",
+    aroma: "Chestnut, spring rain, tender greens",
+    moment: "A clean morning before decisions."
+  },
+  {
+    name: "Anhui",
+    chinese: "安徽",
+    tea: "Huangshan / Keemun 黃山 / 祁門",
+    landscape: "Yellow Mountain mist, pine shade, ridgelines, export memory.",
+    climate: "Cool mountain cloud, pine shade, softened sun.",
+    terroir: "Granite slopes, misted valleys, and old garden craft.",
+    history: "Anhui holds both refined mountain green teas and the elegant black tea tradition of Keemun.",
+    process: "Green tea shaping and black tea oxidation traditions.",
+    taste: "Pine, orchid, cocoa, and restrained sweetness.",
+    brewing: "Use a quiet cup and moderate heat to preserve fragrance.",
+    ritual: "Scholar-like tasting for fragrance and clarity.",
+    liquor: "#8f412d",
+    aroma: "Pine, orchid, cocoa",
+    moment: "For reading, writing, and quieter gifts."
   },
   {
     name: "Chaozhou",
@@ -76,7 +107,10 @@ export const teaOrigins: TeaOrigin[] = [
     process: "Oolong oxidation, shaping, and patient roasting.",
     taste: "Honey orchid, fruit, spice, and a bright edge.",
     brewing: "Use small vessels and quick pours to protect high fragrance.",
-    ritual: "Small pots, quick pours, intense aroma."
+    ritual: "Small pots, quick pours, intense aroma.",
+    liquor: "#c57633",
+    aroma: "Honey orchid, fruit, spice",
+    moment: "When the room needs energy without noise."
   },
   {
     name: "Taiwan",
@@ -89,12 +123,15 @@ export const teaOrigins: TeaOrigin[] = [
     process: "Light oxidation, rolling, careful low roasting.",
     taste: "Cream, flower, cool air, lingering sweetness.",
     brewing: "Use porcelain and repeated short infusions to follow the cool floral body.",
-    ritual: "Porcelain gaiwan or small pot to follow the fragrance arc."
+    ritual: "Porcelain gaiwan or small pot to follow the fragrance arc.",
+    liquor: "#d7c36c",
+    aroma: "Cream, alpine flower, cool air",
+    moment: "A reset between work and evening."
   },
   {
-    name: "Uji Japan",
+    name: "Uji",
     chinese: "日本宇治",
-    tea: "Matcha 抹茶",
+    tea: "Uji Matcha 宇治抹茶",
     landscape: "Shade-grown tea fields, river basin humidity, stone mills.",
     climate: "Shade cultivation and humid river basin air.",
     terroir: "Managed shade, tender leaves, concentrated umami.",
@@ -102,6 +139,9 @@ export const teaOrigins: TeaOrigin[] = [
     process: "Steaming, drying, stone milling.",
     taste: "Umami, green depth, soft bitterness, cream.",
     brewing: "Whisk with warm water into a focused, luminous bowl.",
-    ritual: "Whisked tea as a focused act of presence."
+    ritual: "Whisked tea as a focused act of presence.",
+    liquor: "#4f6f3b",
+    aroma: "Umami, fresh greens, stone mill",
+    moment: "For a focused threshold before practice."
   }
 ];

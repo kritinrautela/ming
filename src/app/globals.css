@@ -6805,3 +6805,637 @@ a {
     display: none;
   }
 }
+
+/* CHAZEN director QA pass */
+.philosophy-art-wall::before,
+.philosophy-art-wall::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.philosophy-art-wall::before {
+  background:
+    radial-gradient(ellipse at 72% 22%, rgba(255, 252, 243, 0.48), transparent 38%),
+    linear-gradient(90deg, rgba(255, 252, 243, 0.22), transparent 34%, rgba(23, 23, 19, 0.08));
+  animation: chazen-mist-drift 14s ease-in-out infinite alternate;
+}
+
+.philosophy-art-wall::after {
+  inset: 1rem;
+  border: 1px solid rgba(23, 23, 19, 0.14);
+  box-shadow: inset 0 0 0 10px rgba(255, 252, 243, 0.18);
+}
+
+.philosophy-caption-panel strong::after {
+  content: " / 山水不是風景，而是人在天地之間重新安靜下來。";
+  display: block;
+  margin-top: 0.9rem;
+  color: rgba(23, 23, 19, 0.54);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+@keyframes chazen-mist-drift {
+  from {
+    opacity: 0.58;
+    transform: translateX(-1.4%);
+  }
+
+  to {
+    opacity: 0.86;
+    transform: translateX(1.4%);
+  }
+}
+
+.timeline-era-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 1rem 0 0;
+}
+
+.timeline-era-meta div {
+  border-top: 1px solid rgba(251, 250, 246, 0.18);
+  padding-top: 0.7rem;
+}
+
+.timeline-era-meta dt {
+  color: rgba(217, 189, 134, 0.78);
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.timeline-era-meta dd {
+  margin: 0.32rem 0 0;
+  color: rgba(251, 250, 246, 0.72);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.timeline-shadow-stage article small {
+  display: block;
+  margin-top: 1rem;
+  border-left: 1px solid rgba(217, 189, 134, 0.48);
+  padding-left: 0.9rem;
+  color: rgba(251, 250, 246, 0.66);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.song-specimen-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 1.4rem;
+}
+
+.song-specimen {
+  min-height: 150px;
+  border: 1px solid rgba(23, 23, 19, 0.1);
+  background:
+    radial-gradient(circle at 50% 38%, rgba(23, 23, 19, 0.08), transparent 38%),
+    rgba(255, 252, 243, 0.72);
+  padding: 0.85rem;
+}
+
+.song-specimen > span {
+  position: relative;
+  display: block;
+  height: 82px;
+  margin-bottom: 0.85rem;
+}
+
+.song-specimen > span::before,
+.song-specimen > span::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  transform: translate(-50%, -50%);
+}
+
+.song-specimen-jian > span::before {
+  width: 82px;
+  height: 46px;
+  border-radius: 0 0 60px 60px;
+  background: radial-gradient(circle at 42% 28%, #5b4632, #11110e 72%);
+}
+
+.song-specimen-whisk > span::before {
+  width: 88px;
+  height: 72px;
+  border-radius: 0 0 50% 50%;
+  background: repeating-linear-gradient(90deg, #b99862 0 3px, transparent 3px 6px);
+}
+
+.song-specimen-powder > span::before {
+  width: 90px;
+  height: 28px;
+  border-radius: 50%;
+  background: #758b4b;
+  box-shadow: 0 0 24px rgba(117, 139, 75, 0.32);
+}
+
+.song-specimen-foam > span::before {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 48% 48%, rgba(255, 252, 243, 0.95), rgba(217, 189, 134, 0.22) 48%, transparent 50%),
+    #171713;
+}
+
+.song-specimen-gathering > span::before {
+  width: 92px;
+  height: 54px;
+  border-bottom: 1px solid rgba(23, 23, 19, 0.34);
+  background:
+    radial-gradient(circle at 25% 70%, rgba(23, 23, 19, 0.42) 0 8px, transparent 9px),
+    radial-gradient(circle at 52% 55%, rgba(23, 23, 19, 0.36) 0 8px, transparent 9px),
+    radial-gradient(circle at 78% 72%, rgba(23, 23, 19, 0.3) 0 8px, transparent 9px);
+}
+
+.song-specimen strong,
+.song-specimen em {
+  display: block;
+  font-style: normal;
+}
+
+.song-specimen strong {
+  color: #171713;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.song-specimen em {
+  margin-top: 0.2rem;
+  color: #9f3f2f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.85rem;
+}
+
+.song-process {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 1rem;
+  border-top: 1px solid rgba(23, 23, 19, 0.12);
+  border-bottom: 1px solid rgba(23, 23, 19, 0.12);
+}
+
+.song-process div {
+  display: grid;
+  gap: 0.22rem;
+  border-right: 1px solid rgba(23, 23, 19, 0.1);
+  padding: 0.85rem 0.65rem;
+}
+
+.song-process div:last-child {
+  border-right: 0;
+}
+
+.song-process span {
+  color: #9f3f2f;
+  font-size: 0.64rem;
+  font-weight: 900;
+}
+
+.song-process strong {
+  color: #171713;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.98rem;
+  font-weight: 400;
+}
+
+.song-process em {
+  color: rgba(23, 23, 19, 0.54);
+  font-style: normal;
+  font-size: 0.78rem;
+}
+
+.atlas-panel .atlas-map::before {
+  inset: 10% 16% 12% 18%;
+  border-radius: 48% 42% 54% 46%;
+  background:
+    radial-gradient(circle at 44% 34%, rgba(23, 23, 19, 0.15), transparent 10%),
+    radial-gradient(circle at 55% 52%, rgba(63, 89, 69, 0.2), transparent 13%),
+    radial-gradient(circle at 70% 64%, rgba(159, 63, 47, 0.15), transparent 12%),
+    linear-gradient(150deg, rgba(23, 23, 19, 0.11), rgba(82, 99, 79, 0.08));
+  clip-path: polygon(26% 10%, 48% 18%, 62% 8%, 76% 26%, 71% 42%, 88% 54%, 76% 79%, 55% 74%, 42% 91%, 30% 74%, 16% 72%, 22% 48%, 10% 34%);
+}
+
+.atlas-map button:nth-of-type(1) {
+  left: 32%;
+  top: 63%;
+}
+
+.atlas-map button:nth-of-type(2) {
+  left: 55%;
+  top: 56%;
+}
+
+.atlas-map button:nth-of-type(3) {
+  left: 56%;
+  top: 66%;
+}
+
+.atlas-map button:nth-of-type(4) {
+  left: 48%;
+  top: 44%;
+}
+
+.atlas-map button:nth-of-type(5) {
+  left: 52%;
+  top: 51%;
+}
+
+.atlas-map button:nth-of-type(6) {
+  left: 62%;
+  top: 73%;
+}
+
+.atlas-map button:nth-of-type(7) {
+  left: 75%;
+  top: 72%;
+}
+
+.atlas-map button:nth-of-type(8) {
+  left: 82%;
+  top: 38%;
+}
+
+.atlas-cup-tea {
+  transition: background-color 260ms ease;
+}
+
+.wisdom-selected-exhibit {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(23, 23, 19, 0.12);
+  border-bottom: 1px solid rgba(23, 23, 19, 0.12);
+  padding: 1.2rem 0;
+}
+
+.wisdom-selected-mark {
+  display: grid;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid rgba(116, 72, 45, 0.18);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(159, 63, 47, 0.13), transparent 60%),
+    rgba(255, 252, 243, 0.68);
+  color: rgba(23, 23, 19, 0.76);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 5rem;
+}
+
+.wisdom-selected-exhibit h3 {
+  margin: 0.35rem 0 0;
+  color: #171713;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  font-weight: 400;
+}
+
+.wisdom-selected-exhibit strong {
+  display: block;
+  margin-top: 0.2rem;
+  color: #9f3f2f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+.wisdom-selected-exhibit p {
+  margin: 0.85rem 0 0;
+}
+
+.wisdom-selected-exhibit dl {
+  display: grid;
+  gap: 0.6rem;
+  margin: 1rem 0 0;
+}
+
+.wisdom-selected-exhibit dt {
+  color: #74482d;
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.wisdom-selected-exhibit dd {
+  margin: 0.2rem 0 0;
+  color: rgba(23, 23, 19, 0.62);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.wisdom-grid button.is-active {
+  border-color: rgba(159, 63, 47, 0.38);
+  background: #fffaf0;
+  transform: translateY(-3px);
+}
+
+.tea-catalogue-exhibit {
+  background:
+    linear-gradient(180deg, #fbf8f1, #efe5d5 52%, #fbf8f1);
+}
+
+.tea-catalogue-head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 0.72fr);
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.tea-catalogue-head h2 {
+  margin: 0.7rem 0 0;
+  color: #171713;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.8rem, 5vw, 6rem);
+  font-weight: 400;
+  line-height: 0.98;
+}
+
+.tea-filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem;
+}
+
+.tea-filter-tabs button {
+  border: 1px solid rgba(23, 23, 19, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 252, 243, 0.64);
+  color: #74482d;
+  padding: 0.62rem 0.84rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tea-filter-tabs button.is-active {
+  border-color: #171713;
+  background: #171713;
+  color: #fbfaf6;
+}
+
+.tea-catalogue-stage {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.42fr) minmax(0, 1fr);
+  gap: clamp(1rem, 2vw, 1.6rem);
+  align-items: start;
+}
+
+.tea-curator-panel {
+  position: sticky;
+  top: 5.5rem;
+  min-height: 680px;
+  border: 1px solid rgba(251, 250, 246, 0.12);
+  background:
+    radial-gradient(circle at 50% 24%, rgba(217, 189, 134, 0.16), transparent 34%),
+    #171713;
+  color: #fbfaf6;
+  padding: clamp(1.2rem, 3vw, 2rem);
+}
+
+.tea-liquor-study {
+  position: relative;
+  height: 250px;
+  margin-bottom: 1.4rem;
+}
+
+.tea-cup-steam,
+.tea-cup-rim,
+.tea-cup-liquor,
+.tea-cup-body {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tea-cup-steam {
+  top: 4%;
+  width: 92px;
+  height: 120px;
+  border-left: 1px solid rgba(251, 250, 246, 0.26);
+  border-radius: 50%;
+  transform: translateX(-50%) rotate(12deg);
+}
+
+.tea-cup-rim {
+  top: 42%;
+  width: 190px;
+  height: 42px;
+  border: 1px solid rgba(251, 250, 246, 0.42);
+  border-radius: 50%;
+}
+
+.tea-cup-liquor {
+  top: 46%;
+  width: 170px;
+  height: 30px;
+  border-radius: 50%;
+  opacity: 0.84;
+  transition: background-color 220ms ease;
+}
+
+.tea-cup-body {
+  top: 52%;
+  width: 152px;
+  height: 82px;
+  border: 1px solid rgba(251, 250, 246, 0.48);
+  border-top: 0;
+  border-radius: 0 0 90px 90px;
+}
+
+.tea-curator-panel h3 {
+  margin: 0.8rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.2rem, 3vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.tea-curator-panel > strong {
+  display: block;
+  margin-top: 0.4rem;
+  color: #d9bd86;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+.tea-curator-panel p {
+  color: rgba(251, 250, 246, 0.68);
+  line-height: 1.75;
+}
+
+.tea-curator-panel dl {
+  display: grid;
+  gap: 1rem;
+  margin: 1.5rem 0 0;
+}
+
+.tea-curator-panel dl div {
+  border-top: 1px solid rgba(251, 250, 246, 0.12);
+  padding-top: 0.9rem;
+}
+
+.tea-curator-panel dt {
+  color: #d9bd86;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tea-curator-panel dd {
+  margin: 0.3rem 0 0;
+  color: rgba(251, 250, 246, 0.68);
+  line-height: 1.55;
+}
+
+.tea-scroll-gallery {
+  display: grid;
+  gap: 1rem;
+}
+
+.tea-scroll-gallery .tea-leaf-card {
+  display: block;
+  min-height: 0;
+  border-radius: 0;
+  background: rgba(255, 252, 243, 0.78);
+  box-shadow: none;
+}
+
+.tea-leaf-select {
+  display: grid;
+  width: 100%;
+  grid-template-columns: minmax(240px, 0.42fr) 34px minmax(0, 1fr);
+  gap: 1.2rem;
+  align-items: stretch;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tea-scroll-gallery .leaf-specimen {
+  min-height: 340px;
+}
+
+.tea-liquor-dot {
+  align-self: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(23, 23, 19, 0.18);
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px rgba(23, 23, 19, 0.03);
+}
+
+.tea-scroll-gallery .tea-leaf-copy {
+  display: block;
+  padding: clamp(1.4rem, 3vw, 2.4rem);
+}
+
+.tea-scroll-gallery .tea-leaf-card.is-selected {
+  border-color: rgba(159, 63, 47, 0.36);
+  box-shadow: 0 24px 70px rgba(48, 35, 24, 0.1);
+}
+
+@media (max-width: 1100px) {
+  .song-specimen-strip,
+  .song-process,
+  .tea-catalogue-head,
+  .tea-catalogue-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .tea-filter-tabs {
+    justify-content: flex-start;
+  }
+
+  .tea-curator-panel {
+    position: relative;
+    top: auto;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .timeline-era-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .song-specimen-strip {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .song-specimen {
+    min-width: 210px;
+    scroll-snap-align: start;
+  }
+
+  .song-process {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .song-process div {
+    border-right: 0;
+    border-bottom: 1px solid rgba(23, 23, 19, 0.1);
+  }
+
+  .wisdom-selected-exhibit {
+    grid-template-columns: 1fr;
+  }
+
+  .wisdom-selected-mark {
+    width: 136px;
+  }
+
+  .wisdom-grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 0.85rem;
+    padding-bottom: 0.4rem;
+    scroll-snap-type: x mandatory;
+  }
+
+  .wisdom-grid button {
+    min-width: 260px;
+    scroll-snap-align: start;
+  }
+
+  .tea-leaf-select {
+    grid-template-columns: 1fr;
+  }
+
+  .tea-liquor-dot {
+    display: none;
+  }
+
+  .tea-scroll-gallery .leaf-specimen {
+    min-height: 280px;
+  }
+}

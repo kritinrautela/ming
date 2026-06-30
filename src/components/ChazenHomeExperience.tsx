@@ -378,6 +378,8 @@ const wisdomCards = [
     name: "Fu",
     chinese: "福德之福",
     meaning: "Blessing and harmony",
+    mood: "Soft white tea for family harmony.",
+    gift: "A housewarming or elder-respect blessing.",
     design: "A clay-red seal character held inside warm ivory paper, designed for family blessing sets.",
     story: "Fu is the wish that a home receives enough: enough peace, enough food, enough kindness, enough return."
   },
@@ -386,6 +388,8 @@ const wisdomCards = [
     name: "Lu",
     chinese: "祿位之祿",
     meaning: "Focus and prosperity",
+    mood: "Longjing for clear work and composed ambition.",
+    gift: "A study, career, or client success set.",
     design: "A bronze vertical mark with ledger-like lines, designed for career, study, and client gifting.",
     story: "Lu is prosperity with discipline. It is not noise or display, but the steady dignity of work becoming fruit."
   },
@@ -394,6 +398,8 @@ const wisdomCards = [
     name: "Shou",
     chinese: "長壽之壽",
     meaning: "Longevity and time",
+    mood: "Aged Pu'er for patience and long memory.",
+    gift: "A birthday, elder, or family continuity gift.",
     design: "A dark ink roundel with slow concentric breath lines, designed for elder respect and long memory.",
     story: "Shou carries time as a blessing. A cup offered slowly says: may your days be long, clear, and gently held."
   },
@@ -402,6 +408,8 @@ const wisdomCards = [
     name: "Liu Bei",
     chinese: "劉備",
     meaning: "Benevolence",
+    mood: "High mountain oolong for gentle leadership.",
+    gift: "A diplomatic host gift for trust and care.",
     design: "A soft moss-green silhouette of a host figure, hands lowered, inviting without force.",
     story: "Liu Bei represents humane leadership: the strength to gather people through trust rather than fear."
   },
@@ -410,6 +418,8 @@ const wisdomCards = [
     name: "Guan Yu",
     chinese: "關羽",
     meaning: "Loyalty",
+    mood: "Wuyi rock tea for vow, gravity, and depth.",
+    gift: "A brotherhood, partnership, or oath collection.",
     design: "A tall ink shadow with a clay-red edge, composed like a guardian at the threshold.",
     story: "Guan Yu turns loyalty into ceremony: a vow kept beyond convenience, a bond poured cup after cup."
   },
@@ -418,6 +428,8 @@ const wisdomCards = [
     name: "Zhang Fei",
     chinese: "張飛",
     meaning: "Courage",
+    mood: "Lapsang Souchong for smoke, courage, and protection.",
+    gift: "A protective gift for decisive new beginnings.",
     design: "A heavier brush silhouette with angled bronze cuts, designed for protective, brotherhood gifts.",
     story: "Zhang Fei is courage before hesitation. In CHAZEN, that force is softened by tea into protection, not aggression."
   },
@@ -426,6 +438,8 @@ const wisdomCards = [
     name: "Lu Yu",
     chinese: "陸羽",
     meaning: "Tea wisdom",
+    mood: "A tasting flight for method, water, and attention.",
+    gift: "A scholar set for those who study craft.",
     design: "A scholar mark beside thin manuscript lines, referencing The Classic of Tea and Tang scholarship.",
     story: "Lu Yu is the figure of tea becoming language. Water, fire, vessel, and conduct become a way of thinking."
   },
@@ -434,6 +448,8 @@ const wisdomCards = [
     name: "Su Shi",
     chinese: "蘇軾",
     meaning: "Scholar elegance",
+    mood: "Anhui tea for poetry, mountain air, and resilience.",
+    gift: "A literary gift for reflection and grace.",
     design: "A drifting ink figure with river-lines and open sky, designed for poetic gifts and reflective practice.",
     story: "Su Shi brings humour, exile, poetry, and resilience. The cup becomes a companion to the mind that keeps moving."
   }
@@ -527,6 +543,7 @@ export function ChazenHomeExperience() {
   const [activeStep, setActiveStep] = useState(ritualSteps[0]);
   const [stepImageFailed, setStepImageFailed] = useState<Record<string, boolean>>({});
   const [activeRegion, setActiveRegion] = useState<TeaOrigin>(teaOrigins[1]);
+  const [activeWisdom, setActiveWisdom] = useState(wisdomCards[0]);
   const [videoModal, setVideoModal] = useState<{ title: string; src: string } | null>(null);
   const [infoModal, setInfoModal] = useState<InfoModalContent | null>(null);
   const [breathingOpen, setBreathingOpen] = useState(false);
@@ -852,6 +869,36 @@ export function ChazenHomeExperience() {
                   </div>
                 ))}
               </div>
+              <div className="song-specimen-strip" aria-label="Song dynasty tea objects">
+                {[
+                  ["jian", "Jian Ware", "建盞"],
+                  ["whisk", "Bamboo Whisk", "茶筅"],
+                  ["powder", "Powdered Tea", "茶末"],
+                  ["foam", "Tea Foam", "湯花"],
+                  ["gathering", "Scholar Gathering", "雅集"]
+                ].map(([kind, title, chinese]) => (
+                  <div key={kind} className={`song-specimen song-specimen-${kind}`}>
+                    <span aria-hidden="true" />
+                    <strong>{title}</strong>
+                    <em lang="zh-Hant">{chinese}</em>
+                  </div>
+                ))}
+              </div>
+              <div className="song-process" aria-label="How dian cha works">
+                {[
+                  ["01", "Grind Tea", "研茶"],
+                  ["02", "Sieve Powder", "羅茶"],
+                  ["03", "Add Water", "注湯"],
+                  ["04", "Whisk Foam", "擊拂"],
+                  ["05", "Read Bowl", "觀盞"]
+                ].map(([number, title, chinese]) => (
+                  <div key={number}>
+                    <span>{number}</span>
+                    <strong>{title}</strong>
+                    <em lang="zh-Hant">{chinese}</em>
+                  </div>
+                ))}
+              </div>
               <div className="chapter-actions">
                 <button type="button" className="museum-link-button dark-on-light" onClick={() => openVideo("Dian Cha", "/video/dian-cha.mp4")}>
                   Watch Dian Cha
@@ -962,6 +1009,31 @@ export function ChazenHomeExperience() {
             <div>
               <p className="museum-kicker">Chapter 09 / Wisdom Collection / 東方智慧 · 傳世典範</p>
               <h2>Character as blessing, memory, and moral form.</h2>
+              <div className="wisdom-selected-exhibit">
+                <span className="wisdom-selected-mark" lang="zh-Hant" aria-hidden="true">
+                  {activeWisdom.character}
+                </span>
+                <div>
+                  <p className="museum-kicker">Selected Figure / 人物標本</p>
+                  <h3>{activeWisdom.name}</h3>
+                  <strong lang="zh-Hant">{activeWisdom.chinese}</strong>
+                  <p>{activeWisdom.story}</p>
+                  <dl>
+                    <div>
+                      <dt>Meaning</dt>
+                      <dd>{activeWisdom.meaning}</dd>
+                    </div>
+                    <div>
+                      <dt>Tea Mood</dt>
+                      <dd>{activeWisdom.mood}</dd>
+                    </div>
+                    <div>
+                      <dt>Gifting</dt>
+                      <dd>{activeWisdom.gift}</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
               <div className="chapter-actions">
                 <button
                   type="button"
@@ -1008,20 +1080,9 @@ export function ChazenHomeExperience() {
                 <button
                   type="button"
                   key={card.name}
-                  onClick={() =>
-                    setInfoModal(
-                      makeInfo({
-                        kicker: "Wisdom Archetype / 傳世典範",
-                        title: card.name,
-                        chinese: card.chinese,
-                        body: [card.story, card.design, "In CHAZEN, symbolic figures become a refined language for gifting, reflection, and ritual identity."],
-                        items: [
-                          { label: "Character", value: card.character },
-                          { label: "Meaning", value: card.meaning }
-                        ]
-                      })
-                    )
-                  }
+                  className={activeWisdom.name === card.name ? "is-active" : ""}
+                  onClick={() => setActiveWisdom(card)}
+                  aria-pressed={activeWisdom.name === card.name}
                 >
                   <span className="wisdom-portrait" lang="zh-Hant" aria-hidden="true">
                     {card.character}

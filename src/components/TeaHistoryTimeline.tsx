@@ -39,7 +39,18 @@ export function TeaHistoryTimeline({ onEnterTimeline }: TeaHistoryTimelineProps)
               <p>{activeItem.visualLabel}</p>
               <h3>{activeItem.title}</h3>
               <strong lang="zh-Hant">{activeItem.chinese}</strong>
+              <dl className="timeline-era-meta">
+                <div>
+                  <dt>Context</dt>
+                  <dd>{activeItem.context}</dd>
+                </div>
+                <div>
+                  <dt>Object</dt>
+                  <dd>{activeItem.object}</dd>
+                </div>
+              </dl>
               <p>{activeItem.story}</p>
+              <small>{activeItem.chazenMeaning}</small>
             </article>
           </div>
 

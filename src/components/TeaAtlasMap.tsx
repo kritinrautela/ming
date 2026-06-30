@@ -11,8 +11,10 @@ type TeaAtlasMapProps = {
 };
 
 export function TeaAtlasMap({ origins, activeOrigin, onSelect, onExplore, onOpenMap }: TeaAtlasMapProps) {
+  const originClass = activeOrigin.name.toLowerCase().replaceAll(" ", "-");
+
   return (
-    <article className="atlas-panel">
+    <article className={`atlas-panel atlas-origin-${originClass}`}>
       <p className="museum-kicker">Chapter 07 / Tea Atlas / 茶之地圖</p>
       <h2>Origin is not a coordinate. It is climate remembered by leaf.</h2>
       <div className="atlas-visual-study">
@@ -35,7 +37,7 @@ export function TeaAtlasMap({ origins, activeOrigin, onSelect, onExplore, onOpen
         <div className="atlas-cup-study" aria-hidden="true">
           <span className="atlas-cup-steam" />
           <span className="atlas-cup-bowl" />
-          <span className="atlas-cup-tea" />
+          <span className="atlas-cup-tea" style={{ backgroundColor: activeOrigin.liquor }} />
           <span className="atlas-cup-saucer" />
           <small>{activeOrigin.tea}</small>
         </div>
@@ -48,8 +50,8 @@ export function TeaAtlasMap({ origins, activeOrigin, onSelect, onExplore, onOpen
         <p>{activeOrigin.tea}</p>
         <dl className="atlas-detail-list">
           <div>
-            <dt>Landscape</dt>
-            <dd>{activeOrigin.landscape}</dd>
+            <dt>Origin Story</dt>
+            <dd>{activeOrigin.history}</dd>
           </div>
           <div>
             <dt>Climate</dt>
@@ -60,8 +62,12 @@ export function TeaAtlasMap({ origins, activeOrigin, onSelect, onExplore, onOpen
             <dd>{activeOrigin.terroir}</dd>
           </div>
           <div>
-            <dt>Brewing</dt>
-            <dd>{activeOrigin.brewing}</dd>
+            <dt>Taste / Aroma</dt>
+            <dd>{activeOrigin.taste} Aroma: {activeOrigin.aroma}.</dd>
+          </div>
+          <div>
+            <dt>Ritual Moment</dt>
+            <dd>{activeOrigin.moment}</dd>
           </div>
         </dl>
       </div>
