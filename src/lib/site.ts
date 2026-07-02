@@ -8,7 +8,7 @@ export const site = {
 };
 
 export const navItems = [
-  { label: "Assessment", href: "/tea-assessment" },
+  { label: "Discover", href: "/discover-your-tea/" },
   { label: "Philosophy", href: "/#philosophy" },
   { label: "Tea Table", href: "/#tea-table" },
   { label: "Ritual", href: "/#gaiwan-ritual" },

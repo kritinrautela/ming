@@ -575,8 +575,8 @@ const entranceRooms = [
     title: "Notice your current state before choosing a tea.",
     chinese: "先覺察當下狀態，再進入一盞茶。",
     body: "A guided reflection for sleep, stress, focus, mood, and pace. It is not a diagnosis; it is a quiet way to understand what kind of tea ritual may support today.",
-    cta: "Begin Reflection",
-    href: "/tea-assessment/",
+    cta: "Discover Your Tea",
+    href: "/discover-your-tea/",
     tone: "reflection"
   },
   {
@@ -651,7 +651,7 @@ export function ChazenHomeExperience() {
   const imageUrl = (name: string) => withBasePath(`/images/chazen-generated/${name}`);
   const mediaUrl = (path: string) => withBasePath(path);
   const teaCollectionUrl = withBasePath("/tea-collection/");
-  const teaAssessmentUrl = withBasePath("/tea-assessment/");
+  const discoverTeaUrl = withBasePath("/discover-your-tea/");
   const scrollToStepRail = () => {
     stepRailRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -748,8 +748,8 @@ export function ChazenHomeExperience() {
           <div className="culture-room-grid" aria-label="CHAZEN cultural rooms">
             {entranceRooms.map((room) => {
               const href =
-                room.href === "/tea-assessment/"
-                  ? teaAssessmentUrl
+                room.href === "/discover-your-tea/"
+                  ? discoverTeaUrl
                   : room.href.startsWith("/")
                     ? withBasePath(room.href)
                     : room.href;
@@ -769,8 +769,8 @@ export function ChazenHomeExperience() {
             })}
           </div>
           <div className="culture-entrance-cta">
-            <a href={teaAssessmentUrl} className="gold-cta compact">
-              Begin Your Tea State Reflection
+            <a href={discoverTeaUrl} className="gold-cta compact">
+              Discover Your Tea
             </a>
             <a href="#philosophy" className="museum-link-button dark-on-light">
               Read Chazen Philosophy
@@ -859,8 +859,8 @@ export function ChazenHomeExperience() {
               </p>
             </div>
             <div className="chapter-actions">
-              <a href={teaAssessmentUrl} className="museum-link-button">
-                Begin Your Tea State Reflection <ArrowRight size={15} aria-hidden="true" />
+              <a href={discoverTeaUrl} className="museum-link-button">
+                Discover Your Tea <ArrowRight size={15} aria-hidden="true" />
               </a>
               <a href="#tea-history" className="museum-link-button">
                 Explore Tea Culture <BookOpen size={15} aria-hidden="true" />
@@ -1376,16 +1376,16 @@ export function ChazenHomeExperience() {
               <span className="assessment-seal">禪</span>
             </div>
             <div className="assessment-preview-copy">
-              <p className="museum-kicker">Chapter 11 / Tea Assessment / 茶禪評估</p>
-              <h2>Choose by person, mood, time, and meaning.</h2>
+              <p className="museum-kicker">Chapter 11 / Discover Your Tea / 茶禪測驗</p>
+              <h2>Choose by pressure, need, ritual, and taste.</h2>
               <p>
-                The CHAZEN assessment turns taste preference, emotional state, recipient,
-                and ritual style into a calm tea and gift recommendation.
+                The CHAZEN quiz turns sleep, stress, focus, taste preference,
+                and ritual style into a calm tea profile and $25 matched tea pack.
               </p>
-              <p lang="zh-Hant">不是只問你喜歡什麼味道，而是問這杯茶要給誰、在何時、承載什麼心意。</p>
+              <p lang="zh-Hant">不是只問你喜歡什麼味道，而是覺察壓力、放鬆需要、儀式接受度與當下心境。</p>
               <div className="chapter-actions">
-                <a href={teaAssessmentUrl} className="gold-cta compact">
-                  Start Tea Assessment
+                <a href={discoverTeaUrl} className="gold-cta compact">
+                  Start Discover Your Tea
                 </a>
                 <button
                   type="button"
@@ -1393,16 +1393,16 @@ export function ChazenHomeExperience() {
                   onClick={() =>
                     setInfoModal(
                       makeInfo({
-                        kicker: "Product Preview / 茶禪評估",
-                        title: "CHAZEN Ritual Assessment",
-                        chinese: "茶禪風格評估",
+                        kicker: "Product Preview / 茶禪測驗",
+                        title: "Discover Your Tea Quiz",
+                        chinese: "茶禪個人化測驗",
                         body: [
-                          "The assessment is structured for a future paid personal tea profile.",
-                          "For now it gives a refined recommendation and invites private consultation."
+                          "The quiz is structured as a free reflection that leads into a $25 AI-matched tea pack.",
+                          "It matches pressure, primary need, ritual readiness, and taste direction to a calm tea profile."
                         ],
                         items: [
-                          { label: "Inputs", value: "Mood, time, taste, recipient, occasion, ritual, caffeine, desired outcome." },
-                          { label: "Output", value: "Tea temperament, tea type, ritual style, gift direction, collection, sound pairing." }
+                          { label: "Inputs", value: "Stress source, sleep, focus, taste, relaxation style, ritual interest, desired feeling." },
+                          { label: "Output", value: "Chazen profile, main tea, flower tea, ritual steps, score visualization, matched pack CTA." }
                         ]
                       })
                     )

@@ -1,0 +1,1214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Discover Your Tea | Chazen 茶禪</title>
+    <meta
+      name="description"
+      content="Find your Chazen tea profile through a calm tea-state reflection across mood, energy, ritual, and taste."
+    />
+    <style>
+      :root {
+        --ink: #171713;
+        --porcelain: #fbfaf6;
+        --paper: #f5efe4;
+        --tea: #74482d;
+        --gold: #d9bd86;
+        --leaf: #52634f;
+        --mist: #edf2e6;
+        --line: rgba(23, 23, 19, 0.12);
+        --soft: rgba(23, 23, 19, 0.66);
+        --serif: Georgia, "Times New Roman", serif;
+        --sans: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        text-rendering: optimizeLegibility;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .quiz-page {
+        min-height: 100dvh;
+      }
+
+      .quiz-hero {
+        position: relative;
+        min-height: 72dvh;
+        display: grid;
+        align-items: end;
+        overflow: hidden;
+        background: #10100d;
+        color: var(--porcelain);
+      }
+
+      .quiz-hero img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 62% 50%;
+        filter: saturate(0.85) contrast(1.08) brightness(0.74);
+      }
+
+      .quiz-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(16, 16, 13, 0.96), rgba(16, 16, 13, 0.72) 38%, rgba(16, 16, 13, 0.18)),
+          linear-gradient(180deg, rgba(16, 16, 13, 0.12), rgba(16, 16, 13, 0.88));
+      }
+
+      .quiz-shell {
+        position: relative;
+        z-index: 1;
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .quiz-hero-inner {
+        max-width: 760px;
+        padding: 7rem 0 4rem;
+      }
+
+      .kicker {
+        margin: 0;
+        color: var(--gold);
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-family: var(--serif);
+        font-weight: 520;
+        letter-spacing: 0;
+      }
+
+      .quiz-hero h1 {
+        max-width: 8.5ch;
+        margin-top: 0.7rem;
+        font-size: clamp(3.4rem, 9vw, 8rem);
+        line-height: 0.9;
+      }
+
+      .quiz-hero p:not(.kicker) {
+        max-width: 560px;
+        color: rgba(251, 250, 246, 0.78);
+        font-size: 1.08rem;
+        line-height: 1.75;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        border: 1px solid rgba(23, 23, 19, 0.18);
+        border-radius: 999px;
+        padding: 0.82rem 1.15rem;
+        background: var(--ink);
+        color: var(--porcelain);
+        cursor: pointer;
+        font-size: 0.88rem;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-decoration: none;
+      }
+
+      .button.secondary {
+        border-color: rgba(251, 250, 246, 0.26);
+        background: rgba(251, 250, 246, 0.08);
+        color: var(--porcelain);
+      }
+
+      .button.gold {
+        border-color: var(--gold);
+        background: var(--gold);
+        color: var(--ink);
+      }
+
+      .button:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+      }
+
+      .quiz-main {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 4rem 0 6rem;
+      }
+
+      .quiz-container {
+        display: grid;
+        grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--porcelain);
+        box-shadow: 0 28px 90px rgba(48, 35, 24, 0.1);
+      }
+
+      .quiz-side {
+        position: relative;
+        min-height: 680px;
+        padding: 2rem;
+        background: var(--ink);
+        color: var(--porcelain);
+      }
+
+      .quiz-side img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.48;
+        filter: saturate(0.8) contrast(1.08);
+      }
+
+      .quiz-side-content {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        align-content: end;
+        min-height: 100%;
+      }
+
+      .quiz-side h2 {
+        max-width: 9ch;
+        margin-top: 0.8rem;
+        font-size: clamp(2.3rem, 5vw, 4.6rem);
+        line-height: 0.98;
+      }
+
+      .quiz-side p:not(.kicker) {
+        color: rgba(251, 250, 246, 0.74);
+        line-height: 1.72;
+      }
+
+      .quiz-panel {
+        min-height: 680px;
+        padding: clamp(1.4rem, 4vw, 3rem);
+      }
+
+      .progress-wrap {
+        display: grid;
+        gap: 0.7rem;
+        margin-bottom: 2rem;
+      }
+
+      .progress-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        color: rgba(23, 23, 19, 0.6);
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .progress-track {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(23, 23, 19, 0.08);
+      }
+
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--leaf);
+        transition: width 180ms ease-out;
+      }
+
+      .question-card {
+        display: grid;
+        gap: 1.4rem;
+      }
+
+      .question-card.is-entering {
+        animation: questionIn 180ms ease-out both;
+      }
+
+      @keyframes questionIn {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .question-card.is-entering {
+          animation: none;
+        }
+
+        .progress-bar {
+          transition: none;
+        }
+      }
+
+      .question-card h2 {
+        max-width: 800px;
+        color: var(--ink);
+        font-size: clamp(2rem, 4vw, 4rem);
+        line-height: 1.04;
+      }
+
+      .question-card .question-cn {
+        margin: 0;
+        color: var(--tea);
+        font-family: var(--serif);
+        font-size: 1.28rem;
+        line-height: 1.5;
+      }
+
+      .options-grid {
+        display: grid;
+        gap: 0.8rem;
+      }
+
+      .option-button {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.9rem;
+        align-items: start;
+        min-height: 82px;
+        border: 1px solid rgba(23, 23, 19, 0.12);
+        border-radius: 8px;
+        background: #fffaf0;
+        padding: 1rem;
+        color: var(--ink);
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .option-button:hover,
+      .option-button:focus-visible,
+      .option-button.is-selected {
+        border-color: rgba(82, 99, 79, 0.62);
+        background: var(--mist);
+      }
+
+      .option-key {
+        display: grid;
+        place-items: center;
+        width: 2rem;
+        height: 2rem;
+        border: 1px solid rgba(116, 72, 45, 0.24);
+        border-radius: 999px;
+        color: var(--tea);
+        font-size: 0.74rem;
+        font-weight: 900;
+      }
+
+      .option-button strong {
+        display: block;
+        font-size: 1rem;
+      }
+
+      .option-button span:last-child {
+        display: block;
+        margin-top: 0.3rem;
+        color: rgba(23, 23, 19, 0.62);
+        line-height: 1.55;
+      }
+
+      .quiz-controls {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.8rem;
+        margin-top: 1.4rem;
+      }
+
+      .email-gate,
+      .result-panel {
+        display: none;
+      }
+
+      .email-gate.is-active,
+      .result-panel.is-active {
+        display: grid;
+        gap: 1.35rem;
+      }
+
+      .email-card {
+        max-width: 760px;
+      }
+
+      .email-card h2,
+      .result-head h2 {
+        font-size: clamp(2.4rem, 5vw, 5rem);
+        line-height: 1;
+      }
+
+      .email-card p,
+      .result-head p {
+        color: rgba(23, 23, 19, 0.66);
+        line-height: 1.75;
+      }
+
+      .email-form {
+        display: grid;
+        gap: 0.8rem;
+        max-width: 520px;
+      }
+
+      .email-form label {
+        color: rgba(23, 23, 19, 0.7);
+        font-size: 0.86rem;
+        font-weight: 800;
+      }
+
+      .email-form input {
+        width: 100%;
+        min-height: 52px;
+        border: 1px solid rgba(23, 23, 19, 0.16);
+        border-radius: 8px;
+        background: #fffaf0;
+        padding: 0.9rem 1rem;
+        color: var(--ink);
+      }
+
+      .form-error {
+        min-height: 1.4rem;
+        margin: 0;
+        color: #9f3f2f;
+        font-size: 0.86rem;
+        font-weight: 700;
+      }
+
+      .result-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.86fr) minmax(280px, 0.56fr);
+        gap: 1rem;
+      }
+
+      .profile-card,
+      .chart-card,
+      .ritual-card,
+      .tea-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffaf0;
+        padding: 1.25rem;
+      }
+
+      .profile-card h3,
+      .chart-card h3,
+      .ritual-card h3,
+      .tea-card h3 {
+        color: var(--tea);
+        font-size: 1.4rem;
+      }
+
+      .profile-meaning {
+        color: rgba(23, 23, 19, 0.68);
+        line-height: 1.72;
+      }
+
+      .bar-list {
+        display: grid;
+        gap: 0.9rem;
+      }
+
+      .bar-row {
+        display: grid;
+        gap: 0.4rem;
+      }
+
+      .bar-label {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        color: rgba(23, 23, 19, 0.66);
+        font-size: 0.86rem;
+        font-weight: 800;
+      }
+
+      .bar-track {
+        height: 12px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(23, 23, 19, 0.08);
+      }
+
+      .bar-fill {
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--leaf);
+      }
+
+      .recommendation-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .tea-card strong {
+        display: block;
+        margin-top: 0.4rem;
+        font-family: var(--serif);
+        font-size: 1.45rem;
+        font-weight: 520;
+      }
+
+      .tea-card p,
+      .ritual-card li {
+        color: rgba(23, 23, 19, 0.66);
+        line-height: 1.65;
+      }
+
+      .ritual-card ol {
+        margin: 0.8rem 0 0;
+        padding-left: 1.2rem;
+      }
+
+      .result-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .disclaimer {
+        color: rgba(23, 23, 19, 0.48);
+        font-size: 0.82rem;
+        line-height: 1.6;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      @media (max-width: 920px) {
+        .quiz-container,
+        .result-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .quiz-side,
+        .quiz-panel {
+          min-height: auto;
+        }
+
+        .quiz-side {
+          min-height: 420px;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .quiz-shell,
+        .quiz-main {
+          width: min(100% - 24px, 1180px);
+        }
+
+        .quiz-hero {
+          min-height: 68dvh;
+        }
+
+        .quiz-hero-inner {
+          padding: 5rem 0 2.5rem;
+        }
+
+        .hero-actions,
+        .quiz-controls,
+        .result-actions {
+          display: grid;
+        }
+
+        .button,
+        .hero-actions .button,
+        .quiz-controls .button,
+        .result-actions .button {
+          width: 100%;
+        }
+
+        .quiz-panel,
+        .quiz-side {
+          padding: 1.25rem;
+        }
+
+        .recommendation-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="quiz-page">
+      <section class="quiz-hero" aria-labelledby="quiz-title">
+        <img src="../images/chazen-generated/chazen-tea-room-hero-v2.png" alt="A quiet Chinese tea room with warm light, tea vessels, and stillness." />
+        <div class="quiz-shell quiz-hero-inner">
+          <p class="kicker">Discover Your Tea / 尋找你的茶禪狀態</p>
+          <h1 id="quiz-title">Find Your Chazen Profile</h1>
+          <p>
+            A calm AI-style tea reflection that reads mood, energy, ritual preference, and taste,
+            then returns a personal tea profile and ritual.
+          </p>
+          <p lang="zh-Hant">不是心理診斷，而是一個用茶、呼吸與文化幫你覺察當下狀態的小儀式。</p>
+          <div class="hero-actions">
+            <a class="button gold" href="#quiz-container">Begin Reflection</a>
+            <a class="button secondary" href="../">Return to Chazen</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main quiz container HTML -->
+      <section class="quiz-main" id="quiz-container" aria-label="Discover Your Tea quiz">
+        <div class="quiz-container">
+          <aside class="quiz-side" aria-label="Quiz atmosphere">
+            <img src="../images/chazen-generated/chazen-shanshui-chapter-2.png" alt="" />
+            <div class="quiz-side-content">
+              <p class="kicker">Tea State Reflection</p>
+              <h2>Begin with your current state.</h2>
+              <p>
+                Your result combines pressure level, primary need, ritual readiness,
+                and taste direction into one Chazen tea profile.
+              </p>
+            </div>
+          </aside>
+
+          <div class="quiz-panel">
+            <div id="question-view">
+              <div class="progress-wrap" aria-label="Quiz progress">
+                <div class="progress-top">
+                  <span id="progress-label">Question 1 of 10</span>
+                  <span id="progress-percent">10%</span>
+                </div>
+                <div class="progress-track" aria-hidden="true">
+                  <div class="progress-bar" id="progress-bar"></div>
+                </div>
+              </div>
+
+              <article class="question-card" id="question-card" aria-live="polite">
+                <p class="kicker" id="question-kicker">Question 01</p>
+                <h2 id="question-title"></h2>
+                <p class="question-cn" id="question-cn"></p>
+                <div class="options-grid" id="options-grid"></div>
+              </article>
+
+              <div class="quiz-controls">
+                <button class="button secondary" type="button" id="back-button">Back</button>
+                <button class="button" type="button" id="next-button" disabled>Next</button>
+              </div>
+            </div>
+
+            <div class="email-gate" id="email-gate">
+              <div class="email-card">
+                <p class="kicker">Your report is ready / 報告已準備好</p>
+                <h2>Where should we save your tea profile?</h2>
+                <p>
+                  Enter your email to unlock the personalized report. This demo stores your
+                  answers locally in your browser so it is easy to connect to email marketing later.
+                </p>
+                <form class="email-form" id="email-form" novalidate>
+                  <label for="quiz-email">Email address</label>
+                  <input id="quiz-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+                  <p class="form-error" id="form-error"></p>
+                  <button class="button gold" type="submit">Show My Chazen Profile</button>
+                </form>
+              </div>
+            </div>
+
+            <section class="result-panel" id="result-panel" aria-live="polite">
+              <div class="result-head">
+                <p class="kicker">Your Chazen Profile / 你的茶禪狀態</p>
+                <h2 id="profile-name"></h2>
+                <p id="profile-summary"></p>
+              </div>
+
+              <div class="result-layout">
+                <div class="profile-card">
+                  <h3>Personal Reading</h3>
+                  <p class="profile-meaning" id="profile-reading"></p>
+                </div>
+                <div class="chart-card">
+                  <h3>Profile Score</h3>
+                  <div class="bar-list" id="bar-list"></div>
+                </div>
+              </div>
+
+              <div class="recommendation-grid">
+                <div class="tea-card">
+                  <h3>Main Tea</h3>
+                  <strong id="main-tea"></strong>
+                  <p id="main-tea-copy"></p>
+                </div>
+                <div class="tea-card">
+                  <h3>Flower Tea</h3>
+                  <strong id="flower-tea"></strong>
+                  <p id="flower-tea-copy"></p>
+                </div>
+              </div>
+
+              <div class="ritual-card">
+                <h3>Your Ritual</h3>
+                <ol id="ritual-steps"></ol>
+              </div>
+
+              <div class="result-actions">
+                <a class="button gold" id="tea-pack-link" href="../contact/?type=Tea+recommendation&source=Discover+Your+Tea&message=I+would+like+the+A%2425+AI-Matched+Tea+Pack.#inquiry-form">
+                  Reserve $25 AI-Matched Tea Pack
+                </a>
+                <button class="button" type="button" id="restart-button">Retake Reflection</button>
+              </div>
+              <p class="disclaimer">
+                Chazen Tea State Reflection is a lifestyle and tea-culture guide. It does not provide medical,
+                psychological, or health diagnosis.
+              </p>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Main JS logic for Chazen AI Quiz v3.0.
+      // The quiz uses localStorage only; replace saveLead() with a real API/email integration later.
+      const DISPLAY_BARS = [
+        ["pressureLevel", "Pressure Level"],
+        ["primaryNeed", "Primary Need"],
+        ["ritualReadiness", "Ritual Readiness"],
+        ["tastePreference", "Taste Preference"]
+      ];
+
+      const questions = [
+        {
+          id: "q1",
+          title: "Where does most of your daily pressure come from?",
+          cn: "你平時一日的壓力主要來自？",
+          options: [
+            { key: "A", label: "Work or study deadlines.", detail: "A full calendar, pressure to perform, or unfinished tasks.", score: { pressure: 3 } },
+            { key: "B", label: "Emotions or relationships.", detail: "People, sensitivity, or inner emotional weather.", score: { pressure: 2, emotional: 1 } },
+            { key: "C", label: "Poor sleep quality.", detail: "Rest is not fully restoring you.", score: { pressure: 3, sleep: 2 } },
+            { key: "D", label: "Too many choices and information.", detail: "Your attention feels pulled in many directions.", score: { pressure: 2 } }
+          ]
+        },
+        {
+          id: "q2",
+          title: "What do you most often feel you need more of?",
+          cn: "你最常覺得自己需要更多？",
+          options: [
+            { key: "A", label: "Relaxation and calm.", detail: "Less inner noise, more room to breathe.", score: { calm: 3 } },
+            { key: "B", label: "Clear focus.", detail: "A steadier mind for work, study, or decisions.", score: { focus: 3 } },
+            { key: "C", label: "Energy and vitality.", detail: "A brighter daily rhythm without forcing yourself.", score: { energy: 2, focus: 1 } },
+            { key: "D", label: "Better sleep.", detail: "A softer evening and deeper rest.", score: { sleep: 3 } }
+          ]
+        },
+        {
+          id: "q3",
+          title: "At night, which pattern feels most familiar?",
+          cn: "夜晚你最容易出現以下哪種情況？",
+          options: [
+            { key: "A", label: "My mind stays active and sleep feels far away.", detail: "Thoughts continue after the day has ended.", score: { calm: 3, sleep: 2 } },
+            { key: "B", label: "I wake easily or sleep lightly.", detail: "Rest happens, but it feels fragile.", score: { sleep: 2, calm: 1 } },
+            { key: "C", label: "I sleep early but still feel tired.", detail: "Recovery has not fully caught up.", score: { energy: 2 } },
+            { key: "D", label: "I crave sweets or caffeine at night.", detail: "The body asks for a small lift or comfort.", score: { pressure: 1, calm: 1 } }
+          ]
+        },
+        {
+          id: "q4",
+          title: "When working or studying, what do you notice most?",
+          cn: "工作或學習時，你最常感到？",
+          options: [
+            { key: "A", label: "I get distracted easily.", detail: "Attention moves before the task is complete.", score: { focus: 3 } },
+            { key: "B", label: "I become impatient or emotionally reactive.", detail: "Small frictions can feel larger than they are.", score: { calm: 2, emotional: 2 } },
+            { key: "C", label: "My stamina runs out.", detail: "I can begin, but sustaining energy is hard.", score: { energy: 2 } },
+            { key: "D", label: "Everything is mostly OK.", detail: "You want a tea ritual for refinement, not repair.", score: {} }
+          ]
+        },
+        {
+          id: "q5",
+          title: "Which taste direction attracts you first?",
+          cn: "你偏好茶的口感？",
+          options: [
+            { key: "A", label: "Fresh and light.", detail: "Green tea or white tea: clean, pale, elegant.", score: {}, tags: { light: 3, taste: 2 } },
+            { key: "B", label: "Rich, roasted, and returning-sweet.", detail: "Oolong or rock tea: mineral, deep, grounded.", score: {}, tags: { rock: 3, grounding: 1, taste: 2 } },
+            { key: "C", label: "Warm and gently sweet.", detail: "Black tea or ripe pu'er: soft, round, comforting.", score: {}, tags: { warm: 3, taste: 2 } },
+            { key: "D", label: "No strong preference.", detail: "You care more about the effect and ritual fit.", score: {}, tags: { neutral: 2, taste: 1 } }
+          ]
+        },
+        {
+          id: "q6",
+          title: "What does your ideal relaxing moment look like?",
+          cn: "你理想中的放鬆時刻是？",
+          options: [
+            { key: "A", label: "Drinking tea quietly alone.", detail: "A private pause with very little noise.", score: { ritualReadiness: 2 }, tags: { solo: 2 } },
+            { key: "B", label: "Listening to music or sound.", detail: "Bowl tone, rain, water, or a soft track.", score: { ritualReadiness: 2 }, tags: { sound: 2 } },
+            { key: "C", label: "Sharing tea with friends or family.", detail: "A warm and human tea moment.", score: { ritualReadiness: 1 }, tags: { social: 1 } },
+            { key: "D", label: "A short reset.", detail: "Simple enough to fit into a real day.", score: { ritualReadiness: 1 }, tags: { quick: 2 } }
+          ]
+        },
+        {
+          id: "q7",
+          title: "How much time do you usually have to brew tea?",
+          cn: "你平時沖茶的時間預算？",
+          options: [
+            { key: "A", label: "Within 5 minutes.", detail: "Quick, reliable, and easy to repeat.", score: { ritualReadiness: 1 }, tags: { quick: 2 } },
+            { key: "B", label: "10-15 minutes.", detail: "Enough time for a proper small ritual.", score: { ritualReadiness: 3 }, tags: { full: 2 } },
+            { key: "C", label: "No rush. I want to taste slowly.", detail: "You are open to a deeper tea table rhythm.", score: { ritualReadiness: 4 }, tags: { deep: 2 } }
+          ]
+        },
+        {
+          id: "q8",
+          title: "What would you most like to improve recently? Choose up to 2.",
+          cn: "你最近最想改善的狀態是？最多選 2 個。",
+          multi: true,
+          max: 2,
+          options: [
+            { key: "A", label: "Reduce stress.", detail: "A calmer inner pace.", score: { calm: 2 } },
+            { key: "B", label: "Improve focus.", detail: "Cleaner attention and fewer scattered starts.", score: { focus: 2 } },
+            { key: "C", label: "Improve sleep.", detail: "A softer evening and steadier rest.", score: { sleep: 2 } },
+            { key: "D", label: "Increase daily calm.", detail: "More stillness in ordinary moments.", score: { calm: 2 } }
+          ]
+        },
+        {
+          id: "q9",
+          title: "How interested are you in tea ritual?",
+          cn: "你對茶儀式的興趣程度？",
+          options: [
+            { key: "A", label: "I want a simple 3-5 minute version.", detail: "A small ritual I can actually keep.", score: { ritualReadiness: 1 }, tags: { quick: 2 } },
+            { key: "B", label: "I am willing to try a full gaiwan ritual.", detail: "I want the cultural feeling and the proper steps.", score: { ritualReadiness: 4 }, tags: { full: 3 } },
+            { key: "C", label: "I mainly want to drink tea.", detail: "The ritual can stay secondary.", score: { ritualReadiness: 0 }, tags: { minimal: 3 } }
+          ]
+        },
+        {
+          id: "q10",
+          title: "What feeling do you most want tea to give you?",
+          cn: "你最想透過茶得到的感覺？",
+          options: [
+            { key: "A", label: "Like a clear breeze in the mountains.", detail: "Quiet, spacious, and mentally soft.", score: { calm: 2 } },
+            { key: "B", label: "Like rock: stable and strong.", detail: "Grounded, substantial, and steady.", score: { grounding: 3 }, tags: { rock: 1 } },
+            { key: "C", label: "Like warm sunlight.", detail: "Bright, gentle, and life-giving.", score: { energy: 2 }, tags: { warm: 1 } }
+          ]
+        }
+      ];
+
+      const profiles = {
+        mountainCalm: {
+          name: "Mountain Calm 山中靜心",
+          summary: "Your pressure wants quiet space, softer evenings, and a tea that helps the mind come down gently.",
+          reading: "Mountain Calm appears when pressure is high and the deeper need is calm. This profile does not ask you to become more productive. It gives you a pale cup, slow breath, and a small return to yourself.",
+          mainTea: "Bai Hao Yin Zhen White Tea",
+          mainTeaCopy: "Light white tea for softness, spaciousness, and a clean evening reset.",
+          flowerTea: "Chrysanthemum or Lily",
+          flowerTeaCopy: "A gentle flower pairing for cooling the mood and softening the edges of the day.",
+          ritual: ["Use low light and a quiet cup.", "Warm the cup before brewing.", "Pour slowly and breathe for four counts.", "Take the first sip without checking your phone.", "End with one minute of silence."]
+        },
+        rockStability: {
+          name: "Rock Stability 岩骨安定",
+          summary: "Your answers point toward grounding, strength, and a tea with enough depth to hold pressure.",
+          reading: "Rock Stability is a profile of backbone. You may be carrying pressure, but your system wants structure rather than sweetness alone. A roasted mineral cup gives the ritual weight, warmth, and steadiness.",
+          mainTea: "Da Hong Pao Rock Oolong",
+          mainTeaCopy: "A roasted Wuyi-style oolong for mineral depth, warmth, and grounded presence.",
+          flowerTea: "Osmanthus",
+          flowerTeaCopy: "A golden floral lift that softens roasted depth without losing strength.",
+          ritual: ["Warm the cup until it holds heat.", "Strike one bowl tone or take one grounded breath.", "Use a small serving and short infusion.", "Notice roast, mineral, and returning sweetness.", "Use the final sip as a boundary between tasks."]
+        },
+        sunlitFocus: {
+          name: "Sunlit Focus 晨光專注",
+          summary: "You need clarity, precision, and clean energy without becoming overstimulated.",
+          reading: "Sunlit Focus belongs to people who want the mind to become bright, not frantic. Your tea should feel green, clean, and deliberate, like opening a window before beginning meaningful work.",
+          mainTea: "Longjing Green Tea",
+          mainTeaCopy: "A clear green tea for focus, freshness, and light structure.",
+          flowerTea: "Jasmine Buds",
+          flowerTeaCopy: "A fragrant companion for clarity and gentle uplift.",
+          ritual: ["Prepare tea in the morning or early afternoon.", "Use water that is warm, not boiling.", "Set one intention before pouring.", "Take three sips before opening your laptop.", "Begin the task immediately after the cup."]
+        },
+        eveningWindDown: {
+          name: "Evening Wind Down 夜間緩解",
+          summary: "Your profile asks for a lower-pressure evening, gentler sleep cues, and a ritual that closes the day.",
+          reading: "Evening Wind Down appears when sleep and calm are both important. The tea should not feel like another task. It should become a small threshold: warm cup, dim light, slower breath, then rest.",
+          mainTea: "White Tea or Light Ripe Pu'er",
+          mainTeaCopy: "A soft, forgiving tea direction for evening quiet and day-end recovery.",
+          flowerTea: "Rose + Jujube",
+          flowerTeaCopy: "A warm floral-fruit blend for softness and emotional ease.",
+          ritual: ["Begin after dinner or before screen-free time.", "Use dim light and a smaller cup.", "Hold the cup with both hands.", "Exhale longer than you inhale.", "Let the final sip close the day."]
+        },
+        balancedHarmony: {
+          name: "Balanced Harmony 中和安住",
+          summary: "Your needs are balanced. You do not need an extreme tea; you need a steady practice that can meet many kinds of days.",
+          reading: "Balanced Harmony suggests your answers are spread across pressure, focus, rest, and taste. A flexible tea practice suits you best: refined but simple, culturally grounded, and easy to repeat.",
+          mainTea: "Gentle Oolong or Seasonal Tea Match",
+          mainTeaCopy: "A balanced tea direction chosen by taste: light, roasted, warm, or neutral.",
+          flowerTea: "Chrysanthemum + Goji",
+          flowerTeaCopy: "A balanced flower pairing for clarity, warmth, and daily ease.",
+          ritual: ["Use the same cup for seven days.", "Keep the steps simple and repeatable.", "Take one sip before responding to messages.", "Notice body, breath, and room.", "Let the ritual be modest, not perfect."]
+        },
+        beginnerGentle: {
+          name: "Gentle Beginner 溫和新手",
+          summary: "You are best served by an easy tea entry: simple brewing, clear guidance, and a ritual that does not feel difficult.",
+          reading: "Gentle Beginner does not mean basic taste. It means the ritual should respect real life. Your Chazen match should be easy to brew, forgiving in timing, and supported by a short ritual card.",
+          mainTea: "Easy-Brew White Tea or Gentle Oolong",
+          mainTeaCopy: "A low-friction tea that tastes refined without requiring advanced tools.",
+          flowerTea: "Jasmine or Chrysanthemum",
+          flowerTeaCopy: "A familiar flower direction that adds fragrance and makes the first ritual feel welcoming.",
+          ritual: ["Use a mug, infuser, or simple cup.", "Brew for 3-5 minutes.", "Take three quiet breaths before the first sip.", "Notice one taste word: sweet, warm, floral, or roasted.", "Repeat at the same time tomorrow."]
+        }
+      };
+
+      const state = {
+        index: 0,
+        answers: JSON.parse(localStorage.getItem("chazenQuizAnswers") || "{}"),
+        email: localStorage.getItem("chazenQuizEmail") || ""
+      };
+
+      const el = {
+        questionView: document.getElementById("question-view"),
+        progressLabel: document.getElementById("progress-label"),
+        progressPercent: document.getElementById("progress-percent"),
+        progressBar: document.getElementById("progress-bar"),
+        questionCard: document.getElementById("question-card"),
+        questionKicker: document.getElementById("question-kicker"),
+        questionTitle: document.getElementById("question-title"),
+        questionCn: document.getElementById("question-cn"),
+        optionsGrid: document.getElementById("options-grid"),
+        backButton: document.getElementById("back-button"),
+        nextButton: document.getElementById("next-button"),
+        emailGate: document.getElementById("email-gate"),
+        emailForm: document.getElementById("email-form"),
+        emailInput: document.getElementById("quiz-email"),
+        formError: document.getElementById("form-error"),
+        resultPanel: document.getElementById("result-panel"),
+        profileName: document.getElementById("profile-name"),
+        profileSummary: document.getElementById("profile-summary"),
+        profileReading: document.getElementById("profile-reading"),
+        barList: document.getElementById("bar-list"),
+        mainTea: document.getElementById("main-tea"),
+        mainTeaCopy: document.getElementById("main-tea-copy"),
+        flowerTea: document.getElementById("flower-tea"),
+        flowerTeaCopy: document.getElementById("flower-tea-copy"),
+        ritualSteps: document.getElementById("ritual-steps"),
+        teaPackLink: document.getElementById("tea-pack-link"),
+        restartButton: document.getElementById("restart-button")
+      };
+
+      function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+      }
+
+      function getSelectedKeys(question) {
+        const selected = state.answers[question.id];
+        if (question.multi) return Array.isArray(selected) ? selected : [];
+        return selected ? [selected] : [];
+      }
+
+      function answerComplete(question) {
+        return getSelectedKeys(question).length > 0;
+      }
+
+      function renderQuestion() {
+        const question = questions[state.index];
+        const selectedKeys = getSelectedKeys(question);
+        const progress = Math.round(((state.index + 1) / questions.length) * 100);
+
+        el.questionCard.classList.remove("is-entering");
+        void el.questionCard.offsetWidth;
+        el.questionCard.classList.add("is-entering");
+
+        el.progressLabel.textContent = `Question ${state.index + 1} of ${questions.length}`;
+        el.progressPercent.textContent = `${progress}%`;
+        el.progressBar.style.width = `${progress}%`;
+        el.questionKicker.textContent = `Question ${String(state.index + 1).padStart(2, "0")}`;
+        el.questionTitle.textContent = question.title;
+        el.questionCn.textContent = question.cn;
+
+        el.optionsGrid.innerHTML = question.options
+          .map((option) => `
+            <button class="option-button ${selectedKeys.includes(option.key) ? "is-selected" : ""}" type="button" data-key="${option.key}">
+              <span class="option-key">${option.key}</span>
+              <span>
+                <strong>${option.label}</strong>
+                <span>${option.detail}</span>
+              </span>
+            </button>
+          `)
+          .join("");
+
+        el.backButton.disabled = state.index === 0;
+        el.nextButton.disabled = !answerComplete(question);
+        el.nextButton.textContent = state.index === questions.length - 1 ? "Complete" : "Next";
+      }
+
+      function saveAnswers() {
+        localStorage.setItem("chazenQuizAnswers", JSON.stringify(state.answers));
+      }
+
+      function calculateScores() {
+        const totals = {
+          pressure: 0,
+          calm: 0,
+          focus: 0,
+          energy: 0,
+          sleep: 0,
+          emotional: 0,
+          grounding: 0,
+          ritualReadiness: 0
+        };
+        const tags = {
+          quick: 0,
+          full: 0,
+          deep: 0,
+          minimal: 0,
+          solo: 0,
+          sound: 0,
+          social: 0,
+          light: 0,
+          rock: 0,
+          warm: 0,
+          neutral: 0,
+          taste: 0,
+          grounding: 0
+        };
+
+        questions.forEach((question) => {
+          getSelectedKeys(question).forEach((answerKey) => {
+            const option = question.options.find((item) => item.key === answerKey);
+            if (!option) return;
+
+            Object.entries(option.score || {}).forEach(([dimension, value]) => {
+              totals[dimension] = (totals[dimension] || 0) + value;
+            });
+            Object.entries(option.tags || {}).forEach(([tag, value]) => {
+              tags[tag] = (tags[tag] || 0) + value;
+            });
+          });
+        });
+
+        const needScores = {
+          calm: totals.calm,
+          focus: totals.focus,
+          sleep: totals.sleep,
+          energy: totals.energy,
+          grounding: totals.grounding,
+          emotional: totals.emotional
+        };
+        const primaryNeedKey = Object.entries(needScores).sort((a, b) => b[1] - a[1])[0][0];
+        const primaryNeedLabels = {
+          calm: "Calm",
+          focus: "Focus",
+          sleep: "Sleep",
+          energy: "Energy",
+          grounding: "Grounding",
+          emotional: "Emotional Balance"
+        };
+        const tasteKey = Object.entries({
+          light: tags.light,
+          rock: tags.rock,
+          warm: tags.warm,
+          neutral: tags.neutral
+        }).sort((a, b) => b[1] - a[1])[0][0];
+        const tasteLabels = {
+          light: "Fresh / White / Longjing",
+          rock: "Rock / Da Hong Pao",
+          warm: "Warm / Black Tea / Ripe Pu'er",
+          neutral: "Neutral / Effect First"
+        };
+        const ritualStyle =
+          tags.minimal >= 3 || tags.quick >= 4
+            ? "Gentle 3-minute ritual"
+            : tags.full >= 3 || tags.deep >= 2
+              ? "Full gaiwan ritual"
+              : tags.sound >= 2
+                ? "Sound + breath ritual"
+                : tags.solo >= 2
+                  ? "Solo quiet ritual"
+                  : "Simple daily tea ritual";
+
+        // Reader-friendly 0-100 display. Pressure includes explicit stress plus need signals from Q2/Q4/Q8.
+        const pressureIndex =
+          totals.pressure +
+          Math.min(totals.calm, 5) * 0.45 +
+          Math.min(totals.sleep, 5) * 0.45 +
+          Math.min(totals.focus, 5) * 0.25 +
+          Math.min(totals.emotional, 4) * 0.45;
+        const highestNeed = Math.max(...Object.values(needScores));
+        const highestTaste = Math.max(tags.light, tags.rock, tags.warm, tags.neutral, 1);
+        const weighted = {
+          pressureLevel: clamp(Math.round((pressureIndex / 9) * 100), 0, 100),
+          primaryNeed: clamp(Math.round((highestNeed / 9) * 100), 0, 100),
+          ritualReadiness: clamp(Math.round((totals.ritualReadiness / 10) * 100), 0, 100),
+          tastePreference: clamp(Math.round((highestTaste / 4) * 100), 0, 100)
+        };
+
+        return {
+          totals,
+          tags,
+          weighted,
+          primaryNeedKey,
+          primaryNeedLabel: primaryNeedLabels[primaryNeedKey],
+          tasteKey,
+          tasteLabel: tasteLabels[tasteKey],
+          ritualStyle
+        };
+      }
+
+      function matchProfile(scores) {
+        const { weighted, tags } = scores;
+        const { totals, primaryNeedKey } = scores;
+
+        if (weighted.ritualReadiness <= 25 || tags.minimal >= 3) return "beginnerGentle";
+        if (totals.sleep >= 5 && totals.calm >= 4) return "eveningWindDown";
+        if (weighted.pressureLevel >= 55 && (totals.grounding >= 3 || tags.rock >= 3 || tags.grounding >= 1)) return "rockStability";
+        if (primaryNeedKey === "focus" && weighted.pressureLevel <= 75) return "sunlitFocus";
+        if (weighted.pressureLevel >= 50 && totals.calm >= 4) return "mountainCalm";
+        return "balancedHarmony";
+      }
+
+      function showEmailGate() {
+        el.questionView.classList.add("hidden");
+        el.emailGate.classList.add("is-active");
+        el.resultPanel.classList.remove("is-active");
+        el.emailInput.value = state.email;
+      }
+
+      function saveLead(email, profileKey, scores) {
+        const payload = {
+          email,
+          profileKey,
+          scores,
+          answers: state.answers,
+          savedAt: new Date().toISOString()
+        };
+        localStorage.setItem("chazenQuizLead", JSON.stringify(payload));
+      }
+
+      function showResults() {
+        const scores = calculateScores();
+        const profileKey = matchProfile(scores);
+        const profile = profiles[profileKey];
+
+        saveLead(state.email, profileKey, scores);
+
+        el.emailGate.classList.remove("is-active");
+        el.resultPanel.classList.add("is-active");
+
+        el.profileName.textContent = profile.name;
+        el.profileSummary.textContent = `${profile.summary} Primary need: ${scores.primaryNeedLabel}. Taste direction: ${scores.tasteLabel}. Ritual style: ${scores.ritualStyle}.`;
+        el.profileReading.textContent = profile.reading;
+        el.mainTea.textContent = profile.mainTea;
+        el.mainTeaCopy.textContent = profile.mainTeaCopy;
+        el.flowerTea.textContent = profile.flowerTea;
+        el.flowerTeaCopy.textContent = profile.flowerTeaCopy;
+        el.ritualSteps.innerHTML = profile.ritual.map((step) => `<li>${step}</li>`).join("");
+
+        const packMessage = encodeURIComponent(`I completed Discover Your Tea and received ${profile.name}. I would like the $25 AI-Matched Tea Pack.`);
+        el.teaPackLink.href = `../contact/?type=Tea+recommendation&source=Discover+Your+Tea&message=${packMessage}#inquiry-form`;
+
+        el.barList.innerHTML = DISPLAY_BARS
+          .map(([key, label]) => {
+            const value = scores.weighted[key];
+            return `
+              <div class="bar-row">
+                <div class="bar-label"><span>${label}</span><span>${value}</span></div>
+                <div class="bar-track"><div class="bar-fill" style="width:${value}%"></div></div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      el.optionsGrid.addEventListener("click", (event) => {
+        const button = event.target.closest(".option-button");
+        if (!button) return;
+        const question = questions[state.index];
+        const selectedKey = button.dataset.key;
+
+        if (question.multi) {
+          const current = getSelectedKeys(question);
+          if (current.includes(selectedKey)) {
+            state.answers[question.id] = current.filter((key) => key !== selectedKey);
+          } else if (current.length < (question.max || 2)) {
+            state.answers[question.id] = [...current, selectedKey];
+          }
+        } else {
+          state.answers[question.id] = selectedKey;
+        }
+        saveAnswers();
+        renderQuestion();
+      });
+
+      el.backButton.addEventListener("click", () => {
+        if (state.index > 0) {
+          state.index -= 1;
+          renderQuestion();
+        }
+      });
+
+      el.nextButton.addEventListener("click", () => {
+        if (!answerComplete(questions[state.index])) return;
+        if (state.index === questions.length - 1) {
+          showEmailGate();
+          return;
+        }
+        state.index += 1;
+        renderQuestion();
+      });
+
+      el.emailForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const email = el.emailInput.value.trim();
+        const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (!valid) {
+          el.formError.textContent = "Please enter a valid email address to unlock your report.";
+          return;
+        }
+        el.formError.textContent = "";
+        state.email = email;
+        localStorage.setItem("chazenQuizEmail", email);
+        showResults();
+      });
+
+      el.restartButton.addEventListener("click", () => {
+        state.index = 0;
+        state.answers = {};
+        localStorage.removeItem("chazenQuizAnswers");
+        el.resultPanel.classList.remove("is-active");
+        el.questionView.classList.remove("hidden");
+        renderQuestion();
+        document.getElementById("quiz-container").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      renderQuestion();
+    </script>
+  </body>
+</html>

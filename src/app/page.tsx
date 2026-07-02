@@ -34,8 +34,8 @@ export default function Home() {
               <p lang="zh-Hant">一盞茶，讓人回到自己。</p>
             </div>
             <div className="hero-actions">
-              <a href={withBasePath("/tea-assessment/")} className="museum-cta">
-                Begin Tea State Reflection
+              <a href={withBasePath("/discover-your-tea/")} className="museum-cta">
+                Discover Your Tea
               </a>
               <a href="#chazen-entrance" className="museum-cta museum-cta-secondary">
                 Explore the Culture
