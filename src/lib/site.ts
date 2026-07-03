@@ -8,12 +8,21 @@ export const site = {
 };
 
 export const navItems = [
-  { label: "Discover", href: "/discover-your-tea/index.html" },
-  { label: "Philosophy", href: "/#philosophy" },
-  { label: "Tea Table", href: "/#tea-table" },
-  { label: "Ritual", href: "/#gaiwan-ritual" },
-  { label: "Chapters", href: "/#chapter-index" },
-  { label: "About", href: "/about" }
+  { label: "Tea Test", href: "/tea-test" },
+  { label: "Ritual", href: "/tea-ritual" },
+  { label: "Culture", href: "/tea-culture" },
+  { label: "Five Cups", href: "/five-cups" },
+  { label: "Tea Boxes", href: "/tea-boxes" },
+  { label: "B2B Gifts", href: "/b2b" }
+];
+
+export const footerItems = [
+  { label: "Tea Test", href: "/tea-test" },
+  { label: "Tea Ritual", href: "/tea-ritual" },
+  { label: "Tea Culture", href: "/tea-culture" },
+  { label: "Five Cups", href: "/five-cups" },
+  { label: "Tea Boxes", href: "/tea-boxes" },
+  { label: "B2B Gifts", href: "/b2b" }
 ];
 
 export const giftBoxItems = [

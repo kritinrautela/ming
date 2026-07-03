@@ -1,126 +1,188 @@
-import Link from "next/link";
-import { ArrowRight, Building2, Check, MessageSquareText, PackageCheck, Truck } from "lucide-react";
-import { InquiryForm } from "@/components/InquiryForm";
-import { SectionHeading } from "@/components/SectionHeading";
-import { buildInquiryPath } from "@/lib/inquiry";
+import {
+  ChazenContentSection,
+  ChazenCtaBand,
+  ChazenMediaPlaceholder,
+  ChazenSubpageHero
+} from "@/components/ChazenSubpage";
 
 export const metadata = {
-  title: "B2B Real Estate Gifting"
+  title: "B2B Tea Gifts"
 };
+
+const useCases = [
+  "Corporate gifts",
+  "Client appreciation",
+  "Real estate settlement gifts",
+  "Festival gifts",
+  "Business partners",
+  "Cultural events"
+];
+
+const whyTeaWorks = [
+  ["有文化感", "茶禮比普通禮物更有故事，也更能代表心意。"],
+  ["不俗氣", "不靠浮誇包裝，而是靠器物、香氣與儀式感。"],
+  ["適合不同年齡", "茶作為禮物，對不同背景和年齡都自然友善。"],
+  ["可長期保存", "茶與茶具可以被慢慢使用，不是一刻即逝的禮物。"],
+  ["更有心意", "一份能被打開、沖泡、記住的關係禮物。"]
+];
+
+const giftOptions = [
+  ["Starter corporate box", "適合小批量客戶答謝或首次合作禮。"],
+  ["Premium cultural box", "適合重要客戶、節日或高價值關係。"],
+  ["Custom settlement gift", "為地產交收時刻加入祝賀卡與品牌訊息。"],
+  ["Event / festival box", "適合文化活動、團隊禮品與節日派送。"]
+];
+
+const brandingItems = [
+  "Company card",
+  "Custom message",
+  "Logo sleeve",
+  "Settlement note",
+  "Bilingual gift message"
+];
 
 export default function B2BPage() {
   return (
-    <main>
-      <section className="section">
-        <div className="container grid gap-12 lg:grid-cols-[0.96fr_1.04fr] lg:items-center">
-          <div>
-            <p className="eyebrow">Real estate settlement gifting</p>
-            <h1 className="display-title mt-4 text-5xl leading-[1] md:text-7xl">
-              A calm gift for a new beginning.
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-ink/66">
-              Settlement is emotional. Chazen helps agencies replace generic hampers
-              with a premium tea ritual that clients can open, use, and remember in
-              their new home.
-            </p>
-            <Link
-              href={buildInquiryPath({
-                type: "Real estate settlement",
-                message: "I would like to request a B2B sample for settlement gifting.",
-                source: "B2B hero"
-              })}
-              className="button-primary mt-8"
-            >
-              Request B2B sample <ArrowRight size={17} />
-            </Link>
-          </div>
-          <div className="border border-ink/10 bg-porcelain p-8 shadow-soft">
-            <Building2 className="text-leaf" size={28} />
-            <p className="display-title mt-6 text-4xl text-leaf">Settlement pilot</p>
-            <p className="mt-5 text-base leading-8 text-ink/64">
-              Each client receives the Chazen Tea Ritual Gift Box with premium loose-leaf
-              tea, compact teaware or infuser, ritual guidance, QR sound card, brand story,
-              and an optional agency congratulations message.
-            </p>
-          </div>
-        </div>
-      </section>
+    <main className="chazen-subpage">
+      <ChazenSubpageHero
+        eyebrow="B2B Gifts"
+        title="為重要關係準備的文化禮盒"
+        english="Cultural Gifts for Meaningful Relationships"
+        copy="Chazen 企業茶禮盒適合公司、客戶答謝、地產交收禮物、節日送禮與文化活動。"
+        placeholder={{
+          asset: "b2b-corporate-gift-scene.webp",
+          label: "Future visual: B2B settlement gift scene",
+          note: "Hero placeholder for future B2B gift photography"
+        }}
+      />
 
-      <section className="section bg-porcelain">
-        <div className="container">
-          <SectionHeading
-            eyebrow="Offer structure"
-            title="Simple enough to pilot. Premium enough to feel considered."
-            copy="The offer is designed for agencies that want a settlement gift with presence, story, and a repeatable client experience."
-          />
-          <div className="mt-12 grid gap-4 md:grid-cols-3">
-            {[
-              "Premium Chazen Tea Ritual Gift Box",
-              "Optional agency-branded congratulations card",
-              "Pilot orders for selected settlement clients"
-            ].map((item) => (
-              <div key={item} className="premium-card bg-white p-6">
-                <Check className="text-moss" size={20} />
-                <p className="mt-5 text-lg font-semibold">{item}</p>
-              </div>
-            ))}
-          </div>
+      <ChazenContentSection
+        eyebrow="Who it is for"
+        title="適合需要被記住的關係"
+        english="For Relationships Worth Marking"
+        tone="paper"
+      >
+        <div className="chazen-card-grid">
+          {useCases.map((useCase) => (
+            <article key={useCase} className="chazen-subpage-card">
+              <span>{useCase}</span>
+              <p>Quiet, cultural, and useful enough to remain after the handover moment.</p>
+            </article>
+          ))}
         </div>
-      </section>
+      </ChazenContentSection>
 
-      <section className="section">
-        <div className="container grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <SectionHeading
-            eyebrow="How it works"
-            title="A three-step handover ritual for agency teams."
-            copy="Keep the process operationally simple while giving clients a gift that feels personal after settlement."
-          />
-          <div className="grid gap-4">
-            {[
-              {
-                icon: PackageCheck,
-                title: "Choose gift box",
-                copy: "Select the Chazen Tea Ritual Gift Box for a pilot group or recurring settlement program."
-              },
-              {
-                icon: MessageSquareText,
-                title: "Add agency message",
-                copy: "Include a congratulations card with agency branding, adviser name, or a personal note."
-              },
-              {
-                icon: Truck,
-                title: "Deliver after settlement",
-                copy: "Present the gift at handover or arrange delivery so the first tea ritual begins in the new home."
-              }
-            ].map(({ icon: Icon, title, copy }) => (
-              <article key={title} className="border-t border-ink/12 py-7">
-                <div className="flex gap-5">
-                  <Icon className="mt-1 shrink-0 text-moss" size={22} />
-                  <div>
-                    <p className="display-title text-3xl text-leaf">{title}</p>
-                    <p className="mt-3 text-sm leading-7 text-ink/62">{copy}</p>
-                  </div>
-                </div>
+      <ChazenContentSection
+        eyebrow="Why tea"
+        title="茶禮有文化，也有溫度"
+        english="Why a Tea Gift Works"
+      >
+        <div className="chazen-card-grid">
+          {whyTeaWorks.map(([title, copy]) => (
+            <article key={title} className="chazen-subpage-card">
+              <h3 lang="zh-Hant">{title}</h3>
+              <p lang="zh-Hant">{copy}</p>
+            </article>
+          ))}
+        </div>
+      </ChazenContentSection>
+
+      <ChazenContentSection
+        eyebrow="Gift box options"
+        title="不同關係，可以有不同茶禮"
+        english="Gift Box Options"
+        tone="paper"
+      >
+        <div className="chazen-two-column">
+          <div className="chazen-card-grid">
+            {giftOptions.map(([title, copy]) => (
+              <article key={title} className="chazen-subpage-card">
+                <span>{title}</span>
+                <p lang="zh-Hant">{copy}</p>
               </article>
             ))}
           </div>
+          <ChazenMediaPlaceholder
+            asset="b2b-settlement-gift.webp"
+            label="Future visual: B2B settlement gift scene"
+            note="Reserved real estate settlement gift scene"
+          />
         </div>
-      </section>
+      </ChazenContentSection>
 
-      <section className="section bg-[#e8decc]">
-        <div className="container grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionHeading
-            eyebrow="B2B inquiry"
-            title="Discuss a sample or pilot order."
-            copy="Submit your inquiry and our team will contact you to discuss pre-orders, B2B gifting, agency cards, and partnership opportunities."
-          />
-          <InquiryForm
-            defaultType="Real estate settlement"
-            defaultMessage="I would like to discuss a B2B sample or settlement gifting pilot."
-            sourceLabel="B2B real estate gifting page"
+      <ChazenContentSection
+        eyebrow="Custom branding"
+        title="品牌可以出現，但不需要喧賓奪主"
+        english="Quiet Custom Branding"
+      >
+        <div className="chazen-two-column">
+          <article className="chazen-subpage-note">
+            <h3>Branding options</h3>
+            <ul>
+              {brandingItems.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+          <ChazenMediaPlaceholder
+            asset="b2b-custom-branding.webp"
+            label="Future visual: Quiet custom branding sleeve"
           />
         </div>
-      </section>
+      </ChazenContentSection>
+
+      <ChazenContentSection
+        eyebrow="Real estate settlement"
+        title="交收禮物，不只是答謝"
+        english="Settlement Gifts That Remember the Relationship"
+        tone="paper"
+      >
+        <div className="chazen-two-column">
+          <article className="chazen-subpage-note">
+            <h3>A settlement gift should not only say thank you.</h3>
+            <p>It should help the client remember the relationship.</p>
+            <p lang="zh-Hant">地產交收禮物不只是答謝，而是讓客戶記得這段關係。</p>
+          </article>
+          <ChazenMediaPlaceholder
+            asset="b2b-festival-gift-box.webp"
+            label="Future visual: Festival and event gift box"
+          />
+        </div>
+      </ChazenContentSection>
+
+      <ChazenContentSection
+        eyebrow="Enquiry form"
+        title="先預留清楚的查詢結構"
+        english="Enquiry Form Placeholder"
+      >
+        <div className="chazen-two-column">
+          <form id="b2b-enquiry" className="chazen-form-placeholder">
+            {/* Future integration: connect these fields to the Chazen B2B enquiry workflow. */}
+            <h3>Enquire for B2B Gift Box</h3>
+            {["Name", "Company", "Email", "Gift purpose", "Quantity"].map((field) => (
+              <label key={field}>
+                {field}
+                <input type={field === "Email" ? "email" : "text"} placeholder={field} />
+              </label>
+            ))}
+            <label>
+              Message
+              <textarea rows={4} placeholder="Tell us about the gift moment." />
+            </label>
+          </form>
+          <ChazenMediaPlaceholder
+            asset="b2b-enquiry-form.webp"
+            label="Future visual: B2B enquiry form preview"
+          />
+        </div>
+      </ChazenContentSection>
+
+      <ChazenCtaBand
+        title="查詢企業茶禮盒"
+        copy="A calm, cultural gift for clients, teams, settlement moments, and festivals."
+        primary={{ href: "/b2b#b2b-enquiry", label: "Enquire for B2B Gift Box" }}
+        secondary={{ href: "/tea-boxes", label: "Explore Tea Boxes" }}
+      />
     </main>
   );
 }

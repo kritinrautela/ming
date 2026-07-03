@@ -13,6 +13,7 @@ export const audioAssets = {
 } as const;
 
 export const videoAssets = {
+  chazenHomeHero: "/videos/chazen-home-hero.mp4",
   chazenRitualFilm: "/video/chazen-ritual-film.mp4",
   gaiwanRitual: "/video/gaiwan-ritual.mp4",
   dianCha: "/video/dian-cha.mp4",
