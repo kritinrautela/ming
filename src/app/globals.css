@@ -99,9 +99,12 @@ body:has(.chazen-motion-home) .museum-site-footer {
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 1.2rem;
   align-items: center;
-  padding: 1.25rem clamp(1rem, 3vw, 2rem);
-  color: rgba(251, 247, 239, 0.9);
+  border-bottom: 1px solid rgba(251, 247, 239, 0.12);
+  background: rgba(18, 13, 8, 0.78);
+  padding: 0.85rem clamp(1rem, 3vw, 2rem);
+  color: rgba(251, 247, 239, 0.96);
   text-shadow: 0 1px 18px rgba(18, 13, 8, 0.72);
+  backdrop-filter: blur(18px);
 }
 
 .chazen-motion-nav a {
@@ -3126,6 +3129,39 @@ a {
   border: 1px solid rgba(251, 250, 246, 0.35);
   background: #fbfaf6;
   color: #203a2b;
+}
+
+.nav-tea-test-pill {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  border: 1px solid rgba(251, 250, 246, 0.2);
+  border-radius: 999px;
+  background: #203a2b;
+  padding: 0.52rem 0.86rem;
+  color: #fbfaf6;
+  box-shadow: 0 12px 30px rgba(12, 24, 17, 0.24);
+  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.nav-tea-test-pill:hover {
+  transform: translateY(-1px);
+  background: #2d4a38;
+  box-shadow: 0 18px 38px rgba(12, 24, 17, 0.28);
+}
+
+.mobile-nav-tea-test-pill {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #203a2b;
+  padding: 0.74rem 1rem;
+  color: #fbfaf6;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-decoration: none;
 }
 
 .button-ghost {
@@ -10961,9 +10997,12 @@ body:has(.chazen-motion-home) .museum-site-footer {
   grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 1.2rem;
   align-items: center;
-  padding: 1.25rem clamp(1rem, 3vw, 2rem);
-  color: rgba(251, 247, 239, 0.9);
+  border-bottom: 1px solid rgba(251, 247, 239, 0.12);
+  background: rgba(18, 13, 8, 0.78);
+  padding: 0.85rem clamp(1rem, 3vw, 2rem);
+  color: rgba(251, 247, 239, 0.96);
   text-shadow: 0 1px 18px rgba(18, 13, 8, 0.72);
+  backdrop-filter: blur(18px);
 }
 
 .chazen-motion-logo {
@@ -11307,6 +11346,35 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .chazen-membership p {
   color: rgba(42, 39, 34, 0.68);
   line-height: 1.7;
+}
+
+.chazen-product-price,
+.chazen-price-tag {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border: 1px solid rgba(185, 130, 58, 0.34);
+  border-radius: 999px;
+  background: rgba(185, 130, 58, 0.12);
+  padding: 0.36rem 0.62rem;
+  color: var(--deep-wood);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.chazen-price-tag {
+  margin-bottom: 0.75rem;
+}
+
+.chazen-product-list {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.9rem 0 0;
+  padding-left: 1.05rem;
+  color: rgba(42, 39, 34, 0.7);
+  line-height: 1.55;
 }
 
 .chazen-scroll-spacer {
@@ -12533,6 +12601,35 @@ body:has(.chazen-motion-home) .museum-site-footer {
   text-transform: uppercase;
 }
 
+.chazen-subpage-card .chazen-price-tag {
+  display: inline-flex;
+  margin: 0 0 0.8rem;
+  color: var(--deep-wood);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.faculty-product-bridge {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(1rem, 3vw, 1.6rem);
+  align-items: stretch;
+}
+
+.five-cups-detail-note {
+  max-width: 900px;
+}
+
+.five-cups-detail-note > div {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.five-cups-detail-note > div p {
+  margin: 0;
+}
+
 .chazen-subpage-table {
   position: relative;
   z-index: 1;
@@ -12667,7 +12764,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(190px, 0.28fr) minmax(0, 1fr);
+  grid-template-columns: minmax(190px, 240px) minmax(0, 1fr);
   gap: clamp(0.85rem, 2vw, 1.4rem);
   align-items: start;
 }
@@ -12730,6 +12827,8 @@ body:has(.chazen-motion-home) .museum-site-footer {
   display: grid;
   grid-template-columns: minmax(280px, 0.45fr) minmax(0, 1fr);
   gap: clamp(1rem, 3vw, 2rem);
+  width: 100%;
+  min-width: 0;
   border: 1px solid rgba(91, 58, 36, 0.16);
   border-radius: 8px;
   background:
@@ -12738,6 +12837,10 @@ body:has(.chazen-motion-home) .museum-site-footer {
   padding: clamp(1rem, 2.4vw, 1.8rem);
   box-shadow: 0 28px 76px rgba(46, 29, 18, 0.1);
   animation: five-cups-panel-enter 260ms ease both;
+}
+
+.five-cups-panel[hidden] {
+  display: none;
 }
 
 .five-cups-panel:focus {
@@ -12987,6 +13090,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
   .chazen-subpage-hero-grid,
   .chazen-two-column,
   .chazen-subpage-cta .chazen-subpage-container,
+  .faculty-product-bridge,
   .five-cups-layout,
   .five-cups-panel,
   .five-cups-summary {

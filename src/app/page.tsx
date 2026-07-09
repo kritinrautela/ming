@@ -32,7 +32,7 @@ const teaWorlds = [
     support: "信，不是盲目相信，而是願意先停下來，相信自己仍然可以回到清明。",
     cta: "由一杯茶開始",
     ctaEnglish: "Begin With Trust",
-    href: "/five-cups"
+    href: "/five-cups/faith"
   },
   {
     key: "effort",
@@ -42,7 +42,7 @@ const teaWorlds = [
     support: "真正的精進，不是逼自己更快，而是在每一天的微小儀式裡，慢慢修正自己的節奏。",
     cta: "進入茶儀式",
     ctaEnglish: "Enter the Ritual",
-    href: "/five-cups"
+    href: "/five-cups/effort"
   },
   {
     key: "mindfulness",
@@ -52,7 +52,7 @@ const teaWorlds = [
     support: "念，是在喝茶時知道自己正在喝茶，也知道此刻的心正在往哪裡走。",
     cta: "觀察此刻心境",
     ctaEnglish: "Observe Your Tea State",
-    href: "/five-cups"
+    href: "/five-cups/mindfulness"
   },
   {
     key: "stillness",
@@ -62,7 +62,7 @@ const teaWorlds = [
     support: "定，不是沒有念頭，而是不再被每一個念頭帶走。茶湯落下，心也慢慢有了停靠之處。",
     cta: "尋找安住",
     ctaEnglish: "Find Stillness",
-    href: "/five-cups"
+    href: "/five-cups/stillness"
   },
   {
     key: "wisdom",
@@ -72,7 +72,7 @@ const teaWorlds = [
     support: "慧，不是知道更多，而是看得更清楚。當你慢下來，茶會把你真正需要的東西映照出來。",
     cta: "開始茶測試",
     ctaEnglish: "Start Tea Test",
-    href: "/five-cups"
+    href: "/five-cups/wisdom"
   }
 ];
 
@@ -117,10 +117,48 @@ const atlasCards = [
 ];
 
 const teaBoxes = [
-  ["AI Tea Test", "適合第一次接觸 Chazen 的人，幫助你了解自己現在適合咩茶。"],
-  ["Starter Tea Box", "適合想開始學中國茶文化的新手，包含入門茶款、簡單教學，可配旅行茶具。"],
-  ["Lifetime Tea Box", "適合收藏、送禮、文化禮盒，以中國傳說、人物、祝福文化為主題。"],
-  ["B2B Tea Box", "適合公司、客戶、地產 settlement gift、節日禮物，可客製化企業文化禮盒。"]
+  {
+    title: "First Pack",
+    price: "A$25",
+    copy: "A low-friction first step after the Tea Test.",
+    items: ["Curated starter tea", "Tea-Mind result card", "Simple brewing guide"]
+  },
+  {
+    title: "Starter Tea Box",
+    price: "A$68",
+    copy: "For a complete beginner Chinese tea ritual at home.",
+    items: ["Two entry tea directions", "Ritual guide", "Optional travel tea set path"]
+  },
+  {
+    title: "Lifetime Tea Box",
+    price: "A$78",
+    copy: "A story-led cultural gift with tea, ritual, and meaning.",
+    items: ["Premium tea", "Cultural story cards", "Gift-ready presentation"]
+  },
+  {
+    title: "B2B Cultural Gift Box",
+    price: "Custom",
+    copy: "For settlement gifts, clients, teams, festivals, and cultural events.",
+    items: ["Custom message", "Branding options", "Bulk gifting support"]
+  }
+];
+
+const membershipTiers = [
+  {
+    title: "Free Member",
+    price: "Free",
+    benefits: ["Included after first purchase", "Birthday tea note and offer", "Early product and journal updates"]
+  },
+  {
+    title: "Community Member",
+    price: "A$28 / month",
+    benefits: ["Monthly member offer", "WhatsApp community access", "Seasonal tea prompts and simple rituals"]
+  },
+  {
+    title: "Premium Ritual Member",
+    price: "A$38 / month",
+    benefits: ["Premium member perks", "Limited teacup gift moments", "Deeper ritual and culture content"]
+  }
 ];
 
 const journalCategories = [
@@ -527,10 +565,16 @@ export default function Home() {
         <div className="chazen-motion-container">
           <SectionHeading title="開始，或延續你的茶旅程" english="Begin or Continue Your Tea Journey" />
           <div className="chazen-box-grid">
-            {teaBoxes.map(([title, copy]) => (
-              <article key={title}>
-                <h3>{title}</h3>
-                <p lang="zh-Hant">{copy}</p>
+            {teaBoxes.map((box) => (
+              <article key={box.title}>
+                <span className="chazen-product-price">{box.price}</span>
+                <h3>{box.title}</h3>
+                <p>{box.copy}</p>
+                <ul className="chazen-product-list">
+                  {box.items.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
               </article>
             ))}
           </div>
@@ -540,17 +584,18 @@ export default function Home() {
       <section id="membership" className="chazen-motion-section">
         <div className="chazen-motion-container chazen-membership">
           <SectionHeading title="每個月，延續你的茶文化旅程" english="Continue Your Tea Journey Month by Month" />
-          {[
-            ["Free Member", "第一次購買後自動加入、生日優惠、產品更新。"],
-            ["$28/month Community Member", "每月優惠、WhatsApp community、member chat。"],
-            ["$38/month Premium Ritual Member", "限量茶杯禮物、premium member perks、更多文化內容。"]
-          ].map(([title, copy]) => (
-            <article key={title}>
-              <h3>{title}</h3>
-              <p lang="zh-Hant">{copy}</p>
+          {membershipTiers.map((tier) => (
+            <article key={tier.title}>
+              <span className="chazen-product-price">{tier.price}</span>
+              <h3>{tier.title}</h3>
+              <ul className="chazen-product-list">
+                {tier.benefits.map((benefit) => (
+                  <li key={benefit}>{benefit}</li>
+                ))}
+              </ul>
             </article>
           ))}
-          <a href="#" className="chazen-primary-btn">Explore Membership</a>
+          <a href={withBasePath("/tea-test")} className="chazen-primary-btn">Find the right tea rhythm</a>
         </div>
       </section>
 

@@ -11,7 +11,11 @@ export function Header() {
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium text-porcelain/68 lg:flex">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="transition hover:text-porcelain">
+            <Link
+              key={item.href}
+              href={item.href}
+              className={item.href === "/tea-test" ? "nav-tea-test-pill" : "transition hover:text-porcelain"}
+            >
               {item.label}
             </Link>
           ))}

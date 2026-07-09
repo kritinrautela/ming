@@ -30,7 +30,11 @@ export function MobileNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="min-h-12 px-4 py-3 text-sm font-semibold text-ink/72 transition hover:bg-paper hover:text-leaf"
+                className={
+                  item.href === "/tea-test"
+                    ? "mobile-nav-tea-test-pill"
+                    : "min-h-12 px-4 py-3 text-sm font-semibold text-ink/72 transition hover:bg-paper hover:text-leaf"
+                }
                 onClick={() => setOpen(false)}
               >
                 {item.label}

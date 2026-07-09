@@ -17,19 +17,29 @@ const journeys = [
 
 const boxCards = [
   {
+    title: "First Pack",
+    price: "A$25",
+    asset: "first-pack-mockup.webp",
+    visual: "Future visual: A$25 First Pack",
+    items: ["Curated starter tea", "Tea-Mind result card", "Simple brewing guide", "Best after the AI Tea Test"]
+  },
+  {
     title: "Starter Tea Box",
+    price: "A$68",
     asset: "starter-tea-box-mockup.webp",
     visual: "Future visual: Starter Tea Box mockup",
-    items: ["入門茶款", "簡單教學", "可配旅行茶具", "適合新手"]
+    items: ["Two entry tea directions", "Printed ritual guide", "Beginner brewing notes", "Optional travel tea set path"]
   },
   {
     title: "Lifetime Tea Box",
+    price: "A$78",
     asset: "lifetime-tea-box-mockup.webp",
     visual: "Future visual: Lifetime cultural tea box",
-    items: ["收藏式文化禮盒", "中國傳說 / 人物 / 祝福文化主題", "適合送禮、收藏、紀念"]
+    items: ["Premium tea", "Cultural story cards", "Gift-ready presentation", "For gifting, collecting, and milestones"]
   },
   {
-    title: "B2B Tea Box Preview",
+    title: "B2B Cultural Gift Box",
+    price: "Custom",
     asset: "b2b-gift-box-mockup.webp",
     visual: "Future visual: B2B settlement gift scene",
     items: ["Corporate gifts", "Client appreciation", "Real estate settlement gifts", "Custom branding"]
@@ -37,9 +47,10 @@ const boxCards = [
 ];
 
 const comparisonRows = [
-  ["Starter Tea Box", "Beginner tea journey", "First-time tea drinkers", "Tea, simple guide, optional travel set", "Warm and approachable", "Find My Tea Box"],
-  ["Lifetime Tea Box", "Cultural collection", "Gifting, collecting, milestones", "Tea, story cards, cultural theme", "High memory value", "Explore Gift Story"],
-  ["B2B Tea Box", "Relationship gifting", "Teams, clients, settlement gifts", "Custom box, message, branding", "Professional and considered", "Enquire"]
+  ["First Pack", "A$25", "Low-friction first purchase", "Tea Test users and first-time tea drinkers", "Starter tea, result card, brewing guide", "Start Tea Test"],
+  ["Starter Tea Box", "A$68", "Beginner tea journey", "Home ritual beginners", "Two tea directions, ritual guide, brewing notes", "Explore Tea Boxes"],
+  ["Lifetime Tea Box", "A$78", "Cultural collection", "Gifting, collecting, milestones", "Premium tea, story cards, cultural theme", "Explore Gift Story"],
+  ["B2B Cultural Gift Box", "Custom", "Relationship gifting", "Teams, clients, settlement gifts", "Custom box, message, branding", "Enquire"]
 ];
 
 export default function TeaBoxesPage() {
@@ -82,6 +93,7 @@ export default function TeaBoxesPage() {
           {boxCards.map((box) => (
             <article key={box.title} className="chazen-subpage-card">
               <span>{box.visual} / {box.asset}</span>
+              <strong className="chazen-price-tag">{box.price}</strong>
               <h3>{box.title}</h3>
               <ul>
                 {box.items.map((item) => (
@@ -119,7 +131,7 @@ export default function TeaBoxesPage() {
           <table>
             <thead>
               <tr>
-                {["Box", "Purpose", "Best for", "Content", "Gift value", "CTA"].map((heading) => (
+                {["Box", "Price", "Purpose", "Best for", "Content", "CTA"].map((heading) => (
                   <th key={heading}>{heading}</th>
                 ))}
               </tr>
@@ -140,8 +152,8 @@ export default function TeaBoxesPage() {
       <ChazenCtaBand
         title="找到適合你的茶盒"
         copy="Start with your state, then continue with the box that fits your rhythm."
-        primary={{ href: "/tea-boxes", label: "Find My Tea Box" }}
-        secondary={{ href: "/tea-test", label: "Start Tea Test" }}
+        primary={{ href: "/tea-test", label: "Find My Tea Box" }}
+        secondary={{ href: "/five-cups", label: "Explore Five Cups" }}
         next={{ href: "/b2b", label: "B2B Gifts" }}
       />
     </main>
