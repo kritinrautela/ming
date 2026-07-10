@@ -2200,33 +2200,26 @@ body:has(.chazen-motion-home) .museum-site-footer {
   font-size: 1rem;
 }
 
-.tea-mind-hero-inner .museum-kicker,
-.tea-mind-room .museum-kicker {
+.tea-mind-hero-inner .museum-kicker {
   color: rgba(217, 189, 134, 0.82);
 }
 
-.tea-mind-start-button,
-.tea-mind-primary-action,
-.tea-mind-result-actions a,
-.tea-mind-result-actions button {
+.tea-mind-start-button {
   display: inline-flex;
   min-height: 48px;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
+  margin-top: 2rem;
   border: 1px solid rgba(217, 189, 134, 0.48);
   border-radius: 4px;
   background: rgba(217, 189, 134, 0.14);
+  padding: 0.9rem 1.1rem;
   color: #fff7e8;
   font-weight: 800;
   text-decoration: none;
   cursor: pointer;
   transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
-}
-
-.tea-mind-start-button {
-  margin-top: 2rem;
-  padding: 0.9rem 1.1rem;
 }
 
 .tea-mind-start-button span {
@@ -2235,20 +2228,43 @@ body:has(.chazen-motion-home) .museum-site-footer {
   font-weight: 400;
 }
 
-.tea-mind-start-button:hover,
+.tea-mind-start-button:hover {
+  border-color: rgba(255, 247, 232, 0.76);
+  background: rgba(217, 189, 134, 0.24);
+  transform: translateY(-1px);
+}
+
+.tea-mind-primary-action,
+.tea-mind-result-actions a,
+.tea-mind-result-actions button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid rgba(111, 74, 50, 0.4);
+  border-radius: 4px;
+  background: rgba(111, 74, 50, 0.08);
+  color: #171713;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
 .tea-mind-primary-action:hover,
 .tea-mind-result-actions a:hover,
 .tea-mind-result-actions button:hover {
-  border-color: rgba(255, 247, 232, 0.76);
-  background: rgba(217, 189, 134, 0.24);
+  border-color: rgba(159, 63, 47, 0.6);
+  background: rgba(111, 74, 50, 0.14);
   transform: translateY(-1px);
 }
 
 .tea-mind-room {
   padding-top: clamp(3rem, 6vw, 5.5rem);
   background:
-    linear-gradient(180deg, rgba(23, 17, 13, 0.94), rgba(18, 15, 12, 1)),
-    repeating-linear-gradient(90deg, rgba(255, 247, 232, 0.022) 0 1px, transparent 1px 14px);
+    linear-gradient(180deg, rgba(251, 250, 246, 0.92), rgba(242, 234, 220, 1)),
+    repeating-linear-gradient(90deg, rgba(23, 23, 19, 0.035) 0 1px, transparent 1px 14px);
 }
 
 .tea-mind-shell {
@@ -2261,10 +2277,10 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-question-panel,
 .tea-mind-loading,
 .tea-mind-result {
-  border: 1px solid rgba(217, 189, 134, 0.2);
+  border: 1px solid rgba(111, 74, 50, 0.2);
   border-radius: 6px;
-  background: rgba(36, 27, 20, 0.74);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.26);
+  background: rgba(255, 252, 243, 0.86);
+  box-shadow: 0 24px 70px rgba(23, 23, 19, 0.1);
   backdrop-filter: blur(14px);
 }
 
@@ -2278,7 +2294,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 
 .tea-mind-progress span {
   display: block;
-  color: rgba(217, 189, 134, 0.82);
+  color: rgba(111, 74, 50, 0.82);
   font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -2288,7 +2304,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-progress strong {
   display: block;
   margin-top: 0.24rem;
-  color: #fff7e8;
+  color: #171713;
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-size: 1.55rem;
   font-weight: 400;
@@ -2297,13 +2313,13 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-progress-track {
   height: 4px;
   margin: 0;
-  border: 1px solid rgba(217, 189, 134, 0.14);
-  background: rgba(255, 247, 232, 0.08);
+  border: 1px solid rgba(111, 74, 50, 0.16);
+  background: rgba(23, 23, 19, 0.08);
 }
 
 .tea-mind-progress-track span,
 .tea-mind-score-track span {
-  background: linear-gradient(90deg, #8f6c38, #d9bd86, #fff1c6);
+  background: linear-gradient(90deg, #6f4a32, #9d8150, #d8d0c2);
   transition: width 360ms ease;
 }
 
@@ -2329,8 +2345,8 @@ body:has(.chazen-motion-home) .museum-site-footer {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(120deg, rgba(217, 189, 134, 0.06), transparent 34%),
-    linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.18));
+    linear-gradient(120deg, rgba(111, 74, 50, 0.05), transparent 34%),
+    linear-gradient(180deg, transparent, rgba(23, 23, 19, 0.05));
 }
 
 .tea-mind-intro-panel > *,
@@ -2342,7 +2358,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
   position: absolute;
   right: clamp(1rem, 7vw, 5rem);
   top: clamp(0.4rem, 4vw, 2.2rem);
-  color: rgba(217, 189, 134, 0.1);
+  color: rgba(111, 74, 50, 0.08);
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-size: clamp(10rem, 24vw, 20rem);
   line-height: 0.8;
@@ -2353,7 +2369,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-result h2 {
   max-width: 820px;
   margin: 0.75rem 0 1rem;
-  color: #fff7e8;
+  color: #171713;
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-size: 3.6rem;
   font-weight: 400;
@@ -2365,7 +2381,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-loading p,
 .tea-mind-result p {
   max-width: 760px;
-  color: rgba(255, 247, 232, 0.72);
+  color: rgba(23, 23, 19, 0.68);
   font-size: 1.06rem;
   line-height: 1.8;
 }
@@ -2379,16 +2395,16 @@ body:has(.chazen-motion-home) .museum-site-footer {
 
 .tea-mind-type-grid article {
   min-height: 154px;
-  border: 1px solid rgba(217, 189, 134, 0.18);
+  border: 1px solid rgba(111, 74, 50, 0.18);
   background:
-    linear-gradient(180deg, rgba(255, 247, 232, 0.075), rgba(255, 247, 232, 0.025)),
-    rgba(18, 13, 9, 0.26);
+    linear-gradient(180deg, rgba(255, 252, 243, 0.9), rgba(255, 252, 243, 0.6)),
+    rgba(111, 74, 50, 0.05);
   padding: 0.9rem;
 }
 
 .tea-mind-type-grid strong {
   display: block;
-  color: #d9bd86;
+  color: #6f4a32;
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-size: 3.1rem;
   font-weight: 400;
@@ -2398,14 +2414,14 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-type-grid span {
   display: block;
   margin-top: 0.6rem;
-  color: #fff7e8;
+  color: #171713;
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
 }
 
 .tea-mind-type-grid em {
   display: block;
   margin-top: 0.45rem;
-  color: rgba(255, 247, 232, 0.58);
+  color: rgba(23, 23, 19, 0.52);
   font-size: 0.78rem;
   font-style: normal;
   line-height: 1.45;
@@ -2431,7 +2447,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 
 .tea-mind-question-panel legend span {
   display: block;
-  color: rgba(217, 189, 134, 0.8);
+  color: rgba(111, 74, 50, 0.82);
   font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: 0.16em;
@@ -2442,7 +2458,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
   display: block;
   max-width: 980px;
   margin-top: 0.8rem;
-  color: #fff7e8;
+  color: #171713;
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-size: clamp(3.1rem, 5vw, 5.2rem);
   font-weight: 400;
@@ -2462,13 +2478,13 @@ body:has(.chazen-motion-home) .museum-site-footer {
   min-height: 190px;
   align-content: space-between;
   gap: 1rem;
-  border: 1px solid rgba(217, 189, 134, 0.22);
+  border: 1px solid rgba(111, 74, 50, 0.2);
   border-radius: 5px;
   background:
-    linear-gradient(180deg, rgba(255, 247, 232, 0.072), rgba(255, 247, 232, 0.028)),
-    rgba(18, 13, 9, 0.22);
+    linear-gradient(180deg, rgba(255, 252, 243, 0.88), rgba(255, 252, 243, 0.58)),
+    rgba(111, 74, 50, 0.04);
   padding: 1rem;
-  color: rgba(255, 247, 232, 0.78);
+  color: rgba(23, 23, 19, 0.72);
   text-align: left;
   cursor: pointer;
   transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
@@ -2486,30 +2502,32 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-options button:hover,
 .tea-mind-options button:focus-visible,
 .tea-mind-options button.is-selected {
-  border-color: rgba(217, 189, 134, 0.78);
-  background:
-    linear-gradient(180deg, rgba(217, 189, 134, 0.18), rgba(116, 72, 45, 0.14)),
-    rgba(18, 13, 9, 0.3);
-  color: #fff7e8;
+  border-color: rgba(159, 63, 47, 0.4);
+  background: #171713;
+  color: #fbfaf6;
   transform: translateY(-2px);
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 18px 42px rgba(23, 23, 19, 0.16);
 }
 
 .tea-mind-options button.is-selected::after {
-  border-color: rgba(255, 247, 232, 0.2);
+  border-color: rgba(251, 250, 246, 0.28);
 }
 
 .tea-mind-options button:focus-visible,
-.tea-mind-start-button:focus-visible,
 .tea-mind-primary-action:focus-visible,
 .tea-mind-result-actions a:focus-visible,
 .tea-mind-result-actions button:focus-visible {
+  outline: 2px solid rgba(159, 63, 47, 0.6);
+  outline-offset: 3px;
+}
+
+.tea-mind-start-button:focus-visible {
   outline: 2px solid rgba(217, 189, 134, 0.7);
   outline-offset: 3px;
 }
 
 .tea-mind-option-mark {
-  color: rgba(217, 189, 134, 0.88);
+  color: rgba(111, 74, 50, 0.85);
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-size: 3.4rem;
   line-height: 0.9;
@@ -2527,15 +2545,15 @@ body:has(.chazen-motion-home) .museum-site-footer {
   width: 112px;
   height: 112px;
   place-items: center;
-  border: 1px solid rgba(217, 189, 134, 0.28);
+  border: 1px solid rgba(111, 74, 50, 0.28);
   border-radius: 50%;
   background:
-    radial-gradient(ellipse at 50% 58%, rgba(217, 189, 134, 0.16), transparent 48%),
-    rgba(255, 247, 232, 0.035);
+    radial-gradient(ellipse at 50% 58%, rgba(111, 74, 50, 0.14), transparent 48%),
+    rgba(255, 252, 243, 0.6);
 }
 
 .tea-mind-loading-cup svg {
-  color: #d9bd86;
+  color: #6f4a32;
   animation: teaMindSpin 1.2s linear infinite;
 }
 
@@ -2544,15 +2562,15 @@ body:has(.chazen-motion-home) .museum-site-footer {
   bottom: 28px;
   width: 58px;
   height: 18px;
-  border: 1px solid rgba(255, 247, 232, 0.32);
+  border: 1px solid rgba(23, 23, 19, 0.18);
   border-radius: 50%;
-  background: rgba(217, 189, 134, 0.16);
+  background: rgba(111, 74, 50, 0.14);
   animation: teaMindSettle 1.6s ease-in-out infinite;
 }
 
 .tea-mind-loading > span {
   margin-top: 1rem;
-  color: rgba(217, 189, 134, 0.82);
+  color: rgba(111, 74, 50, 0.82);
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
 }
 
@@ -2565,43 +2583,43 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-result {
   position: relative;
   overflow: hidden;
-  --mind-accent: #d9bd86;
-  --mind-accent-soft: rgba(217, 189, 134, 0.18);
-  --mind-panel: rgba(255, 247, 232, 0.055);
-  --mind-shadow: rgba(0, 0, 0, 0.28);
+  --mind-accent: #6f4a32;
+  --mind-accent-soft: rgba(111, 74, 50, 0.14);
+  --mind-panel: rgba(255, 252, 243, 0.7);
+  --mind-shadow: rgba(23, 23, 19, 0.16);
   background:
     linear-gradient(125deg, var(--mind-accent-soft), transparent 34%),
-    linear-gradient(180deg, rgba(36, 27, 20, 0.86), rgba(18, 13, 9, 0.82));
+    linear-gradient(180deg, rgba(255, 252, 243, 0.92), rgba(242, 234, 220, 0.88));
 }
 
 .tea-mind-tone-an {
-  --mind-accent: #d7ad72;
-  --mind-accent-soft: rgba(116, 72, 45, 0.28);
-  --mind-panel: rgba(255, 241, 212, 0.072);
+  --mind-accent: #8a5a34;
+  --mind-accent-soft: rgba(138, 90, 52, 0.12);
+  --mind-panel: rgba(255, 246, 235, 0.55);
 }
 
 .tea-mind-tone-ding {
-  --mind-accent: #d0be78;
-  --mind-accent-soft: rgba(63, 89, 63, 0.3);
-  --mind-panel: rgba(211, 222, 184, 0.065);
+  --mind-accent: #4f6b45;
+  --mind-accent-soft: rgba(79, 107, 69, 0.12);
+  --mind-panel: rgba(244, 248, 238, 0.55);
 }
 
 .tea-mind-tone-mian {
-  --mind-accent: #efe2c4;
-  --mind-accent-soft: rgba(39, 59, 94, 0.34);
-  --mind-panel: rgba(230, 238, 250, 0.06);
+  --mind-accent: #4a5f68;
+  --mind-accent-soft: rgba(74, 95, 104, 0.1);
+  --mind-panel: rgba(240, 245, 246, 0.5);
 }
 
 .tea-mind-tone-fang {
-  --mind-accent: #e5b36a;
-  --mind-accent-soft: rgba(173, 100, 56, 0.28);
-  --mind-panel: rgba(255, 232, 189, 0.07);
+  --mind-accent: #a3652e;
+  --mind-accent-soft: rgba(163, 101, 46, 0.12);
+  --mind-panel: rgba(255, 244, 230, 0.55);
 }
 
 .tea-mind-tone-qing {
-  --mind-accent: #c8a45f;
-  --mind-accent-soft: rgba(8, 8, 8, 0.42);
-  --mind-panel: rgba(213, 183, 110, 0.06);
+  --mind-accent: #171713;
+  --mind-accent-soft: rgba(23, 23, 19, 0.08);
+  --mind-panel: rgba(250, 250, 248, 0.55);
 }
 
 .tea-mind-result-hero {
@@ -2629,7 +2647,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .tea-mind-tone-line {
-  color: color-mix(in srgb, var(--mind-accent) 76%, #fff7e8 24%) !important;
+  color: color-mix(in srgb, var(--mind-accent) 70%, #171713 30%) !important;
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-size: 0.98rem !important;
 }
@@ -2658,7 +2676,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-detail-grid article,
 .tea-mind-score-panel,
 .tea-mind-product-panel {
-  border: 1px solid rgba(217, 189, 134, 0.18);
+  border: 1px solid rgba(111, 74, 50, 0.16);
   border-radius: 5px;
   background: var(--mind-panel);
   padding: 1rem;
@@ -2682,7 +2700,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-detail-grid h4,
 .tea-mind-score-panel h4 {
   margin: 0 0 0.8rem;
-  color: #fff7e8;
+  color: #171713;
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-size: 1.18rem;
   font-weight: 400;
@@ -2694,7 +2712,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
   gap: 0.48rem;
   margin: 0;
   padding-left: 1rem;
-  color: rgba(255, 247, 232, 0.72);
+  color: rgba(23, 23, 19, 0.68);
   line-height: 1.55;
 }
 
@@ -2713,11 +2731,11 @@ body:has(.chazen-motion-home) .museum-site-footer {
   grid-template-columns: minmax(150px, 210px) minmax(0, 1fr) 2.4rem;
   gap: 0.8rem;
   align-items: center;
-  color: rgba(255, 247, 232, 0.78);
+  color: rgba(23, 23, 19, 0.7);
 }
 
 .tea-mind-score-row > span {
-  color: rgba(255, 247, 232, 0.82);
+  color: rgba(23, 23, 19, 0.6);
   font-size: 0.86rem;
 }
 
@@ -2729,11 +2747,11 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-score-track {
   height: 9px;
   overflow: hidden;
-  border: 1px solid rgba(255, 247, 232, 0.08);
+  border: 1px solid rgba(23, 23, 19, 0.1);
   border-radius: 0;
   background:
-    repeating-linear-gradient(90deg, rgba(255, 247, 232, 0.09) 0 1px, transparent 1px 12px),
-    rgba(255, 247, 232, 0.065);
+    repeating-linear-gradient(90deg, rgba(23, 23, 19, 0.06) 0 1px, transparent 1px 12px),
+    rgba(23, 23, 19, 0.05);
 }
 
 .tea-mind-score-track span {
@@ -2753,7 +2771,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-product-panel strong {
   display: block;
   margin-top: 0.2rem;
-  color: #fff7e8;
+  color: #171713;
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-size: 2rem;
   font-weight: 400;
@@ -2762,7 +2780,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-product-panel p {
   max-width: 620px;
   margin: 0.55rem 0 0;
-  color: rgba(255, 247, 232, 0.68);
+  color: rgba(23, 23, 19, 0.62);
 }
 
 .tea-mind-result-actions {
