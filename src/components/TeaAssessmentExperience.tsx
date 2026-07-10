@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import { ArrowRight, Check, Download, Loader2, Lock, RotateCcw } from "lucide-react";
 import { buildInquiryPath } from "@/lib/inquiry";
 
@@ -12,7 +12,14 @@ import { buildInquiryPath } from "@/lib/inquiry";
 const UNLOCK_CHECKOUT_URL = "";
 const UNLOCK_STORAGE_KEY = "chazen-tea-mind-report-unlocked";
 
-type ResultKey = "an" | "ding" | "mian" | "fang" | "qing";
+// Set this to a real form endpoint (Formspree, or any service that accepts a
+// plain POST) once one is set up, and this actually starts building an email
+// list. Until then, the email step still gates the result — it just doesn't
+// save the address anywhere.
+const EMAIL_CAPTURE_ENDPOINT = "";
+const EMAIL_STORAGE_KEY = "chazen-tea-mind-email-captured";
+
+type ResultKey = "qixu" | "yinxu" | "qiyu" | "tanshi";
 
 type AssessmentOption = {
   label: string;
@@ -29,6 +36,7 @@ type ResultProfile = {
   key: ResultKey;
   character: string;
   chineseName: string;
+  pinyin: string;
   englishName: string;
   need: string;
   quickRead: string;
@@ -43,198 +51,178 @@ type ResultProfile = {
   product: string;
 };
 
-const resultOrder: ResultKey[] = ["an", "ding", "mian", "fang", "qing"];
+// Inspired by simplified Traditional Chinese Medicine body-constitution
+// patterns (體質). Framed for reflection and lifestyle inspiration, not
+// medical diagnosis — see the disclaimer shown alongside every result.
+const resultOrder: ResultKey[] = ["qixu", "yinxu", "qiyu", "tanshi"];
 
 const resultProfiles: Record<ResultKey, ResultProfile> = {
-  an: {
-    key: "an",
-    character: "安",
-    chineseName: "歸心者",
-    englishName: "The Grounded One",
-    need: "Grounding, safety, return to self.",
-    quickRead: "You look fine outside, but you're quietly carrying more than you're saying.",
+  qixu: {
+    key: "qixu",
+    character: "虛",
+    chineseName: "氣虛",
+    pinyin: "qì xū",
+    englishName: "Running Low",
+    need: "Rebuilding energy, gently.",
+    quickRead: "You're not lazy — you're running on a reserve tank.",
     interpretation:
-      "You may not be lost; you may simply be carrying too many external voices at once. 安 appears when your inner rhythm is asking for warmth, steadiness, and a place to come home to. A mellow, grounded tea can become a small daily threshold back to yourself.",
-    teaFeeling: "Warm brown, ivory, grounding, ripe pu-erh feeling.",
+      "In traditional Chinese wellness terms, this pattern is close to 氣虛 (qì xū), or qi deficiency — when the body's working energy runs low and even ordinary things start to feel effortful. This isn't a diagnosis; it's a familiar pattern for anyone stretched thin for too long. A warming, easily-digested tea can help rebuild reserves rather than spend more of what's left.",
+    teaFeeling: "Warm brown, soft steam, an easy first sip.",
     currentState:
-      "You may feel emotionally unsettled, overwhelmed, or slightly disconnected from your own centre.",
-    strengths: ["Sensitive to atmosphere", "Thoughtful with others", "Able to notice quiet inner changes"],
-    watchOuts: ["Absorbing too many external voices", "Holding worry silently", "Forgetting your own pace"],
-    teas: ["Ripe pu-erh", "Aged white tea", "Roasted oolong", "Chenpi white tea"],
-    ritualName: "Three-Sip Grounding Ritual",
+      "You may tire more easily than usual, catch colds more often, or feel your motivation thinning by late afternoon.",
+    strengths: ["Deeply attuned to your own limits", "Careful and considered rather than reckless", "Good at conserving what matters, once you notice the pattern"],
+    watchOuts: ["Pushing through tiredness instead of resting early", "Skipping meals when busy, which drains reserves further", "Mistaking rest for laziness"],
+    teas: ["Roasted oolong", "Aged white tea", "Ripe pu-erh", "Red date and longan blend"],
+    ritualName: "Rebuild Ritual",
     ritualSteps: [
-      "First sip: feel the warmth of the cup.",
-      "Second sip: notice the texture of the tea.",
-      "Third sip: ask yourself, \"What do I truly need right now?\""
+      "Warm the cup before pouring — let your hands feel it first.",
+      "Drink slowly, in a seated, unhurried posture.",
+      "After the last sip, name one thing you'll do less of today."
     ],
     product: "Starter Tea Box"
   },
-  ding: {
-    key: "ding",
-    character: "定",
-    chineseName: "修行者",
-    englishName: "The Focused One",
-    need: "Focus, rhythm, steady attention.",
-    quickRead: "Your mind is holding too many tabs open at once.",
+  yinxu: {
+    key: "yinxu",
+    character: "陰",
+    chineseName: "陰虛",
+    pinyin: "yīn xū",
+    englishName: "Tired but Wired",
+    need: "Cooling down a mind that won't switch off.",
+    quickRead: "Your body's tired, but nobody told your mind to stop.",
     interpretation:
-      "You do not need more stimulation; you need a rhythm that lets attention gather again. 定 appears when your mind wants fewer interruptions and a clearer beginning. A clean, fragrant tea can become a daily practice for focus, composure, and steady return.",
-    teaFeeling: "Deep green, clean gold, focused, high mountain oolong feeling.",
+      "This pattern is close to what's traditionally called 陰虛 (yīn xū), or yin deficiency — a kind of depleted restlessness, where the body wants rest but runs a little hot and wired instead of settling. It often shows up as difficulty winding down at night even when you're exhausted. A cooling, low-caffeine tea can support the transition into rest instead of fighting it.",
+    teaFeeling: "Pale gold, cool steam, a quiet aftertaste.",
     currentState:
-      "Your mind may be carrying many tabs at once, with attention pulled between tasks, messages, and expectations.",
-    strengths: ["Disciplined when rhythm is clear", "Goal-oriented", "Able to turn small habits into practice"],
-    watchOuts: ["Mistaking stimulation for focus", "Over-planning instead of beginning", "Letting urgency set the pace"],
-    teas: ["High mountain oolong", "Light tieguanyin", "Longjing", "Green tea"],
-    ritualName: "One-Cup Focus Ritual",
+      "You may feel warm or restless in the evening, wake up during the night, or notice your thoughts speeding up right when your body wants to slow down.",
+    strengths: ["Responsible and rarely lets things drop", "Sensitive to your own internal signals, even if you override them", "Capable of real stillness once you actually arrive there"],
+    watchOuts: ["Scrolling through the transition into night instead of winding down", "Caffeine or stimulation too late in the day", "Treating rest as another thing to optimize"],
+    teas: ["White tea", "Aged white tea", "Low-caffeine herbal blend", "Chrysanthemum white tea"],
+    ritualName: "Evening Cooling Ritual",
     ritualSteps: [
-      "For three minutes, do only one thing: drink tea.",
-      "No phone, no messages, no multitasking.",
-      "Notice colour, aroma, temperature, and aftertaste."
-    ],
-    product: "Focus Tea Set"
-  },
-  mian: {
-    key: "mian",
-    character: "眠",
-    chineseName: "養息者",
-    englishName: "The Rested One",
-    need: "Rest, softness, evening rhythm.",
-    quickRead: "Your body's tired, but your mind hasn't been given permission to slow down yet.",
-    interpretation:
-      "Your body may already be tired, but your mind may not have received permission to slow down. 眠 appears when the day needs a softer closing gesture. A gentle tea ritual can support wind-down by marking the boundary between doing and resting.",
-    teaFeeling: "Deep blue, warm white, soft evening feeling.",
-    currentState:
-      "You may feel tired or overstimulated at night, with your body asking for softness while the mind keeps moving.",
-    strengths: ["Responsible", "Attuned to subtle comfort", "Able to build rituals that protect your energy"],
-    watchOuts: ["Turning rest into another task", "Scrolling through the transition into night", "Choosing intensity when softness is needed"],
-    teas: ["White tea", "Aged white tea", "Ripe pu-erh", "Low-caffeine herbal blend", "Chenpi white tea"],
-    ritualName: "Evening Wind-Down Ritual",
-    ritualSteps: [
-      "Thirty to sixty minutes before sleep, put your phone aside.",
-      "Prepare a gentle tea.",
-      "Smell slowly, breathe slowly, and let the day close."
+      "Thirty minutes before bed, put the phone in another room.",
+      "Prepare a low-caffeine or herbal tea.",
+      "Drink slowly in dim light, and let your exhale get longer than your inhale."
     ],
     product: "Evening Calm Tea Box"
   },
-  fang: {
-    key: "fang",
-    character: "放",
-    chineseName: "舒展者",
-    englishName: "The Releasing One",
-    need: "Release, openness, emotional movement.",
-    quickRead: "You're still functioning well, but your body is holding tension you haven't let go of.",
+  qiyu: {
+    key: "qiyu",
+    character: "鬱",
+    chineseName: "氣鬱",
+    pinyin: "qì yù",
+    englishName: "Held Tension",
+    need: "Releasing what's being held instead of said.",
+    quickRead: "You're still functioning well — but your body's been holding tension your schedule hasn't had room for.",
     interpretation:
-      "You may have been holding more than you realise, even while moving through life well. 放 appears when the body and emotions want room to loosen, breathe, and move again. A floral, aromatic tea can support relaxation by making release feel natural rather than forced.",
-    teaFeeling: "Soft amber, floral, breathable, relaxed feeling.",
+      "This pattern echoes 氣鬱 (qì yù), or qi stagnation — where emotional or physical tension gets held rather than moved through, often while you're still outwardly coping fine. It can show up as tightness in the chest or shoulders, a shorter temper, or a sigh you don't notice you're making. A floral, aromatic tea can support release by making it feel natural rather than forced.",
+    teaFeeling: "Soft amber, floral lift, an open exhale.",
     currentState:
-      "You may be carrying tension in the body or emotion, even when you are still functioning well on the outside.",
-    strengths: ["Expressive", "Creative", "Able to sense what wants to move"],
-    watchOuts: ["Holding pressure until it sharpens", "Confusing release with escape", "Forgetting the body while managing the mind"],
-    teas: ["Floral oolong", "Phoenix dancong", "Jasmine green tea", "Light white tea", "Osmanthus oolong"],
+      "You may notice tension in your shoulders or jaw, feel more irritable than usual, or catch yourself sighing without meaning to.",
+    strengths: ["Expressive once given the room", "Sensitive to what needs to shift, even before you can name it", "Able to move tension out through the body, not just the mind"],
+    watchOuts: ["Holding pressure until it sharpens into irritation", "Skipping movement or fresh air when busy", "Trying to think your way through what the body needs to release"],
+    teas: ["Jasmine green tea", "Phoenix dancong", "Floral oolong", "Osmanthus oolong"],
     ritualName: "Breathe and Release Ritual",
     ritualSteps: [
-      "Inhale with the aroma.",
-      "Exhale after each sip.",
-      "Relax your shoulders, jaw, and hands.",
-      "Silently say, \"I do not need to solve everything right now.\""
+      "Inhale slowly with the aroma before the first sip.",
+      "Exhale fully after each sip — longer than the inhale.",
+      "Roll your shoulders back once, and let your jaw unclench."
     ],
     product: "Relaxation Tea Ritual Box"
   },
-  qing: {
-    key: "qing",
-    character: "清",
-    chineseName: "觀照者",
-    englishName: "The Clear One",
-    need: "Clarity, self-understanding, inner direction.",
-    quickRead: "You're not lost — you're just due for a clearer view.",
+  tanshi: {
+    key: "tanshi",
+    character: "濕",
+    chineseName: "痰濕",
+    pinyin: "tán shī",
+    englishName: "Foggy & Heavy",
+    need: "Clearing fog, lifting weight.",
+    quickRead: "Nothing's technically wrong — you're just moving through fog today.",
     interpretation:
-      "You may not need more noise, advice, or answers right now. 清 appears when your inner world is asking for a quieter vantage point, so meaning can settle into view. Tea is not the answer itself; it is a mirror that helps reveal what truly matters.",
-    teaFeeling: "Ink black, antique gold, mountain stone, cultural depth.",
+      "This pattern is close to 痰濕 (tán shī), sometimes translated as dampness — a heavy, sluggish quality where the body and mind feel weighed down and motivation is hard to locate. It's common after too many disrupted routines or too little movement. A bright, clean tea can help cut through the fog rather than add to the heaviness.",
+    teaFeeling: "Bright green, clean lift, a light finish.",
     currentState:
-      "You may feel mentally cloudy, reflective, or quietly aware that your next direction deserves more space.",
-    strengths: ["Insightful", "Reflective", "Drawn to meaning, story, and depth"],
-    watchOuts: ["Thinking so deeply that movement pauses", "Searching for perfect certainty", "Letting ambiguity become heaviness"],
-    teas: ["Raw pu-erh", "Yancha", "Aged tea", "Collectible oolong", "Cultural story tea"],
-    ritualName: "Two-Cup Reflection Ritual",
+      "You may feel physically heavy, mentally cloudy, or find it hard to start things even when you have the time.",
+    strengths: ["Steady and low-drama under the surface", "Good at noticing when something needs to change, even if starting is hard", "Capable of real clarity once the fog lifts"],
+    watchOuts: ["Staying still when movement is what would actually help", "Heavy meals or screens instead of fresh air", "Waiting to feel motivated before starting anything"],
+    teas: ["High mountain oolong", "Longjing", "Raw pu-erh", "Green tea"],
+    ritualName: "Clear the Fog Ritual",
     ritualSteps: [
-      "After the first cup, write: \"What do I need to let go of?\"",
-      "After the second cup, write: \"What direction do I truly want to move toward?\""
+      "Open a window or step outside before your first sip.",
+      "Drink standing or walking, not sitting still.",
+      "Notice one small thing you can start today — not finish, just start."
     ],
-    product: "Lifetime Tea Box"
+    product: "Focus Tea Set"
   }
 };
 
-// Free quick-read: 6 present-moment questions on energy and tension, scored
-// into the same five Tea-Mind rhythms used by the full (unlocked) report.
+// Free quick-read: 6 plain body-signal questions (energy, temperature,
+// sleep, stress response, digestion, and today's need), scored into four
+// simplified TCM-inspired patterns. Deliberately not poetic or mystical —
+// these read like a short wellness check-in, not a personality quiz.
 const questions: AssessmentQuestion[] = [
   {
     id: "energy",
-    question: "Right now, my energy feels...",
+    question: "How's your energy level most days lately?",
     options: [
-      { label: "Heavy, like I'm quietly carrying too much", result: "an" },
-      { label: "Scattered, too many tabs open", result: "ding" },
-      { label: "Tired, but I can't fully wind down", result: "mian" },
-      { label: "Tense, wound up in my body", result: "fang" },
-      { label: "Foggy, like something needs thinking through", result: "qing" }
+      { label: "Low — I tire quickly", result: "qixu" },
+      { label: "Fine in the day, but I can't wind down at night", result: "yinxu" },
+      { label: "Okay, but I feel tight or on edge", result: "qiyu" },
+      { label: "Sluggish and foggy — hard to get going", result: "tanshi" }
     ]
   },
   {
-    id: "forecast",
-    question: "If today had a weather forecast, it'd be...",
+    id: "temperature",
+    question: "Do you run hot or cold?",
     options: [
-      { label: "Overcast and unsettled", result: "an" },
-      { label: "Fast-moving, lots happening", result: "ding" },
-      { label: "Late and heavy, evening fog", result: "mian" },
-      { label: "Pressure building, storm coming", result: "fang" },
-      { label: "Hazy, waiting to clear", result: "qing" }
+      { label: "I get cold easily, especially hands and feet", result: "qixu" },
+      { label: "I run warm at night and sleep restlessly", result: "yinxu" },
+      { label: "Depends on my stress levels that day", result: "qiyu" },
+      { label: "Neither — I feel heavy and damp more than hot or cold", result: "tanshi" }
     ]
   },
   {
-    id: "body",
-    question: "Right now, your body is asking for...",
+    id: "sleep",
+    question: "How's your sleep been?",
     options: [
-      { label: "A place to feel steady", result: "an" },
-      { label: "A clean, focused start", result: "ding" },
-      { label: "Permission to slow down", result: "mian" },
-      { label: "Room to breathe and let go", result: "fang" },
-      { label: "Quiet, to think clearly", result: "qing" }
+      { label: "I fall asleep fine but wake up tired", result: "qixu" },
+      { label: "Hard to switch my mind off at night", result: "yinxu" },
+      { label: "I lie there thinking about everything I'm holding onto", result: "qiyu" },
+      { label: "I sleep plenty but never feel rested", result: "tanshi" }
     ]
   },
   {
-    id: "stress",
-    question: "When stress shows up, you tend to...",
+    id: "stress-response",
+    question: "When you're stressed, what happens in your body?",
     options: [
-      { label: "Keep it inside, quietly", result: "an" },
-      { label: "Try to plan and solve it fast", result: "ding" },
-      { label: "Feel tired and want to escape", result: "mian" },
-      { label: "Feel it rise in your body", result: "fang" },
-      { label: "Start thinking about the deeper reason", result: "qing" }
+      { label: "I just feel drained, like I have nothing left", result: "qixu" },
+      { label: "I feel wired and restless, can't settle", result: "yinxu" },
+      { label: "Tightness in my chest or shoulders, sometimes a sigh", result: "qiyu" },
+      { label: "I want to shut down and do nothing", result: "tanshi" }
     ]
   },
   {
-    id: "help",
-    question: "What would help you most right now?",
+    id: "digestion",
+    question: "How's your appetite and digestion lately?",
     options: [
-      { label: "Feeling grounded again", result: "an" },
-      { label: "A clear, steady rhythm", result: "ding" },
-      { label: "Real rest", result: "mian" },
-      { label: "Releasing tension", result: "fang" },
-      { label: "Understanding your next step", result: "qing" }
+      { label: "Small appetite, low energy after eating", result: "qixu" },
+      { label: "Fine, but I get thirsty and crave cool drinks", result: "yinxu" },
+      { label: "Comes and goes with my stress levels", result: "qiyu" },
+      { label: "Heavy and bloated after meals", result: "tanshi" }
     ]
   },
   {
-    id: "tea-mood",
-    question: "Which tea mood pulls you in tonight?",
+    id: "today-needs",
+    question: "What does today actually need from you?",
     options: [
-      { label: "Warm, mellow, grounding", result: "an" },
-      { label: "Clean, bright, alert", result: "ding" },
-      { label: "Soft, gentle, low-key", result: "mian" },
-      { label: "Floral, open, easy", result: "fang" },
-      { label: "Deep, layered, contemplative", result: "qing" }
+      { label: "Permission to rest without guilt", result: "qixu" },
+      { label: "A way to actually switch off", result: "yinxu" },
+      { label: "Somewhere to put this tension", result: "qiyu" },
+      { label: "A clear head and a reason to move", result: "tanshi" }
     ]
   }
 ];
 
-type QuizPhase = "intro" | "question" | "loading" | "result";
+type QuizPhase = "intro" | "question" | "loading" | "email" | "result";
 
 type QuizResult = {
   scores: Record<ResultKey, number>;
@@ -264,7 +252,7 @@ function calculateResult(answers: ResultKey[]): QuizResult {
 }
 
 function formatProfileName(profile: ResultProfile) {
-  return `${profile.character} | ${profile.chineseName} | ${profile.englishName}`;
+  return `${profile.chineseName} (${profile.pinyin}) | ${profile.englishName}`;
 }
 
 export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
@@ -273,9 +261,20 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
   const [answers, setAnswers] = useState<ResultKey[]>([]);
   const [saveState, setSaveState] = useState<"idle" | "saved">("idle");
   const [unlocked, setUnlocked] = useState(false);
+  const [emailCaptured, setEmailCaptured] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const currentQuestion = questions[currentIndex];
   const progress = phase === "intro" ? 0 : Math.min((answers.length / questions.length) * 100, 100);
   const result = useMemo(() => calculateResult(answers), [answers]);
+
+  useEffect(() => {
+    try {
+      setEmailCaptured(window.localStorage.getItem(EMAIL_STORAGE_KEY) === "true");
+    } catch {
+      // Private browsing or storage disabled: default to not-yet-captured.
+    }
+  }, []);
 
   useEffect(() => {
     if (phase !== "loading") {
@@ -283,11 +282,46 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
     }
 
     const loadingTimer = window.setTimeout(() => {
-      setPhase("result");
+      // Returning visitors who already gave an email skip straight to the result.
+      setPhase(emailCaptured ? "result" : "email");
     }, 1200);
 
     return () => window.clearTimeout(loadingTimer);
-  }, [phase]);
+  }, [phase, emailCaptured]);
+
+  async function handleEmailSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const trimmed = email.trim();
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
+
+    if (!isValid) {
+      setEmailError("Enter a valid email to see your reading.");
+      return;
+    }
+
+    setEmailError("");
+
+    if (EMAIL_CAPTURE_ENDPOINT) {
+      try {
+        await fetch(EMAIL_CAPTURE_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: trimmed, source: "Chazen wellness check-in" })
+        });
+      } catch {
+        // Don't block the result if the capture request fails.
+      }
+    }
+
+    try {
+      window.localStorage.setItem(EMAIL_STORAGE_KEY, "true");
+    } catch {
+      // Private browsing or storage disabled: the gate still passes this session.
+    }
+
+    setEmailCaptured(true);
+    setPhase("result");
+  }
 
   // A visitor is "unlocked" if they've paid before (flagged in localStorage)
   // or if they've just returned from checkout with ?unlocked=true in the URL
@@ -418,8 +452,9 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
           <p className="museum-kicker">Chazen AI Tea Test / 茶心測試</p>
           <h1 id="assessment-title">How are you, right now?</h1>
           <p>
-            Six quick questions on your energy and tension today. Free instantly: which of 安, 定, 眠, 放, or 清
-            you're closest to, and the tea suited to tonight. Unlock the full Tea-Mind report for the rest.
+            Six plain questions about your energy, sleep, and tension today — inspired by traditional Chinese
+            wellness patterns, not a personality quiz. Free instantly: your pattern and the tea suited to
+            tonight. Unlock the full report for the rest.
           </p>
           <div className="tea-mind-character-rail" aria-label="Tea-Mind result types">
             {resultOrder.map((key) => (
@@ -430,7 +465,8 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
             ))}
           </div>
           <p className="tea-mind-disclaimer">
-            This is not a fixed personality label. It reflects your current inner rhythm.
+            Inspired by traditional Chinese wellness philosophy, for reflection and lifestyle inspiration —
+            not a medical diagnosis.
           </p>
           <div className="assessment-hero-meta">
             <span>6 Questions · 2 Minutes</span>
@@ -452,13 +488,15 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
               <strong>
                 {phase === "result"
                   ? "Result revealed"
-                  : phase === "loading"
-                    ? "Reading your rhythm"
-                    : "Tea-Mind Assessment"}
+                  : phase === "email"
+                    ? "Almost there"
+                    : phase === "loading"
+                      ? "Reading your pattern"
+                      : "Wellness Check-In"}
               </strong>
             </div>
             <div className="assessment-progress-track tea-mind-progress-track" aria-hidden="true">
-              <span style={{ width: `${phase === "result" ? 100 : progress}%` }} />
+              <span style={{ width: `${phase === "result" || phase === "email" ? 100 : progress}%` }} />
             </div>
           </div>
 
@@ -468,14 +506,15 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                 茶
               </div>
               <p className="museum-kicker">A quiet check-in, not a quick quiz</p>
-              <h2>Begin with the rhythm you are living in today.</h2>
+              <h2>Begin with how your body feels today.</h2>
               <p>
-                Six questions, about two minutes. This test listens for five Tea-Mind rhythms: 安 for
-                grounding, 定 for focus, 眠 for wind-down, 放 for release, and 清 for clarity. You'll get
-                your rhythm and a tea suited to tonight for free — unlock the full report for strengths,
+                Six plain questions on energy, sleep, and tension — no poetry, just how you actually feel.
+                Your answers map to a simplified pattern from traditional Chinese wellness philosophy:{" "}
+                氣虛 running low, 陰虛 tired but wired, 氣鬱 held tension, or 痰濕 foggy and heavy. You'll get
+                your pattern and a tea suited to tonight for free — unlock the full report for strengths,
                 watch-outs, and a personal ritual.
               </p>
-              <div className="tea-mind-type-grid" aria-label="Five Tea-Mind personalities">
+              <div className="tea-mind-type-grid" aria-label="Four wellness patterns">
                 {resultOrder.map((key) => (
                   <article key={key}>
                     <strong>{resultProfiles[key].character}</strong>
@@ -523,9 +562,47 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                 <Loader2 size={28} />
                 <span />
               </div>
-              <span lang="zh-Hant">茶湯漸定，你的茶心人格正在浮現。</span>
-              <h2>Preparing your tea reading...</h2>
-              <p>The tea is settling. Your result is taking shape.</p>
+              <span lang="zh-Hant">茶湯漸定，你的結果正在浮現。</span>
+              <h2>Reading your pattern...</h2>
+              <p>Almost there.</p>
+            </section>
+          )}
+
+          {phase === "email" && (
+            <section className="tea-mind-email-gate" aria-label="Email to reveal your result">
+              <p className="museum-kicker">One last thing</p>
+              <h2>Where should we send your reading?</h2>
+              <p>
+                Your pattern is ready. Leave your email to reveal it — we'll also use it to send tea notes
+                and the occasional offer. No spam, unsubscribe any time.
+              </p>
+              <form onSubmit={handleEmailSubmit} className="tea-mind-email-form" noValidate>
+                <label htmlFor="tea-mind-email">
+                  Email
+                  <input
+                    id="tea-mind-email"
+                    type="email"
+                    value={email}
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    aria-invalid={Boolean(emailError)}
+                    aria-describedby={emailError ? "tea-mind-email-error" : undefined}
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                      if (emailError) setEmailError("");
+                    }}
+                  />
+                </label>
+                {emailError && (
+                  <span id="tea-mind-email-error" className="tea-mind-email-error">
+                    {emailError}
+                  </span>
+                )}
+                <button type="submit" className="tea-mind-primary-action">
+                  Reveal my reading
+                  <ArrowRight size={16} aria-hidden="true" />
+                </button>
+              </form>
             </section>
           )}
 
@@ -538,7 +615,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                 <div>
                   <p className="museum-kicker">Your quick read &middot; free</p>
                   <h2>
-                    {result.primary.character}｜{result.primary.chineseName}
+                    {result.primary.chineseName} <small>({result.primary.pinyin})</small>
                   </h2>
                   <h3>{result.primary.englishName}</h3>
                   <p>{result.primary.quickRead}</p>
@@ -557,9 +634,9 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
 
                   {result.blended && (
                     <p className="tea-mind-blend-note">
-                      Your result shows a blended Tea-Mind profile. Your primary rhythm is{" "}
-                      {result.primary.character}｜{result.primary.chineseName}, but{" "}
-                      {result.secondary.character}｜{result.secondary.chineseName} is also strongly present.
+                      Your result shows a blended pattern. Your primary reading is {result.primary.chineseName}{" "}
+                      ({result.primary.pinyin}), but {result.secondary.chineseName} ({result.secondary.pinyin})
+                      is also strongly present.
                     </p>
                   )}
 
@@ -681,6 +758,20 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                   </button>
                 </div>
               </div>
+
+              {unlocked && (
+                <div className="tea-mind-membership-upsell">
+                  <div>
+                    <span>Keep your rhythm going</span>
+                    <strong>Chazen Membership</strong>
+                    <p>Monthly tea prompts and rituals matched to how you're doing, not just a one-off box.</p>
+                  </div>
+                  <a href={routeHref("/#membership")}>
+                    See membership options
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </a>
+                </div>
+              )}
             </section>
           )}
         </div>

@@ -2592,34 +2592,28 @@ body:has(.chazen-motion-home) .museum-site-footer {
     linear-gradient(180deg, rgba(255, 252, 243, 0.92), rgba(242, 234, 220, 0.88));
 }
 
-.tea-mind-tone-an {
+.tea-mind-tone-qixu {
   --mind-accent: #8a5a34;
   --mind-accent-soft: rgba(138, 90, 52, 0.12);
   --mind-panel: rgba(255, 246, 235, 0.55);
 }
 
-.tea-mind-tone-ding {
-  --mind-accent: #4f6b45;
-  --mind-accent-soft: rgba(79, 107, 69, 0.12);
-  --mind-panel: rgba(244, 248, 238, 0.55);
-}
-
-.tea-mind-tone-mian {
+.tea-mind-tone-yinxu {
   --mind-accent: #4a5f68;
   --mind-accent-soft: rgba(74, 95, 104, 0.1);
   --mind-panel: rgba(240, 245, 246, 0.5);
 }
 
-.tea-mind-tone-fang {
+.tea-mind-tone-qiyu {
   --mind-accent: #a3652e;
   --mind-accent-soft: rgba(163, 101, 46, 0.12);
   --mind-panel: rgba(255, 244, 230, 0.55);
 }
 
-.tea-mind-tone-qing {
-  --mind-accent: #171713;
-  --mind-accent-soft: rgba(23, 23, 19, 0.08);
-  --mind-panel: rgba(250, 250, 248, 0.55);
+.tea-mind-tone-tanshi {
+  --mind-accent: #4f6b45;
+  --mind-accent-soft: rgba(79, 107, 69, 0.12);
+  --mind-panel: rgba(244, 248, 238, 0.55);
 }
 
 .tea-mind-result-hero {
@@ -2780,6 +2774,135 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .tea-mind-unlock-button:hover {
   background: #8a3627;
   transform: translateY(-1px);
+}
+
+.tea-mind-result-hero h2 small {
+  color: rgba(23, 23, 19, 0.48);
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-size: 0.42em;
+  font-weight: 400;
+}
+
+.tea-mind-email-gate {
+  display: grid;
+  justify-items: start;
+  gap: 0.6rem;
+  max-width: 480px;
+}
+
+.tea-mind-email-gate h2 {
+  margin: 0.4rem 0 0.2rem;
+  color: #171713;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.tea-mind-email-gate > p {
+  color: rgba(23, 23, 19, 0.68);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.tea-mind-email-form {
+  display: grid;
+  gap: 0.7rem;
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
+.tea-mind-email-form label {
+  display: grid;
+  gap: 0.4rem;
+  color: rgba(111, 74, 50, 0.82);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tea-mind-email-form input {
+  border: 1px solid rgba(111, 74, 50, 0.28);
+  border-radius: 5px;
+  background: rgba(255, 252, 243, 0.8);
+  padding: 0.78rem 0.9rem;
+  color: #171713;
+  font-size: 0.98rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.tea-mind-email-form input:focus-visible {
+  outline: 2px solid rgba(159, 63, 47, 0.6);
+  outline-offset: 1px;
+}
+
+.tea-mind-email-error {
+  color: #9f3f2f;
+  font-size: 0.82rem;
+}
+
+.tea-mind-email-form .tea-mind-primary-action {
+  width: fit-content;
+}
+
+.tea-mind-membership-upsell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.9rem;
+  border: 1px solid rgba(111, 74, 50, 0.16);
+  border-radius: 6px;
+  background: rgba(242, 234, 220, 0.5);
+  padding: 1rem 1.1rem;
+}
+
+.tea-mind-membership-upsell span {
+  display: block;
+  color: rgba(111, 74, 50, 0.82);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tea-mind-membership-upsell strong {
+  display: block;
+  margin-top: 0.2rem;
+  color: #171713;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.tea-mind-membership-upsell p {
+  margin: 0.3rem 0 0;
+  color: rgba(23, 23, 19, 0.62);
+  font-size: 0.88rem;
+  max-width: 380px;
+}
+
+.tea-mind-membership-upsell a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(111, 74, 50, 0.4);
+  border-radius: 5px;
+  padding: 0.68rem 1rem;
+  color: #171713;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 180ms ease;
+}
+
+.tea-mind-membership-upsell a:hover {
+  background: rgba(111, 74, 50, 0.1);
 }
 
 .tea-mind-result-grid,
