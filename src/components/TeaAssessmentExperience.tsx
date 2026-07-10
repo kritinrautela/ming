@@ -2,8 +2,15 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Check, Download, Loader2, RotateCcw } from "lucide-react";
+import { ArrowRight, Check, Download, Loader2, Lock, RotateCcw } from "lucide-react";
 import { buildInquiryPath } from "@/lib/inquiry";
+
+// Set this once the Chazen Shopify store is connected: the checkout URL for
+// the First Pack (A$25) product, which is what unlocking the full Tea-Mind
+// report is bundled with. Until it's set, the unlock button falls back to
+// the same email-inquiry flow already used elsewhere on the site.
+const UNLOCK_CHECKOUT_URL = "";
+const UNLOCK_STORAGE_KEY = "chazen-tea-mind-report-unlocked";
 
 type ResultKey = "an" | "ding" | "mian" | "fang" | "qing";
 
@@ -24,6 +31,7 @@ type ResultProfile = {
   chineseName: string;
   englishName: string;
   need: string;
+  quickRead: string;
   interpretation: string;
   teaFeeling: string;
   currentState: string;
@@ -44,6 +52,7 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     chineseName: "歸心者",
     englishName: "The Grounded One",
     need: "Grounding, safety, return to self.",
+    quickRead: "You look fine outside, but you're quietly carrying more than you're saying.",
     interpretation:
       "You may not be lost; you may simply be carrying too many external voices at once. 安 appears when your inner rhythm is asking for warmth, steadiness, and a place to come home to. A mellow, grounded tea can become a small daily threshold back to yourself.",
     teaFeeling: "Warm brown, ivory, grounding, ripe pu-erh feeling.",
@@ -66,6 +75,7 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     chineseName: "修行者",
     englishName: "The Focused One",
     need: "Focus, rhythm, steady attention.",
+    quickRead: "Your mind is holding too many tabs open at once.",
     interpretation:
       "You do not need more stimulation; you need a rhythm that lets attention gather again. 定 appears when your mind wants fewer interruptions and a clearer beginning. A clean, fragrant tea can become a daily practice for focus, composure, and steady return.",
     teaFeeling: "Deep green, clean gold, focused, high mountain oolong feeling.",
@@ -88,6 +98,7 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     chineseName: "養息者",
     englishName: "The Rested One",
     need: "Rest, softness, evening rhythm.",
+    quickRead: "Your body's tired, but your mind hasn't been given permission to slow down yet.",
     interpretation:
       "Your body may already be tired, but your mind may not have received permission to slow down. 眠 appears when the day needs a softer closing gesture. A gentle tea ritual can support wind-down by marking the boundary between doing and resting.",
     teaFeeling: "Deep blue, warm white, soft evening feeling.",
@@ -110,6 +121,7 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     chineseName: "舒展者",
     englishName: "The Releasing One",
     need: "Release, openness, emotional movement.",
+    quickRead: "You're still functioning well, but your body is holding tension you haven't let go of.",
     interpretation:
       "You may have been holding more than you realise, even while moving through life well. 放 appears when the body and emotions want room to loosen, breathe, and move again. A floral, aromatic tea can support relaxation by making release feel natural rather than forced.",
     teaFeeling: "Soft amber, floral, breathable, relaxed feeling.",
@@ -133,6 +145,7 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     chineseName: "觀照者",
     englishName: "The Clear One",
     need: "Clarity, self-understanding, inner direction.",
+    quickRead: "You're not lost — you're just due for a clearer view.",
     interpretation:
       "You may not need more noise, advice, or answers right now. 清 appears when your inner world is asking for a quieter vantage point, so meaning can settle into view. Tea is not the answer itself; it is a mirror that helps reveal what truly matters.",
     teaFeeling: "Ink black, antique gold, mountain stone, cultural depth.",
@@ -150,170 +163,73 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
   }
 };
 
+// Free quick-read: 6 present-moment questions on energy and tension, scored
+// into the same five Tea-Mind rhythms used by the full (unlocked) report.
 const questions: AssessmentQuestion[] = [
   {
-    id: "improve",
-    question: "Recently, what do you most want to improve?",
+    id: "energy",
+    question: "Right now, my energy feels...",
     options: [
-      { label: "I want to feel more settled", result: "an" },
-      { label: "I want to improve my focus", result: "ding" },
-      { label: "I want to relax better before sleep", result: "mian" },
-      { label: "I want to release stress and emotions", result: "fang" },
-      { label: "I want to understand my direction more clearly", result: "qing" }
+      { label: "Heavy, like I'm quietly carrying too much", result: "an" },
+      { label: "Scattered, too many tabs open", result: "ding" },
+      { label: "Tired, but I can't fully wind down", result: "mian" },
+      { label: "Tense, wound up in my body", result: "fang" },
+      { label: "Foggy, like something needs thinking through", result: "qing" }
     ]
   },
   {
-    id: "state",
-    question: "Which sentence best describes your current state?",
+    id: "forecast",
+    question: "If today had a weather forecast, it'd be...",
     options: [
-      { label: "I look fine outside, but inside I feel unsettled", result: "an" },
-      { label: "My mind is busy and hard to focus", result: "ding" },
-      { label: "I feel tired, but I do not fully slow down at night", result: "mian" },
-      { label: "My body or emotions feel tense", result: "fang" },
-      { label: "I keep thinking about what my next step should be", result: "qing" }
+      { label: "Overcast and unsettled", result: "an" },
+      { label: "Fast-moving, lots happening", result: "ding" },
+      { label: "Late and heavy, evening fog", result: "mian" },
+      { label: "Pressure building, storm coming", result: "fang" },
+      { label: "Hazy, waiting to clear", result: "qing" }
     ]
   },
   {
-    id: "feeling",
-    question: "Which feeling appears most often recently?",
+    id: "body",
+    question: "Right now, your body is asking for...",
     options: [
-      { label: "Insecurity", result: "an" },
-      { label: "Mental overload", result: "ding" },
-      { label: "Tiredness", result: "mian" },
-      { label: "Irritation or pressure", result: "fang" },
-      { label: "Confusion or uncertainty", result: "qing" }
+      { label: "A place to feel steady", result: "an" },
+      { label: "A clean, focused start", result: "ding" },
+      { label: "Permission to slow down", result: "mian" },
+      { label: "Room to breathe and let go", result: "fang" },
+      { label: "Quiet, to think clearly", result: "qing" }
     ]
   },
   {
     id: "stress",
-    question: "When stress comes, what do you usually do?",
+    question: "When stress shows up, you tend to...",
     options: [
-      { label: "I keep it inside and do not want others to notice", result: "an" },
-      { label: "I immediately try to plan and solve it", result: "ding" },
-      { label: "I feel tired and want to escape for a while", result: "mian" },
-      { label: "My emotions rise, but I may not express them", result: "fang" },
-      { label: "I start thinking deeply about the reason and meaning", result: "qing" }
+      { label: "Keep it inside, quietly", result: "an" },
+      { label: "Try to plan and solve it fast", result: "ding" },
+      { label: "Feel tired and want to escape", result: "mian" },
+      { label: "Feel it rise in your body", result: "fang" },
+      { label: "Start thinking about the deeper reason", result: "qing" }
     ]
   },
   {
-    id: "need",
-    question: "What do you feel you need to improve most?",
+    id: "help",
+    question: "What would help you most right now?",
     options: [
-      { label: "Trusting myself more", result: "an" },
-      { label: "Executing with more consistency", result: "ding" },
-      { label: "Resting better", result: "mian" },
-      { label: "Expressing and releasing more naturally", result: "fang" },
-      { label: "Understanding my true direction", result: "qing" }
+      { label: "Feeling grounded again", result: "an" },
+      { label: "A clear, steady rhythm", result: "ding" },
+      { label: "Real rest", result: "mian" },
+      { label: "Releasing tension", result: "fang" },
+      { label: "Understanding your next step", result: "qing" }
     ]
   },
   {
-    id: "friends",
-    question: "How might your friends describe you?",
+    id: "tea-mood",
+    question: "Which tea mood pulls you in tonight?",
     options: [
-      { label: "Sensitive, thoughtful, caring", result: "an" },
-      { label: "Goal-oriented, hardworking, disciplined", result: "ding" },
-      { label: "Responsible, but sometimes too tired", result: "mian" },
-      { label: "Emotional, expressive, creative", result: "fang" },
-      { label: "Deep-thinking, insightful, reflective", result: "qing" }
-    ]
-  },
-  {
-    id: "tea-time",
-    question: "When do you most need tea during the day?",
-    options: [
-      { label: "When my heart feels unsettled", result: "an" },
-      { label: "Before work or study", result: "ding" },
-      { label: "After dinner or before sleep", result: "mian" },
-      { label: "When I feel stressed and need to loosen up", result: "fang" },
-      { label: "When I am alone and thinking", result: "qing" }
-    ]
-  },
-  {
-    id: "scene",
-    question: "What is your ideal tea scene?",
-    options: [
-      { label: "Sitting quietly and returning to myself", result: "an" },
-      { label: "Taking a three-minute break to refocus", result: "ding" },
-      { label: "Ending the day under soft evening light", result: "mian" },
-      { label: "Smelling a comforting aroma and relaxing my body", result: "fang" },
-      { label: "Drinking tea while thinking about life and direction", result: "qing" }
-    ]
-  },
-  {
-    id: "rhythm",
-    question: "Which rhythm do you lack most right now?",
-    options: [
-      { label: "Grounding", result: "an" },
-      { label: "Focus", result: "ding" },
-      { label: "Rest", result: "mian" },
-      { label: "Relaxation", result: "fang" },
-      { label: "Clarity", result: "qing" }
-    ]
-  },
-  {
-    id: "tea-type",
-    question: "Which type of tea sounds most appealing?",
-    options: [
-      { label: "Warm, mellow, and grounding", result: "an" },
-      { label: "Clean, fragrant, and refreshing", result: "ding" },
-      { label: "Soft, gentle, and low-stimulation", result: "mian" },
-      { label: "Floral, open, and expressive", result: "fang" },
-      { label: "Layered, deep, and story-rich", result: "qing" }
-    ]
-  },
-  {
-    id: "tea-feeling",
-    question: "What feeling do you want tea to give you?",
-    options: [
-      { label: "Warmth and support", result: "an" },
-      { label: "Alertness and focus", result: "ding" },
-      { label: "Softness and slowing down", result: "mian" },
-      { label: "Openness and flow", result: "fang" },
-      { label: "Depth and aftertaste", result: "qing" }
-    ]
-  },
-  {
-    id: "caffeine",
-    question: "How do you feel about caffeine?",
-    options: [
-      { label: "I prefer something gentle and not too stimulating", result: "an" },
-      { label: "I can accept some uplifting effect", result: "ding" },
-      { label: "I am sensitive, especially at night", result: "mian" },
-      { label: "I mainly want aroma and relaxation", result: "fang" },
-      { label: "I care more about depth, story, and layers", result: "qing" }
-    ]
-  },
-  {
-    id: "test-meaning",
-    question: "What do you most want to know from this test?",
-    options: [
-      { label: "How I can feel more at ease", result: "an" },
-      { label: "How I can become more focused and steady", result: "ding" },
-      { label: "How I can build a calming evening routine", result: "mian" },
-      { label: "How I can release pressure and emotion", result: "fang" },
-      { label: "How I can understand myself more deeply", result: "qing" }
-    ]
-  },
-  {
-    id: "box",
-    question: "If Chazen prepared a tea box for you, what should it be?",
-    options: [
-      { label: "A beginner-friendly grounding tea box", result: "an" },
-      { label: "A daily rhythm and focus tea box", result: "ding" },
-      { label: "A gentle evening tea box", result: "mian" },
-      { label: "A relaxing aromatic tea box", result: "fang" },
-      { label: "A cultural and collectible tea box", result: "qing" }
-    ]
-  },
-  {
-    id: "receive",
-    question: "After finishing the test, what would you most like to receive?",
-    options: [
-      { label: "A personal tea suggestion that helps me feel grounded", result: "an" },
-      { label: "A daily tea habit I can follow", result: "ding" },
-      { label: "A calming evening tea ritual guide", result: "mian" },
-      { label: "A tea aroma ritual for stress release", result: "fang" },
-      { label: "A deeper Tea-Mind personality report", result: "qing" }
+      { label: "Warm, mellow, grounding", result: "an" },
+      { label: "Clean, bright, alert", result: "ding" },
+      { label: "Soft, gentle, low-key", result: "mian" },
+      { label: "Floral, open, easy", result: "fang" },
+      { label: "Deep, layered, contemplative", result: "qing" }
     ]
   }
 ];
@@ -356,6 +272,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<ResultKey[]>([]);
   const [saveState, setSaveState] = useState<"idle" | "saved">("idle");
+  const [unlocked, setUnlocked] = useState(false);
   const currentQuestion = questions[currentIndex];
   const progress = phase === "intro" ? 0 : Math.min((answers.length / questions.length) * 100, 100);
   const result = useMemo(() => calculateResult(answers), [answers]);
@@ -371,6 +288,25 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
 
     return () => window.clearTimeout(loadingTimer);
   }, [phase]);
+
+  // A visitor is "unlocked" if they've paid before (flagged in localStorage)
+  // or if they've just returned from checkout with ?unlocked=true in the URL
+  // (set this as the Shopify order-status redirect once the store is connected).
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const fromCheckout = params.get("unlocked") === "true";
+      const stored = window.localStorage.getItem(UNLOCK_STORAGE_KEY) === "true";
+
+      if (fromCheckout) {
+        window.localStorage.setItem(UNLOCK_STORAGE_KEY, "true");
+      }
+
+      setUnlocked(fromCheckout || stored);
+    } catch {
+      // Private browsing or storage disabled: default to locked, no crash.
+    }
+  }, []);
 
   function handleStart() {
     setAnswers([]);
@@ -452,6 +388,19 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
     )}. I would like to learn more about the ${result.primary.product}.`,
     source: "Chazen AI Tea Test"
   });
+  // Once UNLOCK_CHECKOUT_URL is set to a real Shopify checkout link, the unlock
+  // button charges A$25 and bundles the First Pack tea. Until then it falls back
+  // to the same working email-inquiry flow used by the rest of the site.
+  const unlockHref =
+    UNLOCK_CHECKOUT_URL ||
+    buildInquiryPath({
+      basePath,
+      type: "Tea recommendation",
+      message: `I completed the Chazen AI Tea Test. My quick read is ${formatProfileName(
+        result.primary
+      )}. I'd like to unlock my full Tea-Mind report and get the First Pack (A$25).`,
+      source: "Chazen AI Tea Test — report unlock"
+    });
   const routeHref = (path: string) => `${basePath}${path}`;
 
   return (
@@ -467,10 +416,10 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
         <div className="assessment-hero-shade tea-mind-hero-shade" />
         <div className="assessment-hero-inner tea-mind-hero-inner">
           <p className="museum-kicker">Chazen AI Tea Test / 茶心測試</p>
-          <h1 id="assessment-title">Discover your Tea-Mind Personality</h1>
+          <h1 id="assessment-title">How are you, right now?</h1>
           <p>
-            One cup of tea can reveal the rhythm you are living in right now. Take the Chazen AI Tea Test
-            to discover whether your current inner rhythm is 安, 定, 眠, 放, or 清.
+            Six quick questions on your energy and tension today. Free instantly: which of 安, 定, 眠, 放, or 清
+            you're closest to, and the tea suited to tonight. Unlock the full Tea-Mind report for the rest.
           </p>
           <div className="tea-mind-character-rail" aria-label="Tea-Mind result types">
             {resultOrder.map((key) => (
@@ -484,9 +433,9 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
             This is not a fixed personality label. It reflects your current inner rhythm.
           </p>
           <div className="assessment-hero-meta">
-            <span>15 Questions</span>
-            <span>Five Tea-Mind Types</span>
-            <span>Personal Ritual Result</span>
+            <span>6 Questions · 2 Minutes</span>
+            <span>Free Quick Read</span>
+            <span>A$25 Full Report + Tea</span>
           </div>
           <button type="button" className="tea-mind-start-button" onClick={handleStart}>
             Start My Tea Test
@@ -518,12 +467,13 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
               <div className="tea-mind-oracle-character" aria-hidden="true">
                 茶
               </div>
-              <p className="museum-kicker">A quiet assessment, not a quick quiz</p>
+              <p className="museum-kicker">A quiet check-in, not a quick quiz</p>
               <h2>Begin with the rhythm you are living in today.</h2>
               <p>
-                This test listens for five Tea-Mind rhythms: 安 for grounding, 定 for focus, 眠 for
-                wind-down, 放 for release, and 清 for clarity. Your result will show a primary and
-                secondary rhythm, recommended teas, and a small ritual you can return to.
+                Six questions, about two minutes. This test listens for five Tea-Mind rhythms: 安 for
+                grounding, 定 for focus, 眠 for wind-down, 放 for release, and 清 for clarity. You'll get
+                your rhythm and a tea suited to tonight for free — unlock the full report for strengths,
+                watch-outs, and a personal ritual.
               </p>
               <div className="tea-mind-type-grid" aria-label="Five Tea-Mind personalities">
                 {resultOrder.map((key) => (
@@ -586,13 +536,25 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                   {result.primary.character}
                 </span>
                 <div>
-                  <p className="museum-kicker">Your Tea-Mind Personality</p>
+                  <p className="museum-kicker">Your quick read &middot; free</p>
                   <h2>
                     {result.primary.character}｜{result.primary.chineseName}
                   </h2>
                   <h3>{result.primary.englishName}</h3>
-                  <p>{result.primary.interpretation}</p>
+                  <p>{result.primary.quickRead}</p>
                   <p className="tea-mind-tone-line">{result.primary.teaFeeling}</p>
+                </div>
+              </div>
+
+              <article className="tea-mind-quick-tea">
+                <span>Suited to you right now</span>
+                <strong>{result.primary.teas[0]}</strong>
+              </article>
+
+              {unlocked ? (
+                <>
+                  <p className="tea-mind-full-interpretation">{result.primary.interpretation}</p>
+
                   {result.blended && (
                     <p className="tea-mind-blend-note">
                       Your result shows a blended Tea-Mind profile. Your primary rhythm is{" "}
@@ -600,80 +562,103 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                       {result.secondary.character}｜{result.secondary.chineseName} is also strongly present.
                     </p>
                   )}
+
+                  <div className="tea-mind-result-grid">
+                    <article>
+                      <span>Current State</span>
+                      <p>{result.primary.currentState}</p>
+                    </article>
+                    <article>
+                      <span>Core Need</span>
+                      <p>{result.primary.need}</p>
+                    </article>
+                    <article>
+                      <span>Secondary Personality</span>
+                      <p>{formatProfileName(result.secondary)}</p>
+                    </article>
+                  </div>
+
+                  <div className="tea-mind-detail-grid">
+                    <article>
+                      <h4>Strengths</h4>
+                      <ul>
+                        {result.primary.strengths.map((strength) => (
+                          <li key={strength}>{strength}</li>
+                        ))}
+                      </ul>
+                    </article>
+                    <article>
+                      <h4>Watch-Out Points</h4>
+                      <ul>
+                        {result.primary.watchOuts.map((watchOut) => (
+                          <li key={watchOut}>{watchOut}</li>
+                        ))}
+                      </ul>
+                    </article>
+                    <article>
+                      <h4>Recommended Teas</h4>
+                      <ul>
+                        {result.primary.teas.map((tea) => (
+                          <li key={tea}>{tea}</li>
+                        ))}
+                      </ul>
+                    </article>
+                    <article>
+                      <h4>{result.primary.ritualName}</h4>
+                      <ol>
+                        {result.primary.ritualSteps.map((step) => (
+                          <li key={step}>{step}</li>
+                        ))}
+                      </ol>
+                    </article>
+                  </div>
+
+                  <article className="tea-mind-score-panel">
+                    <h4>Score Distribution</h4>
+                    <div className="tea-mind-score-list">
+                      {resultOrder.map((key) => {
+                        const profile = resultProfiles[key];
+                        const score = result.scores[key];
+
+                        return (
+                          <div key={key} className="tea-mind-score-row">
+                            <span>
+                              {profile.character} {profile.chineseName}
+                            </span>
+                            <div className="tea-mind-score-track" aria-hidden="true">
+                              <span style={{ width: `${(score / (questions.length * 2)) * 100}%` }} />
+                            </div>
+                            <strong>{score}</strong>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </article>
+                </>
+              ) : (
+                <div className="tea-mind-locked" aria-label="Full Tea-Mind report, locked">
+                  <div className="tea-mind-locked-preview" aria-hidden="true">
+                    <p>Your full Tea-Mind report</p>
+                    <div className="tea-mind-locked-grid">
+                      <span>Strengths</span>
+                      <span>Watch-out points</span>
+                      <span>{result.primary.ritualName}</span>
+                      <span>Score breakdown</span>
+                    </div>
+                  </div>
+                  <div className="tea-mind-locked-overlay">
+                    <Lock size={20} aria-hidden="true" />
+                    <p>
+                      Unlock your full report, strengths, {result.primary.ritualName.toLowerCase()}, and a starter
+                      tea matched to tonight.
+                    </p>
+                    <span>A$25 &middot; includes First Pack tea</span>
+                    <a href={unlockHref} className="tea-mind-unlock-button">
+                      Unlock my report
+                    </a>
+                  </div>
                 </div>
-              </div>
-
-              <div className="tea-mind-result-grid">
-                <article>
-                  <span>Current State</span>
-                  <p>{result.primary.currentState}</p>
-                </article>
-                <article>
-                  <span>Core Need</span>
-                  <p>{result.primary.need}</p>
-                </article>
-                <article>
-                  <span>Secondary Personality</span>
-                  <p>{formatProfileName(result.secondary)}</p>
-                </article>
-              </div>
-
-              <div className="tea-mind-detail-grid">
-                <article>
-                  <h4>Strengths</h4>
-                  <ul>
-                    {result.primary.strengths.map((strength) => (
-                      <li key={strength}>{strength}</li>
-                    ))}
-                  </ul>
-                </article>
-                <article>
-                  <h4>Watch-Out Points</h4>
-                  <ul>
-                    {result.primary.watchOuts.map((watchOut) => (
-                      <li key={watchOut}>{watchOut}</li>
-                    ))}
-                  </ul>
-                </article>
-                <article>
-                  <h4>Recommended Teas</h4>
-                  <ul>
-                    {result.primary.teas.map((tea) => (
-                      <li key={tea}>{tea}</li>
-                    ))}
-                  </ul>
-                </article>
-                <article>
-                  <h4>{result.primary.ritualName}</h4>
-                  <ol>
-                    {result.primary.ritualSteps.map((step) => (
-                      <li key={step}>{step}</li>
-                    ))}
-                  </ol>
-                </article>
-              </div>
-
-              <article className="tea-mind-score-panel">
-                <h4>Score Distribution</h4>
-                <div className="tea-mind-score-list">
-                  {resultOrder.map((key) => {
-                    const profile = resultProfiles[key];
-                    const score = result.scores[key];
-
-                    return (
-                      <div key={key} className="tea-mind-score-row">
-                        <span>
-                          {profile.character} {profile.chineseName}
-                        </span>
-                        <div className="tea-mind-score-track" aria-hidden="true">
-                          <span style={{ width: `${(score / (questions.length * 2)) * 100}%` }} />
-                        </div>
-                        <strong>{score}</strong>
-                      </div>
-                    );
-                  })}
-                </div>
-              </article>
+              )}
 
               <div className="tea-mind-product-panel">
                 <div>

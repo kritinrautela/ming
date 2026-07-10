@@ -2657,6 +2657,131 @@ body:has(.chazen-motion-home) .museum-site-footer {
   padding-left: 1rem;
 }
 
+.tea-mind-quick-tea {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.1rem;
+  border: 1px solid rgba(111, 74, 50, 0.18);
+  border-radius: 6px;
+  background: rgba(255, 252, 243, 0.7);
+  padding: 0.9rem 1.1rem;
+}
+
+.tea-mind-quick-tea span {
+  color: rgba(111, 74, 50, 0.82);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tea-mind-quick-tea strong {
+  color: #171713;
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+}
+
+.tea-mind-full-interpretation {
+  max-width: 760px;
+  margin-top: 1.1rem;
+  color: rgba(23, 23, 19, 0.72);
+  font-size: 1.06rem;
+  line-height: 1.8;
+}
+
+.tea-mind-locked {
+  position: relative;
+  margin-top: 1.4rem;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.tea-mind-locked-preview {
+  filter: blur(3px);
+  opacity: 0.55;
+  padding: 1.1rem;
+  border: 1px solid rgba(111, 74, 50, 0.14);
+  border-radius: 6px;
+  background: rgba(255, 252, 243, 0.6);
+}
+
+.tea-mind-locked-preview p {
+  margin: 0 0 0.7rem;
+  color: #171713;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.tea-mind-locked-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.tea-mind-locked-grid span {
+  display: block;
+  border-radius: 5px;
+  background: rgba(111, 74, 50, 0.08);
+  padding: 0.7rem 0.8rem;
+  color: rgba(23, 23, 19, 0.6);
+  font-size: 0.82rem;
+}
+
+.tea-mind-locked-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(251, 250, 246, 0.2), rgba(251, 250, 246, 0.94) 42%);
+}
+
+.tea-mind-locked-overlay svg {
+  color: #6f4a32;
+}
+
+.tea-mind-locked-overlay p {
+  max-width: 380px;
+  margin: 0;
+  color: #171713;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.tea-mind-locked-overlay > span {
+  color: rgba(23, 23, 19, 0.56);
+  font-size: 0.82rem;
+}
+
+.tea-mind-unlock-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.2rem;
+  border: none;
+  border-radius: 6px;
+  background: #9f3f2f;
+  padding: 0.72rem 1.3rem;
+  color: #fbfaf6;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.tea-mind-unlock-button:hover {
+  background: #8a3627;
+  transform: translateY(-1px);
+}
+
 .tea-mind-result-grid,
 .tea-mind-detail-grid {
   display: grid;
