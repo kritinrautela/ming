@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { LanguageProvider } from "@/lib/language";
 import { site } from "@/lib/site";
 
 const displaySerif = Cormorant_Garamond({
@@ -34,11 +35,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${displaySerif.variable} ${interfaceSans.variable}`}>
       <body>
-        <div className="page-shell">
-          <Header />
-          {children}
-          <Footer />
-        </div>
+        <LanguageProvider>
+          <div className="page-shell">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+        </LanguageProvider>
       </body>
     </html>
   );

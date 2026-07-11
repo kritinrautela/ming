@@ -4,9 +4,12 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { navItems } from "@/lib/site";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useLanguage } from "@/lib/language";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <div className="mobile-nav relative lg:hidden">
@@ -37,16 +40,17 @@ export function MobileNav() {
                 }
                 onClick={() => setOpen(false)}
               >
-                {item.label}
+                {t(item.label, item.labelZh)}
               </Link>
             ))}
           </div>
+          <LanguageToggle className="mobile-nav-language-toggle" />
           <Link
             href="/tea-test"
             className="mobile-menu-inquire button-primary mt-3"
             onClick={() => setOpen(false)}
           >
-            Start Tea Test
+            {t("Start Tea Test", "開始茶測試")}
           </Link>
         </div>
       ) : null}

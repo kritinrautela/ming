@@ -8,29 +8,29 @@ export const site = {
 };
 
 export const navItems = [
-  { label: "Tea Test", href: "/tea-test" },
-  { label: "Ritual", href: "/tea-ritual" },
-  { label: "Culture", href: "/tea-culture" },
-  { label: "Tea Collection", href: "/tea-collection" },
-  { label: "Five Cups", href: "/five-cups" },
-  { label: "Tea Boxes", href: "/tea-boxes" },
-  { label: "Song Room", href: "/song-room" },
-  { label: "Stillness Mode", href: "/stillness-mode" },
-  { label: "AI Tea Guide", href: "/ai-tea-guide" },
-  { label: "B2B Gifts", href: "/b2b" }
+  { label: "Tea Test", labelZh: "茶測試", href: "/tea-test" },
+  { label: "Ritual", labelZh: "茶儀式", href: "/tea-ritual" },
+  { label: "Culture", labelZh: "茶文化", href: "/tea-culture" },
+  { label: "Tea Collection", labelZh: "茶品收藏", href: "/tea-collection" },
+  { label: "Five Cups", labelZh: "五盞", href: "/five-cups" },
+  { label: "Tea Boxes", labelZh: "茶盒", href: "/tea-boxes" },
+  { label: "Song Room", labelZh: "點茶室", href: "/song-room" },
+  { label: "Stillness Mode", labelZh: "靜心模式", href: "/stillness-mode" },
+  { label: "AI Tea Guide", labelZh: "AI 茶導師", href: "/ai-tea-guide" },
+  { label: "B2B Gifts", labelZh: "企業茶禮", href: "/b2b" }
 ];
 
 export const footerItems = [
-  { label: "Tea Test", href: "/tea-test" },
-  { label: "Tea Ritual", href: "/tea-ritual" },
-  { label: "Tea Culture", href: "/tea-culture" },
-  { label: "Tea Collection", href: "/tea-collection" },
-  { label: "Five Cups", href: "/five-cups" },
-  { label: "Tea Boxes", href: "/tea-boxes" },
-  { label: "Song Room", href: "/song-room" },
-  { label: "Stillness Mode", href: "/stillness-mode" },
-  { label: "AI Tea Guide", href: "/ai-tea-guide" },
-  { label: "B2B Gifts", href: "/b2b" }
+  { label: "Tea Test", labelZh: "茶測試", href: "/tea-test" },
+  { label: "Tea Ritual", labelZh: "茶儀式", href: "/tea-ritual" },
+  { label: "Tea Culture", labelZh: "茶文化", href: "/tea-culture" },
+  { label: "Tea Collection", labelZh: "茶品收藏", href: "/tea-collection" },
+  { label: "Five Cups", labelZh: "五盞", href: "/five-cups" },
+  { label: "Tea Boxes", labelZh: "茶盒", href: "/tea-boxes" },
+  { label: "Song Room", labelZh: "點茶室", href: "/song-room" },
+  { label: "Stillness Mode", labelZh: "靜心模式", href: "/stillness-mode" },
+  { label: "AI Tea Guide", labelZh: "AI 茶導師", href: "/ai-tea-guide" },
+  { label: "B2B Gifts", labelZh: "企業茶禮", href: "/b2b" }
 ];
 
 export const giftBoxItems = [

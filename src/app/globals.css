@@ -3346,6 +3346,65 @@ a {
   backdrop-filter: blur(18px);
 }
 
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(251, 250, 246, 0.22);
+  border-radius: 999px;
+  padding: 2px;
+}
+
+.language-toggle button {
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  padding: 0.32rem 0.68rem;
+  color: rgba(251, 250, 246, 0.62);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.language-toggle button.is-active {
+  background: rgba(251, 250, 246, 0.16);
+  color: #fbfaf6;
+}
+
+.mobile-nav-language-toggle {
+  margin: 0.6rem 0.2rem 0;
+}
+
+.mobile-nav-language-toggle .language-toggle {
+  border-color: rgba(23, 23, 19, 0.16);
+}
+
+.mobile-nav-language-toggle button {
+  color: rgba(23, 23, 19, 0.56);
+}
+
+.mobile-nav-language-toggle button.is-active {
+  background: rgba(23, 23, 19, 0.08);
+  color: #171713;
+}
+
+/* The mobile menu panel and the homepage's own nav render on a light
+   porcelain surface, not the dark sticky header — the base .language-toggle
+   rule above is tuned for the dark header, so this reuses its structure. */
+.mobile-nav .language-toggle {
+  border-color: rgba(23, 23, 19, 0.16);
+}
+
+.mobile-nav .language-toggle button {
+  color: rgba(23, 23, 19, 0.56);
+}
+
+.mobile-nav .language-toggle button.is-active {
+  background: rgba(23, 23, 19, 0.08);
+  color: #171713;
+}
+
 .section {
   padding: 8.5rem 0;
 }
