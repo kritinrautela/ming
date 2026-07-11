@@ -1,29 +1,87 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect } from "react";
 import { ArrowRight, Check, Package, Send } from "lucide-react";
 import { ProductVisual } from "@/components/ProductVisual";
 import { SectionHeading } from "@/components/SectionHeading";
 import { buildInquiryPath } from "@/lib/inquiry";
 import { giftBoxItems, site } from "@/lib/site";
+import { useLanguage } from "@/lib/language";
 
-export const metadata = {
-  title: "Tea Ritual Gift Box"
-};
+const openListenPour = [
+  {
+    step: "1",
+    title: { en: "Open", zh: "開啟" },
+    copy: {
+      en: "The box opens with a quiet brand message and a clear ritual invitation.",
+      zh: "禮盒開啟時，附有一則安靜的品牌訊息與清晰的儀式邀請。"
+    }
+  },
+  {
+    step: "2",
+    title: { en: "Listen", zh: "聆聽" },
+    copy: {
+      en: "Scan the QR card for a short Zen bowl sound ritual.",
+      zh: "掃描 QR 卡片，開始一段簡短的禪缽聲音儀式。"
+    }
+  },
+  {
+    step: "3",
+    title: { en: "Pour", zh: "沖泡" },
+    copy: {
+      en: "Prepare the first cup slowly and let the gift become an experience.",
+      zh: "慢慢準備第一杯茶，讓禮物成為一場體驗。"
+    }
+  }
+];
+
+const perceivedValue = [
+  {
+    title: { en: "Material", zh: "實體價值" },
+    copy: {
+      en: "A refined object with tea, teaware, and printed ritual pieces.",
+      zh: "一件精緻的物品，包含茶葉、茶具與印製的儀式卡片。"
+    }
+  },
+  {
+    title: { en: "Emotional", zh: "情感價值" },
+    copy: {
+      en: "A slower first cup that marks arrival, gratitude, or a new beginning.",
+      zh: "一杯慢下來的初茶，標記著抵達、感謝，或是一個新的開始。"
+    }
+  },
+  {
+    title: { en: "Memorable", zh: "難忘價值" },
+    copy: {
+      en: "A gift with a sequence, sound cue, and story clients can retell.",
+      zh: "一份有步驟、有聲音提示、有故事的禮物，讓客戶樂於分享。"
+    }
+  }
+];
 
 export default function GiftBoxPage() {
+  const { t, language } = useLanguage();
+
+  useEffect(() => {
+    document.title = language === "zh" ? "茶儀式禮盒 | Chazen" : "Tea Ritual Gift Box | Chazen";
+  }, [language]);
+
   return (
     <main>
       <section className="section">
         <div className="container grid gap-12 lg:grid-cols-[0.86fr_1.14fr] lg:items-center">
           <div>
-            <p className="eyebrow">Hero product</p>
+            <p className="eyebrow">{t("Hero product", "主打產品")}</p>
             <h1 className="display-title mt-4 text-5xl leading-[1] md:text-7xl">
-              Chazen Tea Ritual Gift Box
+              {t("Chazen Tea Ritual Gift Box", "Chazen 茶儀式禮盒")}
             </h1>
             <p className="mt-6 text-2xl text-leaf">{site.price}</p>
             <p className="mt-6 text-lg leading-8 text-ink/66">
-              A complete modern Chinese tea ritual gift: premium loose-leaf tea, compact
-              teaware, guided ritual cards, and a quiet sound moment inside a refined
-              outer gift box.
+              {t(
+                "A complete modern Chinese tea ritual gift: premium loose-leaf tea, compact teaware, guided ritual cards, and a quiet sound moment inside a refined outer gift box.",
+                "一份完整的現代中國茶儀式禮物：頂級散裝茶葉、輕巧茶具、引導式儀式卡片，以及精緻外盒中的一段安靜聲音時刻。"
+              )}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -34,10 +92,10 @@ export default function GiftBoxPage() {
                 })}
                 className="button-primary"
               >
-                Inquire or pre-order <ArrowRight size={17} />
+                {t("Inquire or pre-order", "查詢或預購")} <ArrowRight size={17} />
               </Link>
               <Link href="/b2b" className="button-secondary">
-                Request a B2B sample
+                {t("Request a B2B sample", "索取企業樣品")}
               </Link>
             </div>
           </div>
@@ -49,14 +107,17 @@ export default function GiftBoxPage() {
         <div className="container">
           <SectionHeading
             eyebrow="Box contents"
+            eyebrowZh="禮盒內容"
             title="Every element supports the first cup."
+            titleZh="每個細節都為第一杯茶而準備。"
             copy="The gift box is designed to feel valuable before it is opened, then intimate once the ritual begins."
+            copyZh="這份禮盒在打開之前就令人感受到價值，儀式開始後則變得親密而細膩。"
           />
           <div className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {giftBoxItems.map((item) => (
-              <div key={item} className="premium-card bg-white p-6">
+              <div key={item.en} className="premium-card bg-white p-6">
                 <Check className="text-moss" size={20} />
-                <p className="mt-5 text-lg font-semibold">{item}</p>
+                <p className="mt-5 text-lg font-semibold">{t(item.en, item.zh)}</p>
               </div>
             ))}
           </div>
@@ -65,15 +126,11 @@ export default function GiftBoxPage() {
 
       <section className="section">
         <div className="container grid gap-12 lg:grid-cols-3">
-          {[
-            ["1", "Open", "The box opens with a quiet brand message and a clear ritual invitation."],
-            ["2", "Listen", "Scan the QR card for a short Zen bowl sound ritual."],
-            ["3", "Pour", "Prepare the first cup slowly and let the gift become an experience."]
-          ].map(([step, title, copy]) => (
-            <div key={step} className="border-t border-ink/12 pt-7">
-              <p className="eyebrow">{step}</p>
-              <p className="display-title mt-5 text-4xl text-leaf">{title}</p>
-              <p className="mt-5 text-sm leading-7 text-ink/62">{copy}</p>
+          {openListenPour.map((item) => (
+            <div key={item.step} className="border-t border-ink/12 pt-7">
+              <p className="eyebrow">{item.step}</p>
+              <p className="display-title mt-5 text-4xl text-leaf">{t(item.title.en, item.title.zh)}</p>
+              <p className="mt-5 text-sm leading-7 text-ink/62">{t(item.copy.en, item.copy.zh)}</p>
             </div>
           ))}
         </div>
@@ -83,18 +140,17 @@ export default function GiftBoxPage() {
         <div className="container grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <SectionHeading
             eyebrow="Perceived value"
+            eyebrowZh="感知價值"
             title="More than tea in a box."
+            titleZh="不只是一盒茶。"
             copy="Chazen combines a physical gift, a cultural story, and a guided first-use moment. The value is in the ritual the recipient can repeat long after the occasion."
+            copyZh="Chazen 結合了實體禮物、文化故事與引導式的初次體驗。它的價值在於收禮者能在活動過後長久重複的那場儀式。"
           />
           <div className="grid gap-4 md:grid-cols-3">
-            {[
-              ["Material", "A refined object with tea, teaware, and printed ritual pieces."],
-              ["Emotional", "A slower first cup that marks arrival, gratitude, or a new beginning."],
-              ["Memorable", "A gift with a sequence, sound cue, and story clients can retell."]
-            ].map(([title, copy]) => (
-              <article key={title} className="premium-card bg-white p-6">
-                <p className="display-title text-2xl text-leaf">{title}</p>
-                <p className="mt-4 text-sm leading-7 text-ink/62">{copy}</p>
+            {perceivedValue.map((item) => (
+              <article key={item.title.en} className="premium-card bg-white p-6">
+                <p className="display-title text-2xl text-leaf">{t(item.title.en, item.title.zh)}</p>
+                <p className="mt-4 text-sm leading-7 text-ink/62">{t(item.copy.en, item.copy.zh)}</p>
               </article>
             ))}
           </div>
@@ -104,18 +160,23 @@ export default function GiftBoxPage() {
       <section className="section bg-stone">
         <div className="container grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
-            <p className="eyebrow">For private and agency gifting</p>
+            <p className="eyebrow">{t("For private and agency gifting", "適合私人與地產公司送禮")}</p>
             <h2 className="display-title mt-4 text-4xl text-ink md:text-5xl">
-              A compact luxury gift with a lasting ritual after the handover.
+              {t(
+                "A compact luxury gift with a lasting ritual after the handover.",
+                "一份精緻的奢華禮物，交收後仍留有一場持久的儀式。"
+              )}
             </h2>
             <p className="mt-5 max-w-2xl text-base leading-8 text-ink/64">
-              For real estate settlement gifting, add an agency congratulations card so
-              the client receives a personal message alongside the Chazen ritual.
+              {t(
+                "For real estate settlement gifting, add an agency congratulations card so the client receives a personal message alongside the Chazen ritual.",
+                "地產交收送禮時，可加上地產公司的賀卡，讓客戶在收到 Chazen 儀式的同時，也收到一則個人化訊息。"
+              )}
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
             <Link href="/b2b" className="button-primary">
-              Explore settlement gifting <Package size={17} />
+              {t("Explore settlement gifting", "探索交收送禮方案")} <Package size={17} />
             </Link>
             <Link
               href={buildInquiryPath({
@@ -125,7 +186,7 @@ export default function GiftBoxPage() {
               })}
               className="button-secondary"
             >
-              Request a B2B sample <Send size={17} />
+              {t("Request a B2B sample", "索取企業樣品")} <Send size={17} />
             </Link>
           </div>
         </div>
