@@ -1,54 +1,115 @@
+"use client";
+
+import { useEffect } from "react";
 import {
   ChazenContentSection,
   ChazenCtaBand,
   ChazenMediaPlaceholder,
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
-
-export const metadata = {
-  title: "B2B Tea Gifts"
-};
+import { useLanguage } from "@/lib/language";
 
 const useCases = [
-  "Corporate gifts",
-  "Client appreciation",
-  "Real estate settlement gifts",
-  "Festival gifts",
-  "Business partners",
-  "Cultural events"
+  { en: "Corporate gifts", zh: "企業禮品" },
+  { en: "Client appreciation", zh: "客戶答謝" },
+  { en: "Real estate settlement gifts", zh: "地產交收禮物" },
+  { en: "Festival gifts", zh: "節日禮盒" },
+  { en: "Business partners", zh: "商業夥伴禮物" },
+  { en: "Cultural events", zh: "文化活動禮品" }
 ];
 
 const whyTeaWorks = [
-  ["有文化感", "茶禮比普通禮物更有故事，也更能代表心意。"],
-  ["不俗氣", "不靠浮誇包裝，而是靠器物、香氣與儀式感。"],
-  ["適合不同年齡", "茶作為禮物，對不同背景和年齡都自然友善。"],
-  ["可長期保存", "茶與茶具可以被慢慢使用，不是一刻即逝的禮物。"],
-  ["更有心意", "一份能被打開、沖泡、記住的關係禮物。"]
+  {
+    title: { en: "Culturally rich", zh: "有文化感" },
+    copy: {
+      zh: "茶禮比普通禮物更有故事，也更能代表心意。",
+      en: "A tea gift carries more story than an ordinary gift, and expresses thoughtfulness more clearly."
+    }
+  },
+  {
+    title: { en: "Never gaudy", zh: "不俗氣" },
+    copy: {
+      zh: "不靠浮誇包裝，而是靠器物、香氣與儀式感。",
+      en: "It doesn't rely on showy packaging, but on fine objects, aroma, and a sense of ritual."
+    }
+  },
+  {
+    title: { en: "Suits every age", zh: "適合不同年齡" },
+    copy: {
+      zh: "茶作為禮物，對不同背景和年齡都自然友善。",
+      en: "As a gift, tea feels natural and welcoming across backgrounds and ages."
+    }
+  },
+  {
+    title: { en: "Long-lasting", zh: "可長期保存" },
+    copy: {
+      zh: "茶與茶具可以被慢慢使用，不是一刻即逝的禮物。",
+      en: "Tea and teaware are used slowly over time, not a gift that's gone in a moment."
+    }
+  },
+  {
+    title: { en: "More thoughtful", zh: "更有心意" },
+    copy: {
+      zh: "一份能被打開、沖泡、記住的關係禮物。",
+      en: "A relationship gift that can be opened, brewed, and remembered."
+    }
+  }
 ];
 
 const giftOptions = [
-  ["Starter corporate box", "適合小批量客戶答謝或首次合作禮。"],
-  ["Premium cultural box", "適合重要客戶、節日或高價值關係。"],
-  ["Custom settlement gift", "為地產交收時刻加入祝賀卡與品牌訊息。"],
-  ["Event / festival box", "適合文化活動、團隊禮品與節日派送。"]
+  {
+    title: { en: "Starter corporate box", zh: "企業入門禮盒" },
+    copy: { zh: "適合小批量客戶答謝或首次合作禮。", en: "Suited to small-batch client appreciation or a first partnership gift." }
+  },
+  {
+    title: { en: "Premium cultural box", zh: "頂級文化禮盒" },
+    copy: { zh: "適合重要客戶、節日或高價值關係。", en: "Suited to important clients, festivals, or high-value relationships." }
+  },
+  {
+    title: { en: "Custom settlement gift", zh: "客製交收禮物" },
+    copy: {
+      zh: "為地產交收時刻加入祝賀卡與品牌訊息。",
+      en: "Adds a congratulations card and branded message to the real estate settlement moment."
+    }
+  },
+  {
+    title: { en: "Event / festival box", zh: "活動／節日禮盒" },
+    copy: { zh: "適合文化活動、團隊禮品與節日派送。", en: "Suited to cultural events, team gifting, and festival distribution." }
+  }
 ];
 
 const brandingItems = [
-  "Company card",
-  "Custom message",
-  "Logo sleeve",
-  "Settlement note",
-  "Bilingual gift message"
+  { en: "Company card", zh: "公司卡片" },
+  { en: "Custom message", zh: "客製化訊息" },
+  { en: "Logo sleeve", zh: "品牌標誌外套" },
+  { en: "Settlement note", zh: "交收賀卡" },
+  { en: "Bilingual gift message", zh: "雙語贈禮訊息" }
+];
+
+const enquiryFields = [
+  { en: "Name", zh: "姓名" },
+  { en: "Company", zh: "公司" },
+  { en: "Email", zh: "電郵" },
+  { en: "Gift purpose", zh: "贈禮目的" },
+  { en: "Quantity", zh: "數量" }
 ];
 
 export default function B2BPage() {
+  const { t, language } = useLanguage();
+
+  useEffect(() => {
+    document.title = language === "zh" ? "企業茶禮 | Chazen" : "B2B Tea Gifts | Chazen";
+  }, [language]);
+
   return (
     <main className="chazen-subpage">
       <ChazenSubpageHero
         eyebrow="B2B Gifts"
+        eyebrowZh="企業茶禮"
         title="為重要關係準備的文化禮盒"
         english="Cultural Gifts for Meaningful Relationships"
         copy="Chazen 企業茶禮盒適合公司、客戶答謝、地產交收禮物、節日送禮與文化活動。"
+        copyEn="Chazen's corporate tea gift boxes suit companies, client appreciation, real estate settlement gifts, festival gifting, and cultural events."
         placeholder={{
           asset: "b2b-corporate-gift-scene.webp",
           label: "Future visual: B2B settlement gift scene",
@@ -58,15 +119,21 @@ export default function B2BPage() {
 
       <ChazenContentSection
         eyebrow="Who it is for"
+        eyebrowZh="適合對象"
         title="適合需要被記住的關係"
         english="For Relationships Worth Marking"
         tone="paper"
       >
         <div className="chazen-card-grid">
           {useCases.map((useCase) => (
-            <article key={useCase} className="chazen-subpage-card">
-              <span>{useCase}</span>
-              <p>Quiet, cultural, and useful enough to remain after the handover moment.</p>
+            <article key={useCase.en} className="chazen-subpage-card">
+              <span>{t(useCase.en, useCase.zh)}</span>
+              <p>
+                {t(
+                  "Quiet, cultural, and useful enough to remain after the handover moment.",
+                  "低調、有文化感，且足夠實用，能在交收時刻過後留存下來。"
+                )}
+              </p>
             </article>
           ))}
         </div>
@@ -74,14 +141,15 @@ export default function B2BPage() {
 
       <ChazenContentSection
         eyebrow="Why tea"
+        eyebrowZh="為何選茶"
         title="茶禮有文化，也有溫度"
         english="Why a Tea Gift Works"
       >
         <div className="chazen-card-grid">
-          {whyTeaWorks.map(([title, copy]) => (
-            <article key={title} className="chazen-subpage-card">
-              <h3 lang="zh-Hant">{title}</h3>
-              <p lang="zh-Hant">{copy}</p>
+          {whyTeaWorks.map((item) => (
+            <article key={item.title.en} className="chazen-subpage-card">
+              {language === "zh" ? <h3 lang="zh-Hant">{item.title.zh}</h3> : <h3>{item.title.en}</h3>}
+              <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
             </article>
           ))}
         </div>
@@ -89,16 +157,17 @@ export default function B2BPage() {
 
       <ChazenContentSection
         eyebrow="Gift box options"
+        eyebrowZh="禮盒選項"
         title="不同關係，可以有不同茶禮"
         english="Gift Box Options"
         tone="paper"
       >
         <div className="chazen-two-column">
           <div className="chazen-card-grid">
-            {giftOptions.map(([title, copy]) => (
-              <article key={title} className="chazen-subpage-card">
-                <span>{title}</span>
-                <p lang="zh-Hant">{copy}</p>
+            {giftOptions.map((item) => (
+              <article key={item.title.en} className="chazen-subpage-card">
+                <span>{t(item.title.en, item.title.zh)}</span>
+                <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
               </article>
             ))}
           </div>
@@ -112,15 +181,16 @@ export default function B2BPage() {
 
       <ChazenContentSection
         eyebrow="Custom branding"
+        eyebrowZh="客製品牌化"
         title="品牌可以出現，但不需要喧賓奪主"
         english="Quiet Custom Branding"
       >
         <div className="chazen-two-column">
           <article className="chazen-subpage-note">
-            <h3>Branding options</h3>
+            <h3>{t("Branding options", "品牌客製選項")}</h3>
             <ul>
               {brandingItems.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item.en}>{t(item.en, item.zh)}</li>
               ))}
             </ul>
           </article>
@@ -133,15 +203,25 @@ export default function B2BPage() {
 
       <ChazenContentSection
         eyebrow="Real estate settlement"
+        eyebrowZh="地產交收"
         title="交收禮物，不只是答謝"
         english="Settlement Gifts That Remember the Relationship"
         tone="paper"
       >
         <div className="chazen-two-column">
           <article className="chazen-subpage-note">
-            <h3>A settlement gift should not only say thank you.</h3>
-            <p>It should help the client remember the relationship.</p>
-            <p lang="zh-Hant">地產交收禮物不只是答謝，而是讓客戶記得這段關係。</p>
+            <h3>
+              {t(
+                "A settlement gift should not only say thank you.",
+                "地產交收禮物，不應只是一句多謝。"
+              )}
+            </h3>
+            <p lang={language === "zh" ? "zh-Hant" : undefined}>
+              {t(
+                "It should help the client remember the relationship.",
+                "它應該讓客戶記得這段關係。"
+              )}
+            </p>
           </article>
           <ChazenMediaPlaceholder
             asset="b2b-festival-gift-box.webp"
@@ -152,22 +232,26 @@ export default function B2BPage() {
 
       <ChazenContentSection
         eyebrow="Enquiry form"
+        eyebrowZh="查詢表格"
         title="先預留清楚的查詢結構"
         english="Enquiry Form Placeholder"
       >
         <div className="chazen-two-column">
           <form id="b2b-enquiry" className="chazen-form-placeholder">
             {/* Future integration: connect these fields to the Chazen B2B enquiry workflow. */}
-            <h3>Enquire for B2B Gift Box</h3>
-            {["Name", "Company", "Email", "Gift purpose", "Quantity"].map((field) => (
-              <label key={field}>
-                {field}
-                <input type={field === "Email" ? "email" : "text"} placeholder={field} />
+            <h3>{t("Enquire for B2B Gift Box", "查詢企業禮盒")}</h3>
+            {enquiryFields.map((field) => (
+              <label key={field.en}>
+                {t(field.en, field.zh)}
+                <input
+                  type={field.en === "Email" ? "email" : "text"}
+                  placeholder={t(field.en, field.zh)}
+                />
               </label>
             ))}
             <label>
-              Message
-              <textarea rows={4} placeholder="Tell us about the gift moment." />
+              {t("Message", "訊息")}
+              <textarea rows={4} placeholder={t("Tell us about the gift moment.", "告訴我們這份禮物的場合。")} />
             </label>
           </form>
           <ChazenMediaPlaceholder
@@ -179,9 +263,11 @@ export default function B2BPage() {
 
       <ChazenCtaBand
         title="查詢企業茶禮盒"
+        titleEn="Enquire About a Corporate Tea Gift Box"
         copy="A calm, cultural gift for clients, teams, settlement moments, and festivals."
-        primary={{ href: "/b2b#b2b-enquiry", label: "Enquire for B2B Gift Box" }}
-        secondary={{ href: "/tea-boxes", label: "Explore Tea Boxes" }}
+        copyZh="一份平靜而有文化感的禮物，適合客戶、團隊、交收時刻與節日。"
+        primary={{ href: "/b2b#b2b-enquiry", label: "Enquire for B2B Gift Box", labelZh: "查詢企業禮盒" }}
+        secondary={{ href: "/tea-boxes", label: "Explore Tea Boxes", labelZh: "探索茶盒" }}
       />
     </main>
   );
