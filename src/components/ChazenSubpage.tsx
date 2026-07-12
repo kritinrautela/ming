@@ -91,22 +91,28 @@ type ChazenCtaBandProps = {
   };
 };
 
+// Strips leading "Future visual:"/"Future video:" framing from caller-provided
+// labels so this never prints as an apology — the caption should read as a
+// deliberate curatorial note ("Gaiwan vessel study"), not a confession that a
+// file is missing.
+function toCaption(label: string) {
+  return label.replace(/^Future (visual|video):\s*/i, "");
+}
+
 export function ChazenMediaPlaceholder({
-  asset,
   label,
-  type = "image",
-  note = "Future media placeholder"
+  note
 }: ChazenMediaPlaceholderProps) {
+  const { t } = useLanguage();
+
   return (
-    <figure className="chazen-media-placeholder">
-      {/* Future media: replace this placeholder with the matching asset from docs/chazen-asset-list.md. */}
+    <figure className="chazen-media-placeholder" aria-label={toCaption(label)}>
       <div aria-hidden="true">
-        <span>{type === "video" ? "MP4" : "WEBP"}</span>
-        <strong>{asset}</strong>
+        <span>{t("In the Making", "製作中")}</span>
       </div>
       <figcaption>
-        <span>{label}</span>
-        <small>{note}</small>
+        <span>{toCaption(label)}</span>
+        {note ? <small>{note}</small> : null}
       </figcaption>
     </figure>
   );

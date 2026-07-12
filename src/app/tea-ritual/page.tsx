@@ -5,7 +5,8 @@ import {
   ChazenContentSection,
   ChazenCtaBand,
   ChazenMediaPlaceholder,
-  ChazenSubpageHero
+  ChazenSubpageHero,
+  ChazenSubpageMedia
 } from "@/components/ChazenSubpage";
 import { useLanguage } from "@/lib/language";
 
@@ -170,13 +171,13 @@ export default function TeaRitualPage() {
         tone="paper"
       >
         <div className="chazen-placeholder-grid">
-          <ChazenMediaPlaceholder
-            asset="ritual-five-jian-zhan-cups.webp"
-            label="Future visual: Gaiwan -> Cha Hai -> Five Jian Zhan Cups"
+          <ChazenSubpageMedia
+            asset="chazen-tea-table-topdown-v3.png"
+            alt="A top-down view of the tea table set for the ritual: gaiwan, fairness pitcher, and cups arranged in sequence."
           />
-          <ChazenMediaPlaceholder
-            asset="ritual-six-steps-animation.mp4"
-            label="Future visual: Six-step ritual animation"
+          <ChazenSubpageMedia
+            asset="chazen-ritual-film.mp4"
+            alt="A short film following the six-step tea ritual from warming the vessel to the final slow sip."
             type="video"
           />
         </div>

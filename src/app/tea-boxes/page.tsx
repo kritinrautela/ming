@@ -183,7 +183,7 @@ export default function TeaBoxesPage() {
         <div className="chazen-three-column">
           {boxCards.map((box) => (
             <article key={box.title.en} className="chazen-subpage-card">
-              <span>{box.visual} / {box.asset}</span>
+              <span>{t("In the Making", "製作中")}</span>
               <strong className="chazen-price-tag">{box.price}</strong>
               <h3>{t(box.title.en, box.title.zh)}</h3>
               <ul>

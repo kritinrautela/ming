@@ -149,7 +149,7 @@ export default function TeaCulturePage() {
           {timeline.map((item, index) => (
             <article key={item.title.en} className="chazen-subpage-card">
               <span>
-                {String(index + 1).padStart(2, "0")} / {t("Future visual", "未來視覺")}: {item.asset}
+                {t("Chapter", "篇章")} {String(index + 1).padStart(2, "0")}
               </span>
               {language === "zh" ? <h3 lang="zh-Hant">{item.title.zh}</h3> : <h3>{item.title.en}</h3>}
               <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>

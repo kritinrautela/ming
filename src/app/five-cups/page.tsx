@@ -32,6 +32,10 @@ export default function FiveCupsPage() {
           label: "Future visual: five Jian Zhan cups arranged on a quiet tea table",
           note: "Reserved Five Cups overview visual"
         }}
+        media={{
+          asset: "chazen-arrival-room.avif",
+          alt: "A quiet, softly lit tea room — the arrival point for the Five Cups practice."
+        }}
       />
 
       <ChazenContentSection
