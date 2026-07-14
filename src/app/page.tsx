@@ -7,6 +7,7 @@ import { LanguageToggle } from "@/components/LanguageToggle";
 import { MoonGateMark, RippleDivider } from "@/components/ChazenMotif";
 import { videoAssets, withBasePath } from "@/lib/media";
 import { useLanguage } from "@/lib/language";
+import { site } from "@/lib/site";
 
 const revealCards = [
   {
@@ -287,9 +288,14 @@ export default function Home() {
   const presentingRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLCanvasElement>(null);
 
+  // The Metadata API (layout.tsx) sets the default English title for crawlers/initial paint.
+  // This only overrides it client-side for the zh toggle state, and matches the same
+  // English string when reverting, so it never drifts from the metadata default.
   useEffect(() => {
     document.title =
-      language === "zh" ? "Chazen 茶禪｜現代中國茶文化" : "Chazen | Modern Chinese Tea Culture";
+      language === "zh"
+        ? "Chazen 茶禪｜現代中國茶文化"
+        : `${site.name} | One Cup. One Breath. One Return.`;
   }, [language]);
 
   useEffect(() => {
@@ -306,6 +312,10 @@ export default function Home() {
     if (!root || !hero || !panel || !fixedCards || !cardsGrid || !trigger || !presenting || !canvas || !ctx) {
       return;
     }
+
+    const prefersReducedMotion =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     let raf = 0;
     let particleRaf = 0;
@@ -344,7 +354,12 @@ export default function Home() {
       particleRaf = requestAnimationFrame(drawParticles);
     };
 
-    const tick = () => {
+    // The frame calculation is shared: the default path re-runs it every
+    // animation frame for smooth scroll-tied motion; the reduced-motion path
+    // (below) instead re-runs it only in direct response to scroll/resize
+    // events, with no self-perpetuating loop — content still reveals on
+    // scroll, it just doesn't animate independently of user input.
+    const updateFrame = () => {
       const vh = window.innerHeight;
       const scrollY = window.scrollY;
       const heroFade = Math.max(0, 1 - scrollY / (vh * 0.45));
@@ -377,19 +392,33 @@ export default function Home() {
       if (presenting.getBoundingClientRect().top < vh * 0.72) {
         presenting.classList.add("is-visible");
       }
+    };
 
+    const tick = () => {
+      updateFrame();
       raf = requestAnimationFrame(tick);
     };
 
-    resizeParticles();
-    drawParticles();
-    raf = requestAnimationFrame(tick);
-    window.addEventListener("resize", resizeParticles);
+    if (prefersReducedMotion) {
+      // Skip the ambient particle drift and the persistent per-frame scroll
+      // loop entirely. The reveal itself still works — it's just driven
+      // directly by scroll/resize events instead of an autonomous loop.
+      updateFrame();
+      window.addEventListener("scroll", updateFrame, { passive: true });
+      window.addEventListener("resize", updateFrame);
+    } else {
+      resizeParticles();
+      drawParticles();
+      raf = requestAnimationFrame(tick);
+      window.addEventListener("resize", resizeParticles);
+    }
 
     return () => {
       cancelAnimationFrame(raf);
       cancelAnimationFrame(particleRaf);
       window.removeEventListener("resize", resizeParticles);
+      window.removeEventListener("scroll", updateFrame);
+      window.removeEventListener("resize", updateFrame);
     };
   }, []);
 
@@ -723,7 +752,7 @@ export default function Home() {
             </article>
           ))}
           <a href={withBasePath("/tea-test")} className="chazen-primary-btn">
-            {t("Find the right tea rhythm", "找到適合你的茶節奏")}
+            {t("Start Tea Test", "開始茶測試")}
           </a>
         </div>
       </section>
@@ -759,15 +788,21 @@ export default function Home() {
             <span>{t("Jian Zhan five cups", "建盞五盞")}</span>
             <span>{t("Cultural gifting", "文化贈禮")}</span>
           </div>
-          <form>
+          <form
+            action={`mailto:${site.email}?subject=${encodeURIComponent("Chazen Tea Notes Signup")}`}
+            method="post"
+            encType="text/plain"
+          >
             <input
               type="email"
+              name="email"
+              required
               placeholder={t("Email for tea notes", "電郵訂閱茶語")}
               aria-label={t("Email for newsletter", "訂閱電郵")}
             />
             <button type="submit">{t("Join for Tea Notes", "訂閱茶語")}</button>
           </form>
-          <small>hello@chazentea.com.au · Instagram · YouTube</small>
+          <small>{site.email} · Instagram · YouTube</small>
         </div>
       </footer>
     </main>

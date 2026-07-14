@@ -191,10 +191,10 @@ Note: `gaiwan-ritual.mp4`, `dian-cha.mp4`, `chazen-ritual-film.mp4`, and `stilln
 - [x] Load the configured display font (Cormorant Garamond) via `next/font`, plus Inter for the interface sans (also declared but unloaded) — wired into all 136 hardcoded `Georgia` declarations and the 1 hardcoded `Avenir Next` declaration in `globals.css` via CSS variables, so existing selectors now render the real fonts without needing 137 individual edits
 - [x] Fix dead/broken links: home logo (`href="#"` → `/`), Tea Collection's `#chapter-index` anchor (→ `#entrance`) — `/tea-test` vs `/tea-assessment` duplication still open
 - [x] Add Song Room, Stillness Mode, Tea Collection, and AI Tea Guide to primary navigation (Header, Footer, MobileNav via shared `navItems`/`footerItems`, plus the homepage's own inline nav+footer)
-- [ ] Wire up the B2B enquiry form and homepage newsletter form to an actual submit action
+- [x] Wire up the B2B enquiry form (merged from `codex/site-wide-improvement-pass-1`, mailto to chazen24tz@gmail.com) and the homepage newsletter form (mailto to `site.email`) to actual submit actions
 - [ ] Decide fate of the ~2,400-line orphaned `ChazenHomeExperience` module — mine it or remove it
-- [ ] Fix the home page's `document.title` `useEffect` fighting with the Metadata API
-- [ ] Add favicon, Open Graph, and Twitter Card metadata
+- [x] Home page's `document.title` `useEffect` now mirrors the Metadata API's default English title exactly instead of a divergent hardcoded string, so it only diverges for the zh toggle state
+- [x] Added favicon (`src/app/icon.svg`, `favicon.ico`, `apple-icon.png`, brand moon-gate mark); Open Graph and Twitter Card metadata merged from `codex/site-wide-improvement-pass-1`
 
 ### Phase 2 — Visual Design
 - [x] Swap in existing unused real assets — song-diancha image (Song Room hero), gift-box image (Gift Box hero, replacing CSS mockup), gaiwan-ritual video (Tea Ritual hero), singing-bowl audio (Stillness Mode bowl-strike, replacing synthesized tone). `stillness-room.mp4` and `dian-cha.mp4` (used in Song Room's dian-cha exhibit, replacing an unstyled/invisible div block — found during this pass) also wired in. `chazen-ritual-film.mp4` still unused — no clear slot yet.
@@ -205,7 +205,7 @@ Note: `gaiwan-ritual.mp4`, `dian-cha.mp4`, `chazen-ritual-film.mp4`, and `stilln
 
 ### Phase 3 — UX
 - [x] Merge `/tea-test` and `/tea-assessment` into one route — `/tea-test` is canonical (every nav/CTA site-wide already pointed there); `/tea-assessment` now client-redirects to it instead of duplicating the quiz component
-- [ ] Standardize CTA copy — currently 5 different labels all pointing to the same quiz
+- [x] Standardized CTA copy — all 4 homepage buttons linking to `/tea-test` now read "Start Tea Test" / 開始茶測試
 - [x] Fixed mobile heading overflow risk on the Tea Test hero — `clamp()` minimum font size was large enough (4.2rem/67px) that long words could exceed the container width, and the ancestor's `overflow: hidden` was silently clipping instead of wrapping. Added `overflow-wrap`/`word-break` plus a tighter clamp under 640px to both `.assessment-hero-inner h1` and `.tea-mind-hero-inner h1`. Note: the specific clipped strings seen in the earlier screenshot audit ("PERSONAL TEA TEMPERAMENT", "profile coming soon") belong to an older version of this page's copy that no longer exists in the codebase — this fix addresses the underlying structural risk, not that exact (now-gone) text. Home hero overflow still unverified live.
 - [x] Replaced the hardcoded fake "Current State" result on the homepage tea-test teaser with copy that clearly labels it as an example (was presented as if it were the visitor's own result). Journal category chips all linking to the same page is still open.
 - [ ] Right-size the homepage — decide what's a true teaser vs. redundant duplication of dedicated pages
@@ -213,7 +213,7 @@ Note: `gaiwan-ritual.mp4`, `dian-cha.mp4`, `chazen-ritual-film.mp4`, and `stilln
 
 ### Phase 4 — Animation
 - [ ] Replace the hand-rolled scroll-jacking RAF loop on Home (430vh pinned wrapper) with the same restrained `MotionReveal` pattern used elsewhere
-- [ ] Couple the two persistent home-page animation loops to `prefers-reduced-motion` (currently uncoupled)
+- [x] Coupled both home-page animation loops to `prefers-reduced-motion` — the ambient particle canvas is skipped entirely, and the scroll-tied reveal loop runs only on scroll/resize events instead of a persistent `requestAnimationFrame` loop
 - [ ] Extend `MotionReveal`'s consistent easing to Home and the `ChazenSubpage` pages (currently used on only 3 of 16 routes)
 
 ### Phase 5 — Content
