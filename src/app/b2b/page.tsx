@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import {
   ChazenContentSection,
   ChazenCtaBand,
-  ChazenMediaPlaceholder,
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
 import { useLanguage } from "@/lib/language";
@@ -110,10 +109,10 @@ export default function B2BPage() {
         english="Cultural Gifts for Meaningful Relationships"
         copy="Chazen 企業茶禮盒適合公司、客戶答謝、地產交收禮物、節日送禮與文化活動。"
         copyEn="Chazen's corporate tea gift boxes suit companies, client appreciation, real estate settlement gifts, festival gifting, and cultural events."
-        placeholder={{
-          asset: "b2b-corporate-gift-scene.webp",
-          label: "Future visual: B2B settlement gift scene",
-          note: "Hero placeholder for future B2B gift photography"
+        media={{
+          asset: "chazen-gift-box-v1.png",
+          alt: "A refined Chazen cultural gift box designed for settlement, client, and corporate gifting.",
+          type: "image"
         }}
       />
 
@@ -171,11 +170,10 @@ export default function B2BPage() {
               </article>
             ))}
           </div>
-          <ChazenMediaPlaceholder
-            asset="b2b-settlement-gift.webp"
-            label="Future visual: B2B settlement gift scene"
-            note="Reserved real estate settlement gift scene"
-          />
+          <article className="chazen-subpage-note">
+            <h3>{t("Designed for the handover moment", "為交收時刻而設")}</h3>
+            <p>{t("From A$78 per box, with a minimum order of 10. Final pricing depends on tea, card, sleeve, and co-branding requirements.", "每盒 A$78 起，最低訂量 10 盒。最終價格按茶葉、賀卡、封套及聯名要求而定。")}</p>
+          </article>
         </div>
       </ChazenContentSection>
 
@@ -194,10 +192,10 @@ export default function B2BPage() {
               ))}
             </ul>
           </article>
-          <ChazenMediaPlaceholder
-            asset="b2b-custom-branding.webp"
-            label="Future visual: Quiet custom branding sleeve"
-          />
+          <article className="chazen-subpage-note">
+            <h3>{t("Chazen × Your Brand", "Chazen × 你的品牌")}</h3>
+            <p>{t("Brand presence is applied through a restrained sleeve, message card, or settlement note—without overwhelming the gift experience.", "品牌可低調呈現在封套、訊息卡或交收賀卡上，不掩蓋禮物本身的體驗。")}</p>
+          </article>
         </div>
       </ChazenContentSection>
 
@@ -223,41 +221,57 @@ export default function B2BPage() {
               )}
             </p>
           </article>
-          <ChazenMediaPlaceholder
-            asset="b2b-festival-gift-box.webp"
-            label="Future visual: Festival and event gift box"
-          />
+          <article className="chazen-subpage-note">
+            <h3>{t("The First Evening", "第一個夜晚")}</h3>
+            <p>{t("A quiet ritual for the client's first evening at home—created to make the relationship memorable beyond settlement day.", "為客戶入住所準備的一場安靜儀式，讓這段關係在交收日之後仍被記住。")}</p>
+          </article>
         </div>
       </ChazenContentSection>
 
       <ChazenContentSection
         eyebrow="Enquiry form"
         eyebrowZh="查詢表格"
-        title="先預留清楚的查詢結構"
-        english="Enquiry Form Placeholder"
+        title="告訴我們你的贈禮時刻"
+        english="Tell Us About the Gift Moment"
       >
         <div className="chazen-two-column">
-          <form id="b2b-enquiry" className="chazen-form-placeholder">
-            {/* Future integration: connect these fields to the Chazen B2B enquiry workflow. */}
+          <form
+            id="b2b-enquiry"
+            className="chazen-form-placeholder"
+            action="mailto:hello@chazentea.com.au?subject=Chazen%20B2B%20Gift%20Enquiry"
+            method="post"
+            encType="text/plain"
+          >
             <h3>{t("Enquire for B2B Gift Box", "查詢企業禮盒")}</h3>
             {enquiryFields.map((field) => (
               <label key={field.en}>
                 {t(field.en, field.zh)}
                 <input
-                  type={field.en === "Email" ? "email" : "text"}
+                  type={field.en === "Email" ? "email" : field.en === "Quantity" ? "number" : "text"}
+                  name={field.en.toLowerCase().replaceAll(" ", "-")}
                   placeholder={t(field.en, field.zh)}
+                  required={field.en === "Name" || field.en === "Email" || field.en === "Quantity"}
                 />
               </label>
             ))}
             <label>
               {t("Message", "訊息")}
-              <textarea rows={4} placeholder={t("Tell us about the gift moment.", "告訴我們這份禮物的場合。")} />
+              <textarea
+                name="message"
+                rows={4}
+                placeholder={t("Tell us about the gift moment.", "告訴我們這份禮物的場合。")}
+                required
+              />
             </label>
+            <button type="submit" className="button-primary">
+              {t("Prepare Email Enquiry", "準備電郵查詢")}
+            </button>
           </form>
-          <ChazenMediaPlaceholder
-            asset="b2b-enquiry-form.webp"
-            label="Future visual: B2B enquiry form preview"
-          />
+          <article className="chazen-subpage-note">
+            <h3>{t("What happens next", "提交後流程")}</h3>
+            <p>{t("Your email app will open with the enquiry details. We will confirm quantity, branding, lead time, and final pricing before production.", "系統會開啟你的電郵程式並帶入查詢資料。我們會在製作前確認數量、聯名方式、交期及最終價格。")}</p>
+            <p><a href="mailto:hello@chazentea.com.au">hello@chazentea.com.au</a></p>
+          </article>
         </div>
       </ChazenContentSection>
 
