@@ -24,7 +24,30 @@ export const metadata: Metadata = {
     default: `${site.name} | One Cup. One Breath. One Return.`,
     template: `%s | ${site.name}`
   },
-  description: site.description
+  description: site.description,
+  metadataBase: new URL("https://mingchan1348-lang.github.io/chazen-website/"),
+  openGraph: {
+    title: "Chazen 茶禪 | One Cup. One Breath. One Return.",
+    description: site.description,
+    url: "https://mingchan1348-lang.github.io/chazen-website/",
+    siteName: "Chazen 茶禪",
+    images: [
+      {
+        url: "images/chazen-tea-room-hero-v2.png",
+        width: 1672,
+        height: 941,
+        alt: "Chazen tea room — modern Chinese tea culture and quiet ritual."
+      }
+    ],
+    locale: "en_AU",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chazen 茶禪 | One Cup. One Breath. One Return.",
+    description: site.description,
+    images: ["images/chazen-tea-room-hero-v2.png"]
+  }
 };
 
 export default function RootLayout({
