@@ -1,7 +1,7 @@
 import { TeaAssessmentExperience } from "@/components/TeaAssessmentExperience";
 
 export const metadata = {
-  title: "Chazen AI Tea Test"
+  title: "Chazen Tea Rhythm Test"
 };
 
 export default function TeaTestPage() {

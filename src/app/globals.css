@@ -2655,6 +2655,54 @@ body:has(.chazen-motion-home) .museum-site-footer {
   --mind-panel: rgba(244, 248, 238, 0.55);
 }
 
+.tea-mind-tone-harmony {
+  --mind-accent: #53684f;
+  --mind-accent-soft: rgba(83, 104, 79, 0.11);
+  --mind-panel: rgba(244, 248, 238, 0.58);
+}
+
+.tea-mind-tone-restore {
+  --mind-accent: #835b3d;
+  --mind-accent-soft: rgba(131, 91, 61, 0.12);
+  --mind-panel: rgba(255, 247, 237, 0.58);
+}
+
+.tea-mind-tone-warm {
+  --mind-accent: #9a6632;
+  --mind-accent-soft: rgba(154, 102, 50, 0.12);
+  --mind-panel: rgba(255, 244, 229, 0.58);
+}
+
+.tea-mind-tone-cool {
+  --mind-accent: #4d6d72;
+  --mind-accent-soft: rgba(77, 109, 114, 0.11);
+  --mind-panel: rgba(239, 247, 247, 0.58);
+}
+
+.tea-mind-tone-replenish {
+  --mind-accent: #5e7770;
+  --mind-accent-soft: rgba(94, 119, 112, 0.11);
+  --mind-panel: rgba(241, 248, 245, 0.58);
+}
+
+.tea-mind-tone-light {
+  --mind-accent: #667044;
+  --mind-accent-soft: rgba(102, 112, 68, 0.11);
+  --mind-panel: rgba(248, 248, 237, 0.58);
+}
+
+.tea-mind-tone-release {
+  --mind-accent: #98643c;
+  --mind-accent-soft: rgba(152, 100, 60, 0.11);
+  --mind-panel: rgba(255, 245, 235, 0.58);
+}
+
+.tea-mind-tone-settle {
+  --mind-accent: #4e5c6b;
+  --mind-accent-soft: rgba(78, 92, 107, 0.11);
+  --mind-panel: rgba(241, 244, 247, 0.58);
+}
+
 .tea-mind-result-hero {
   display: grid;
   grid-template-columns: minmax(180px, 0.32fr) minmax(0, 1fr);
@@ -2692,7 +2740,8 @@ body:has(.chazen-motion-home) .museum-site-footer {
 
 .tea-mind-quick-tea {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
   margin-top: 1.1rem;
@@ -2715,6 +2764,20 @@ body:has(.chazen-motion-home) .museum-site-footer {
   font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   font-size: 1.3rem;
   font-weight: 400;
+}
+
+.tea-mind-quick-tea p {
+  margin: 0;
+  color: rgba(23, 23, 19, 0.76);
+  line-height: 1.55;
+}
+
+.tea-mind-quick-tea small {
+  display: block;
+  max-width: 760px;
+  color: rgba(23, 23, 19, 0.58);
+  font-size: 0.78rem;
+  line-height: 1.6;
 }
 
 .tea-mind-full-interpretation {
@@ -2956,7 +3019,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .tea-mind-detail-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .tea-mind-result-grid article,
