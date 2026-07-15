@@ -157,7 +157,7 @@ function bridgeResponse(data, payload) {
 
   const origin = JSON.stringify(CHAT_PARENT_ORIGIN);
   const html = `<!doctype html><html><body><script>
-    window.parent.postMessage(${message}, ${origin});
+    window.top.postMessage(${message}, ${origin});
   </script></body></html>`;
 
   return HtmlService
