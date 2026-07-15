@@ -1,16 +1,12 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
-import { ArrowRight, ClipboardCopy, MailCheck } from "lucide-react";
-import {
-  buildInquiryEmailBody,
-  buildInquiryMailto,
-  inquiryTypes,
-  type InquiryPayload,
-  type InquiryType
-} from "@/lib/inquiry";
-import { site } from "@/lib/site";
+import { FormEvent, useEffect, useState } from "react";
+import { ArrowRight, CheckCircle2, LoaderCircle } from "lucide-react";
+import { inquiryTypes, type InquiryPayload, type InquiryType } from "@/lib/inquiry";
 import { useLanguage } from "@/lib/language";
+
+const inquiryEndpoint =
+  "https://script.google.com/macros/s/AKfycbxNWxzcqD-_fKWDuySSGixtDW2aPUrgHVa2ySFzYiqMHeEv_sp2NTfCmU4hNhj_lhB4tg/exec";
 
 type InquiryFormProps = {
   defaultType?: InquiryType;
@@ -56,24 +52,6 @@ function validateInquiry(payload: InquiryPayload, t: (en: string, zh: string) =>
   return errors;
 }
 
-function copyToClipboard(text: string) {
-  if (navigator.clipboard?.writeText) {
-    return navigator.clipboard.writeText(text);
-  }
-
-  const textArea = document.createElement("textarea");
-  textArea.value = text;
-  textArea.setAttribute("readonly", "");
-  textArea.style.position = "fixed";
-  textArea.style.left = "-9999px";
-  document.body.appendChild(textArea);
-  textArea.select();
-  document.execCommand("copy");
-  document.body.removeChild(textArea);
-
-  return Promise.resolve();
-}
-
 const inquiryTypeLabels: Record<InquiryType, string> = {
   "Personal gift": "個人禮物",
   "Real estate settlement": "地產交收禮物",
@@ -96,7 +74,7 @@ export function InquiryForm({
     source: sourceLabel
   });
   const [errors, setErrors] = useState<InquiryErrors>({});
-  const [status, setStatus] = useState<"idle" | "opening" | "copied">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -112,12 +90,11 @@ export function InquiryForm({
     }));
   }, []);
 
-  const emailBody = useMemo(() => buildInquiryEmailBody(payload), [payload]);
-  const mailtoHref = useMemo(() => buildInquiryMailto(payload), [payload]);
   const hasErrors = Object.keys(errors).length > 0;
 
   function updateField<Field extends keyof InquiryPayload>(field: Field, value: InquiryPayload[Field]) {
     setPayload((current) => ({ ...current, [field]: value }));
+    setStatus("idle");
     setErrors((current) => {
       if (!current[field]) return current;
       const next = { ...current };
@@ -126,7 +103,7 @@ export function InquiryForm({
     });
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -140,13 +117,34 @@ export function InquiryForm({
       return;
     }
 
-    setStatus("opening");
-    window.location.href = mailtoHref;
-  }
+    setStatus("sending");
 
-  async function handleCopy() {
-    await copyToClipboard(`${emailBody}\n\nSend to: ${site.email}`);
-    setStatus("copied");
+    try {
+      // Apps Script accepts a simple cross-origin form POST. no-cors keeps the visitor
+      // on this page while allowing the inquiry to be delivered to the script.
+      const submission = new URLSearchParams({
+        name: payload.name.trim(),
+        email: payload.email.trim(),
+        company: payload.company.trim(),
+        inquiryType: payload.type,
+        quantity: payload.quantity.trim(),
+        timing: payload.timing.trim(),
+        message: payload.message.trim(),
+        source: payload.source || sourceLabel,
+        website: ""
+      });
+
+      await fetch(inquiryEndpoint, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+        body: submission.toString()
+      });
+
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -215,7 +213,7 @@ export function InquiryForm({
         <label className="grid gap-2 text-sm font-semibold text-ink/78">
           {t("Inquiry type", "查詢類型")}
           <select
-            name="type"
+            name="inquiryType"
             value={payload.type}
             aria-invalid={Boolean(errors.type)}
             className="h-12 border border-ink/12 bg-white px-4 text-base outline-none transition focus:border-leaf"
@@ -269,11 +267,16 @@ export function InquiryForm({
         ) : null}
       </label>
       <div className="flex flex-wrap gap-3">
-        <button type="submit" className="button-primary">
-          {t("Send inquiry", "送出查詢")} <ArrowRight size={17} />
-        </button>
-        <button type="button" className="button-secondary" onClick={handleCopy}>
-          {t("Copy inquiry", "複製查詢內容")} <ClipboardCopy size={17} />
+        <button type="submit" className="button-primary" disabled={status === "sending"}>
+          {status === "sending" ? (
+            <>
+              <LoaderCircle className="animate-spin" size={17} /> {t("Sending…", "正在送出…")}
+            </>
+          ) : (
+            <>
+              {t("Send inquiry", "送出查詢")} <ArrowRight size={17} />
+            </>
+          )}
         </button>
       </div>
       <div className="grid gap-2 text-xs leading-6 text-ink/58" aria-live="polite">
@@ -282,28 +285,25 @@ export function InquiryForm({
             {t("Please fix the highlighted fields before sending.", "請先修正標示的欄位再送出。")}
           </p>
         ) : null}
-        {status === "opening" ? (
+        {status === "sending" ? (
           <p className="flex max-w-xl items-start gap-2">
-            <MailCheck className="mt-1 shrink-0 text-leaf" size={15} />
-            {t("Your email app should open with the inquiry ready to send. If it does not, use Copy inquiry and send it to", "你的電郵應用程式將會開啟並準備好查詢內容。如果沒有，請使用「複製查詢內容」並寄送至")}{" "}
-            <a className="font-semibold text-leaf underline" href={`mailto:${site.email}`}>
-              {site.email}
-            </a>
-            .
+            <LoaderCircle className="mt-1 shrink-0 animate-spin text-leaf" size={15} />
+            {t("Sending your inquiry…", "正在送出你的查詢…")}
           </p>
-        ) : status === "copied" ? (
-          <p>
-            {t("Inquiry copied. Send it to", "查詢內容已複製，請寄送至")}{" "}
-            <a className="font-semibold text-leaf underline" href={`mailto:${site.email}`}>
-              {site.email}
-            </a>
-            .
+        ) : status === "sent" ? (
+          <p className="flex max-w-xl items-start gap-2 font-semibold text-leaf">
+            <CheckCircle2 className="mt-1 shrink-0" size={15} />
+            {t("Thank you — your inquiry has been sent. We will be in touch soon.", "謝謝，你的查詢已成功送出。我們會盡快與你聯絡。")}
+          </p>
+        ) : status === "error" ? (
+          <p className="font-semibold text-seal">
+            {t("We could not send your inquiry. Please check your connection and try again.", "未能送出你的查詢。請檢查網絡後再試。")}
           </p>
         ) : (
           <p className="max-w-xl">
             {t(
-              "This GitHub Pages friendly form opens your email app with the inquiry prepared. You can also copy the inquiry if your browser blocks mail links.",
-              "這個表單適用於 GitHub Pages，會為你開啟電郵應用程式並準備好查詢內容。如果瀏覽器封鎖了電郵連結，你也可以直接複製查詢內容。"
+              "Send your enquiry directly from this page. No email app will open.",
+              "直接在此頁送出查詢，不會開啟電郵應用程式。"
             )}
           </p>
         )}
