@@ -6,7 +6,7 @@ import { inquiryTypes, type InquiryPayload, type InquiryType } from "@/lib/inqui
 import { useLanguage } from "@/lib/language";
 
 const inquiryEndpoint =
-  "https://script.google.com/macros/s/AKfycbxNWxzcqD-_fKWDuySSGixtDW2aPUrgHVa2ySFzYiqMHeEv_sp2NTfCmU4hNhj_lhB4tg/exec";
+  "https://script.google.com/macros/s/AKfycbxUYXnFHhxpjCB1lqt7RdvtuI3JQiFAqWNThjwzs_v6QmxmdwYt-nYTW-Id3IHKqbHfpw/exec";
 
 type InquiryFormProps = {
   defaultType?: InquiryType;
