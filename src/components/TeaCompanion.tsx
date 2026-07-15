@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Gift, Leaf, MessageCircle, SendHorizontal, Sparkles, X } from "lucide-react";
+import { ArrowRight, Gift, Leaf, MessageCircle, Sparkles, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { useLanguage } from "@/lib/language";
@@ -27,13 +27,13 @@ function getVisitorId() {
   const existing = window.localStorage.getItem(key);
   if (existing) return existing;
 
-  const created = `cha_${crypto.randomUUID?.() ?? `${Date.now()}_${Math.random().toString(36).slice(2)}`}`;
+  const created = `cha_${Date.now()}_${Math.random().toString(36).slice(2)}_${Math.random().toString(36).slice(2)}`;
   window.localStorage.setItem(key, created);
   return created;
 }
 
 function askCha(message: string, visitorId: string) {
-  return new Promise<ChatResponse>((resolve, reject) => {
+  return new Promise<ChatResponse>((resolve) => {
     const callback = `chazenChaReply_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const url = new URL(endpoint);
     url.search = new URLSearchParams({ action: "chat", message, visitorId, callback }).toString();
@@ -42,13 +42,13 @@ function askCha(message: string, visitorId: string) {
 
     function finish(result?: ChatResponse) {
       window.clearTimeout(timeout);
-      delete (window as Window & Record<string, unknown>)[callback];
+      delete (window as unknown as Record<string, unknown>)[callback];
       script.remove();
       if (result) resolve(result);
-      else reject(new Error("Cha did not respond."));
+      else resolve({ error: "connection" });
     }
 
-    (window as Window & Record<string, unknown>)[callback] = (result: ChatResponse) => finish(result);
+    (window as unknown as Record<string, unknown>)[callback] = (result: ChatResponse) => finish(result);
     script.onerror = () => finish({ error: "connection" });
     script.src = url.toString();
     document.body.appendChild(script);
@@ -118,7 +118,7 @@ export function TeaCompanion() {
             <label className="sr-only" htmlFor="cha-question">{t("Ask Cha", "問茶")}</label>
             <textarea id="cha-question" value={question} maxLength={600} rows={2} placeholder={t("Ask about tea, gifts, or rituals…", "問茶葉、禮物或茶儀式…")} onChange={(event) => setQuestion(event.target.value)} className="w-full resize-none rounded-xl border border-[#5b3a24]/20 bg-white px-3 py-2 text-sm leading-5 outline-none focus:border-[#1f4735]" />
             <button type="submit" disabled={!question.trim() || status === "thinking"} className="flex items-center justify-center gap-2 rounded-xl bg-[#1f4735] px-3 py-2.5 text-sm font-bold text-[#fbf7ef] disabled:cursor-not-allowed disabled:opacity-50">
-              <SendHorizontal size={15} /> {status === "thinking" ? t("Thinking…", "思考中…") : t("Ask Cha", "問茶")}
+              <ArrowRight size={15} /> {status === "thinking" ? t("Thinking…", "思考中…") : t("Ask Cha", "問茶")}
             </button>
           </form>
           <p className="mt-2 text-[0.68rem] leading-4 text-[#2a2722]/55">{t("Short questions work best. Messages are limited to protect this service.", "簡短問題最合適。為保護服務，訊息設有上限。")}</p>
