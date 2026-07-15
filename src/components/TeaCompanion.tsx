@@ -37,27 +37,13 @@ function getVisitorId() {
   return created;
 }
 
-function askCha(message: string, visitorId: string) {
-  return new Promise<ChatResponse>((resolve) => {
-    const callback = `chazenChaReply_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-    const url = new URL(endpoint);
-    url.search = new URLSearchParams({ action: "chat", message, visitorId, callback }).toString();
-    const script = document.createElement("script");
-    const timeout = window.setTimeout(() => finish({ error: "timeout" }), 18_000);
+async function askCha(message: string, visitorId: string) {
+  const url = new URL(endpoint);
+  url.search = new URLSearchParams({ action: "chat", message, visitorId }).toString();
 
-    function finish(result?: ChatResponse) {
-      window.clearTimeout(timeout);
-      delete (window as unknown as Record<string, unknown>)[callback];
-      script.remove();
-      if (result) resolve(result);
-      else resolve({ error: "connection" });
-    }
-
-    (window as unknown as Record<string, unknown>)[callback] = (result: ChatResponse) => finish(result);
-    script.onerror = () => finish({ error: "connection" });
-    script.src = url.toString();
-    document.body.appendChild(script);
-  });
+  const response = await fetch(url.toString(), { method: "GET" });
+  if (!response.ok) throw new Error("Cha service unavailable");
+  return response.json() as Promise<ChatResponse>;
 }
 
 export function TeaCompanion() {
