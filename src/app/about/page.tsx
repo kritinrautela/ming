@@ -1,10 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import { SectionHeading } from "@/components/SectionHeading";
 import { useLanguage } from "@/lib/language";
+import { withBasePath } from "@/lib/media";
 import styles from "./about.module.css";
 
 const pillars = [
@@ -63,6 +65,21 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
+
+          <figure className={styles.storyFigure}>
+            <Image
+              src={withBasePath("/images/chazen-tea-room-hero-v2.jpg")}
+              alt={t(
+                "The Chazen tea room: a low wooden table, gaiwan, and warm side light.",
+                "Chazen 茶室：矮木茶桌、蓋碗，與溫暖的側光。"
+              )}
+              fill
+              sizes="(min-width: 1024px) 80vw, 100vw"
+            />
+            <figcaption lang={language === "zh" ? "zh-Hant" : undefined}>
+              {t("The tea room the brand is built around.", "品牌圍繞著的那間茶室。")}
+            </figcaption>
+          </figure>
 
           <div className={styles.pillarsGrid}>
             {pillars.map((item) => (

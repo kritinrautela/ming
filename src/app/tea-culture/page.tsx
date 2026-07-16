@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import {
@@ -8,6 +9,7 @@ import {
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
 import { useLanguage } from "@/lib/language";
+import { withBasePath } from "@/lib/media";
 import styles from "./page.module.css";
 
 const timeline = [
@@ -17,7 +19,11 @@ const timeline = [
       zh: "茶從傳說與草木經驗開始，慢慢走入人的生活。",
       en: "Tea began with legend and herbal knowledge, slowly finding its way into daily life."
     },
-    asset: "culture-shennong.webp"
+    asset: "chazen-shanshui-chapter-2.jpg",
+    alt: {
+      en: "Ink-wash mountains and mist, the mythic landscape where tea began.",
+      zh: "水墨山霧，茶開始的神話山水。"
+    }
   },
   {
     title: { zh: "唐代 — 陸羽《茶經》", en: "Tang Dynasty — Lu Yu's Classic of Tea" },
@@ -25,7 +31,11 @@ const timeline = [
       zh: "茶被書寫、整理，也開始成為有系統的文化。",
       en: "Tea was written about and codified, becoming a systematic culture."
     },
-    asset: "culture-luyu-tea-classic.webp"
+    asset: "chazen-tea-table-topdown-v3.jpg",
+    alt: {
+      en: "A tea table set in careful order, the codified sequence Lu Yu described.",
+      zh: "井然有序的茶席，正是陸羽筆下的系統。"
+    }
   },
   {
     title: { zh: "宋代 — 點茶與文人美學", en: "Song Dynasty — Whisked Tea and Literati Aesthetics" },
@@ -33,7 +43,11 @@ const timeline = [
       zh: "茶與器物、書畫、文人日常連在一起。",
       en: "Tea intertwined with fine objects, calligraphy, painting, and literati daily life."
     },
-    asset: "culture-song-diancha.webp"
+    asset: "chazen-song-diancha-v1.jpg",
+    alt: {
+      en: "Whisked tea in a dark Jian Zhan bowl, the Song literati aesthetic.",
+      zh: "建盞中的點茶，宋代文人的美學。"
+    }
   },
   {
     title: { zh: "明代 — 散茶與日常飲茶", en: "Ming Dynasty — Loose-Leaf Tea and Everyday Drinking" },
@@ -41,7 +55,11 @@ const timeline = [
       zh: "飲茶方式更貼近日常，也更接近今天的茶桌。",
       en: "Tea drinking grew closer to everyday life, resembling the tea table we know today."
     },
-    asset: "culture-ming-loose-leaf.webp"
+    asset: "chazen-hero-gongfu-room-v3.jpg",
+    alt: {
+      en: "A gongfu tea room with loose-leaf brewing, the table the Ming made everyday.",
+      zh: "以散茶沖泡的工夫茶室，明代之後的日常茶桌。"
+    }
   },
   {
     title: { zh: "Modern Chazen", en: "Modern Chazen" },
@@ -49,7 +67,11 @@ const timeline = [
       zh: "以茶測試、茶儀式與文化內容，把茶帶回現代生活。",
       en: "Bringing tea back into modern life through the Tea Test, tea ritual, and cultural content."
     },
-    asset: "culture-five-faculties-jian-zhan.webp"
+    asset: "chazen-tea-room-hero-v2.jpg",
+    alt: {
+      en: "The modern Chazen tea room, where the tradition continues.",
+      zh: "現代的 Chazen 茶室，傳統在此延續。"
+    }
   }
 ];
 
@@ -148,6 +170,14 @@ export default function TeaCulturePage() {
         <ul className={styles.timeline}>
           {timeline.map((item, index) => (
             <li key={item.title.en} className={styles.timelineItem}>
+              <span className={styles.timelineMedia}>
+                <Image
+                  src={withBasePath(`/images/${item.asset}`)}
+                  alt={t(item.alt.en, item.alt.zh)}
+                  fill
+                  sizes="(min-width: 1024px) 30vw, 100vw"
+                />
+              </span>
               <span className={styles.timelineNumber}>
                 {t("Chapter", "篇章")} {String(index + 1).padStart(2, "0")}
               </span>

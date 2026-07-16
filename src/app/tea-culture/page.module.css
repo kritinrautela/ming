@@ -16,12 +16,29 @@
   align-content: start;
   border-top: 1px solid rgba(157, 129, 80, 0.28);
   padding-top: 0.9rem;
-  transition: background 250ms ease, padding-left 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: background 250ms ease;
+}
+
+.timelineMedia {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.timelineMedia img {
+  object-fit: cover;
+  filter: sepia(0.18) saturate(0.9);
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1), filter 400ms ease;
+}
+
+.timelineItem:hover .timelineMedia img {
+  transform: scale(1.04);
+  filter: sepia(0) saturate(1);
 }
 
 .timelineItem:hover {
   background: rgba(251, 250, 246, 0.4);
-  padding-left: 0.6rem;
 }
 
 .timelineItem h3 {

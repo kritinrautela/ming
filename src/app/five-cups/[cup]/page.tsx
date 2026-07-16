@@ -50,10 +50,9 @@ export default async function FiveCupPage({ params }: FiveCupPageProps) {
         english={currentCup.english}
         copy={currentCup.teaZenMeaning}
         copyEn={currentCup.teaZenMeaningEn}
-        placeholder={{
-          asset: currentCup.asset,
-          label: currentCup.visualDirection,
-          note: "Future Jian Zhan cup photography"
+        media={{
+          asset: "chazen-song-diancha-v1.jpg",
+          alt: "A dark Jian Zhan bowl during Song-style whisked tea preparation."
         }}
       />
 

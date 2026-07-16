@@ -4,8 +4,8 @@ import { useEffect } from "react";
 import {
   ChazenContentSection,
   ChazenCtaBand,
-  ChazenMediaPlaceholder,
-  ChazenSubpageHero
+  ChazenSubpageHero,
+  ChazenSubpageMedia
 } from "@/components/ChazenSubpage";
 import { FiveCupsTabs } from "@/app/five-cups/FiveCupsTabs";
 import { useLanguage } from "@/lib/language";
@@ -27,14 +27,9 @@ export default function FiveCupsPage() {
         english="Five Jian Zhan Cups, Five Ways Back to the Self"
         copy="一盞茶，不只是入口的味道。它是一個讓人慢下來、觀察自己、重新整理內心的過程。"
         copyEn="A cup of tea is more than a taste on the tongue. It's a process that slows you down, lets you observe yourself, and reorganizes your inner world."
-        placeholder={{
-          asset: "five-cups-overview.webp",
-          label: "Future visual: five Jian Zhan cups arranged on a quiet tea table",
-          note: "Reserved Five Cups overview visual"
-        }}
         media={{
-          asset: "chazen-arrival-room.avif",
-          alt: "A quiet, softly lit tea room — the arrival point for the Five Cups practice."
+          asset: "chazen-song-diancha-v1.jpg",
+          alt: "A dark Jian Zhan bowl during Song-style whisked tea preparation — the vessel behind the Five Cups practice."
         }}
       />
 
@@ -77,11 +72,10 @@ export default function FiveCupsPage() {
               {t("This is the Chazen way of tea and stillness.", "這，就是 Chazen 的茶禪之路。")}
             </p>
           </div>
-          <ChazenMediaPlaceholder
-            asset="five-cups-practice-loop.mp4"
-            label="Future video: the Five Cups practice loop"
+          <ChazenSubpageMedia
+            asset="dian-cha.mp4"
+            alt="Slow footage of whisked tea settling in a dark Jian Zhan bowl — the rhythm of the Five Cups practice."
             type="video"
-            note="Reserved slow tea ritual motion asset"
           />
         </div>
       </ChazenContentSection>

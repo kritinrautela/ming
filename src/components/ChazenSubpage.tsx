@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
+import { MotionReveal } from "@/components/MotionReveal";
 import { useLanguage } from "@/lib/language";
 
 type ChazenMediaPlaceholderProps = {
@@ -132,7 +133,7 @@ export function ChazenSubpageHero({
   return (
     <section className="chazen-subpage-hero">
       <div className="chazen-subpage-container chazen-subpage-hero-grid">
-        <div>
+        <MotionReveal>
           <p className="chazen-subpage-eyebrow">{t(eyebrow, eyebrowZh ?? eyebrow)}</p>
           {language === "zh" ? (
             <>
@@ -144,8 +145,12 @@ export function ChazenSubpageHero({
           )}
           <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(copyEn ?? copy, copy)}</p>
           <div className="chazen-subpage-hero-rule" aria-hidden="true" />
-        </div>
-        {media ? <ChazenSubpageMedia {...media} /> : placeholder ? <ChazenMediaPlaceholder {...placeholder} /> : null}
+        </MotionReveal>
+        {media || placeholder ? (
+          <MotionReveal delay={0.14}>
+            {media ? <ChazenSubpageMedia {...media} /> : placeholder ? <ChazenMediaPlaceholder {...placeholder} /> : null}
+          </MotionReveal>
+        ) : null}
       </div>
     </section>
   );
@@ -165,7 +170,7 @@ export function ChazenContentSection({
   return (
     <section className={`chazen-subpage-section chazen-subpage-section-${tone}`}>
       <div className="chazen-subpage-container">
-        <div className="chazen-subpage-heading">
+        <MotionReveal className="chazen-subpage-heading">
           {eyebrow ? <p className="chazen-subpage-eyebrow">{t(eyebrow, eyebrowZh ?? eyebrow)}</p> : null}
           {language === "zh" || !english ? (
             <>
@@ -176,8 +181,8 @@ export function ChazenContentSection({
             <h2>{english}</h2>
           )}
           {copy ? <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(copyEn ?? copy, copy)}</p> : null}
-        </div>
-        {children}
+        </MotionReveal>
+        {children ? <MotionReveal delay={0.12}>{children}</MotionReveal> : null}
       </div>
     </section>
   );
@@ -188,11 +193,11 @@ export function ChazenCtaBand({ title, titleEn, copy, copyZh, primary, secondary
   return (
     <section className="chazen-subpage-cta">
       <div className="chazen-subpage-container">
-        <div>
+        <MotionReveal>
           <p className="chazen-subpage-eyebrow">{t("Next step", "下一步")}</p>
           {language === "zh" || !titleEn ? <h2 lang="zh-Hant">{title}</h2> : <h2>{titleEn}</h2>}
           <p>{t(copy, copyZh ?? copy)}</p>
-        </div>
+        </MotionReveal>
         <div className="chazen-subpage-actions">
           <Link href={primary.href} className="chazen-subpage-button chazen-subpage-button-primary">
             {t(primary.label, primary.labelZh ?? primary.label)} <ArrowRight size={16} aria-hidden="true" />

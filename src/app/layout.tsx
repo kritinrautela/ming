@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Instrument_Sans, Noto_Serif_TC } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
@@ -59,6 +59,10 @@ export const metadata: Metadata = {
   }
 };
 
+export const viewport: Viewport = {
+  themeColor: "#171713"
+};
+
 export default function RootLayout({
   children
 }: Readonly<{
@@ -69,8 +73,11 @@ export default function RootLayout({
       <body>
         <LanguageProvider>
           <div className="page-shell">
+            <a href="#main-content" className="skip-link">
+              Skip to content
+            </a>
             <Header />
-            {children}
+            <div id="main-content">{children}</div>
             <Footer />
             <TeaCompanion />
           </div>

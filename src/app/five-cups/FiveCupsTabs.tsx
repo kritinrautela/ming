@@ -113,7 +113,10 @@ function CupPanel({ cup, baseId, hidden }: { cup: FiveCup; baseId: string; hidde
       hidden={hidden}
     >
       <div className="five-cups-visual-wrap">
-        <JianZhanVisual asset={cup.asset} label={t(cup.visualDirectionEn, cup.visualDirection)} />
+        <JianZhanVisual
+          title={language === "zh" ? cup.tab : cup.english}
+          label={t(cup.teaZenMeaningEn, cup.teaZenMeaning)}
+        />
       </div>
 
       <div className="five-cups-copy">
@@ -148,11 +151,6 @@ function CupPanel({ cup, baseId, hidden }: { cup: FiveCup; baseId: string; hidde
           ))}
         </div>
 
-        <div className="five-cups-direction">
-          <span>{t("Visual direction", "視覺方向")}</span>
-          <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(cup.visualDirectionEn, cup.visualDirection)}</p>
-        </div>
-
         <Link href={cup.cta.href} className="chazen-subpage-button chazen-subpage-button-primary">
           {t(cup.cta.label, cup.cta.labelZh)} <ArrowRight size={16} aria-hidden="true" />
         </Link>
@@ -161,7 +159,7 @@ function CupPanel({ cup, baseId, hidden }: { cup: FiveCup; baseId: string; hidde
   );
 }
 
-function JianZhanVisual({ asset, label }: { asset: string; label: string }) {
+function JianZhanVisual({ title, label }: { title: string; label: string }) {
   return (
     <figure className="five-cups-visual">
       <div className="five-cups-steam" aria-hidden="true">
@@ -173,7 +171,7 @@ function JianZhanVisual({ asset, label }: { asset: string; label: string }) {
         <span />
       </div>
       <figcaption>
-        <span>{asset}</span>
+        <span>{title}</span>
         <small>{label}</small>
       </figcaption>
     </figure>

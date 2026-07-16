@@ -218,8 +218,8 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
               "茶不是商品格子。是一座座山，一種手藝，一杯時間。"
             )}
           </p>
-          <a href={`${basePath}/#entrance`} className="museum-link-button">
-            {t("Return to CHAZEN", "返回 CHAZEN")}
+          <a href={`${basePath}/brew-simulator/`} className="museum-link-button">
+            {t("Brew these leaves in the Brewing Room", "到沖泡室沖泡這些茶葉")}
           </a>
         </div>
       </section>

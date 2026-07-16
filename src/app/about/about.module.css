@@ -46,6 +46,30 @@
   color: rgba(23, 23, 19, 0.68);
 }
 
+.storyFigure {
+  position: relative;
+  aspect-ratio: 21 / 9;
+  min-height: 260px;
+  margin: 0 0 1rem;
+  overflow: hidden;
+}
+
+.storyFigure img {
+  object-fit: cover;
+}
+
+.storyFigure figcaption {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  padding: 0.45rem 0.8rem;
+  background: rgba(23, 23, 19, 0.55);
+  color: rgba(251, 250, 246, 0.92);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(3px);
+}
+
 .pillarsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

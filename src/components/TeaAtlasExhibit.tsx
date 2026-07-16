@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/lib/language";
+import { withBasePath } from "@/lib/media";
 
 const origins = [
   {
@@ -140,17 +142,41 @@ export function TeaAtlasExhibit() {
 
   return (
     <div className="atlas-exhibit">
-      <div className="atlas-map" aria-label="Interactive tea origin map">
-        <div className="atlas-landmass" />
+      <div className="atlas-map" aria-label={t("Interactive tea origin map", "互動茶產地地圖")}>
+        <Image
+          src={withBasePath("/images/chazen-shanshui-chapter-2.jpg")}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 60vw, 100vw"
+          className="atlas-map-art"
+          aria-hidden="true"
+        />
         {origins.map((origin) => (
           <button
             key={origin.name}
             type="button"
-            className={`atlas-point ${active.name === origin.name ? "is-active" : ""}`}
+            className={`atlas-point${active.name === origin.name ? " is-active" : ""}`}
             style={{ left: origin.x, top: origin.y }}
             onClick={() => setActive(origin)}
+            aria-pressed={active.name === origin.name}
+            aria-label={language === "zh" ? origin.cn : origin.name}
+          />
+        ))}
+        <div className="atlas-map-active" aria-hidden="true">
+          <span>{t("Selected origin", "所選產地")}</span>
+          <strong>{language === "zh" ? active.cn : active.name}</strong>
+        </div>
+      </div>
+      <div className="atlas-chipbar" role="group" aria-label={t("Choose a tea origin", "選擇茶產地")}>
+        {origins.map((origin) => (
+          <button
+            key={origin.name}
+            type="button"
+            className={active.name === origin.name ? "is-active" : ""}
+            onClick={() => setActive(origin)}
+            aria-pressed={active.name === origin.name}
           >
-            <span>{language === "zh" ? origin.cn : origin.name}</span>
+            {language === "zh" ? origin.cn : origin.name}
           </button>
         ))}
       </div>
