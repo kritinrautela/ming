@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Cormorant_Garamond, Instrument_Sans, Noto_Serif_TC } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -9,12 +9,20 @@ import { site } from "@/lib/site";
 
 const displaySerif = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
   variable: "--font-serif",
   display: "swap"
 });
 
-const interfaceSans = Inter({
+const cjkSerif = Noto_Serif_TC({
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cjk",
+  display: "swap",
+  preload: false
+});
+
+const interfaceSans = Instrument_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap"
@@ -26,11 +34,11 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`
   },
   description: site.description,
-  metadataBase: new URL("https://mingchan1348-lang.github.io/chazen-website/"),
+  metadataBase: new URL("https://kritinrautela.github.io/chazen-website/"),
   openGraph: {
     title: "Chazen 茶禪 | One Cup. One Breath. One Return.",
     description: site.description,
-    url: "https://mingchan1348-lang.github.io/chazen-website/",
+    url: "https://kritinrautela.github.io/chazen-website/",
     siteName: "Chazen 茶禪",
     images: [
       {
@@ -57,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${displaySerif.variable} ${interfaceSans.variable}`}>
+    <html lang="en" className={`${displaySerif.variable} ${cjkSerif.variable} ${interfaceSans.variable}`}>
       <body>
         <LanguageProvider>
           <div className="page-shell">

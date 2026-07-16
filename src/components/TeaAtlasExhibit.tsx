@@ -179,14 +179,14 @@ export function TeaAtlasExhibit() {
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           <div>
             <p className="museum-label text-moss">{t("Terroir", "風土")}</p>
-            <p className="mt-3 text-sm leading-7 text-ink/64">{t(active.terroir.en, active.terroir.zh)}</p>
+            <p className="mt-3 text-sm leading-7 text-ink/65">{t(active.terroir.en, active.terroir.zh)}</p>
           </div>
           <div>
             <p className="museum-label text-moss">{t("Recommended Ritual", "建議儀式")}</p>
-            <p className="mt-3 text-sm leading-7 text-ink/64">{t(active.ritual.en, active.ritual.zh)}</p>
+            <p className="mt-3 text-sm leading-7 text-ink/65">{t(active.ritual.en, active.ritual.zh)}</p>
           </div>
         </div>
-        <p className="mt-8 border-l border-clay/35 pl-5 text-base leading-8 text-ink/72">
+        <p className="mt-8 border-l border-clay/35 pl-5 text-base leading-8 text-ink/70">
           {t(active.story.en, active.story.zh)}
         </p>
       </article>

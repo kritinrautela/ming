@@ -19,7 +19,7 @@ export function SectionHeading({ eyebrow, eyebrowZh, title, titleZh, copy, copyZ
       <h2 className="display-title mt-4 text-4xl leading-[1.05] text-ink md:text-6xl">
         {t(title, titleZh ?? title)}
       </h2>
-      {copy ? <p className="mt-6 text-lg leading-8 text-ink/66">{t(copy, copyZh ?? copy)}</p> : null}
+      {copy ? <p className="mt-6 text-lg leading-8 text-ink/65">{t(copy, copyZh ?? copy)}</p> : null}
     </div>
   );
 }

@@ -93,7 +93,7 @@ export function StillnessRoom() {
         </div>
         <p className="museum-label mt-6 text-brass">{t("60-second tea meditation", "六十秒茶冥想")}</p>
         <p className="display-title mt-3 text-6xl leading-none text-ink">{timeLabel}</p>
-        <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-ink/62">
+        <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-ink/60">
           {t(
             "Let the first sound mark the beginning. Watch the breath expand and release. Return to the cup before returning to the day.",
             "讓第一聲響標記開始。看著呼吸的展開與釋放。在回到日常之前，先回到這杯茶。"
@@ -127,7 +127,7 @@ export function StillnessRoom() {
               className={
                 mood.name.en === item.name.en
                   ? "rounded-full border border-moss bg-moss px-4 py-2 text-sm font-semibold text-porcelain transition"
-                  : "rounded-full border border-ink/15 px-4 py-2 text-sm font-semibold text-ink/68 transition hover:border-moss/50"
+                  : "rounded-full border border-ink/15 px-4 py-2 text-sm font-semibold text-ink/70 transition hover:border-moss/50"
               }
               onClick={() => setMood(item)}
             >
@@ -139,7 +139,7 @@ export function StillnessRoom() {
         <div className="mt-6 rounded-lg border border-clay/20 bg-paper px-6 py-5 text-center">
           <p className="museum-label text-clay">{t("Recommended tea", "建議茶款")}</p>
           <strong className="display-title mt-2 block text-2xl text-ink">{t(mood.tea.en, mood.tea.zh)}</strong>
-          <span className="mt-1 block text-sm leading-6 text-ink/62">{t(mood.copy.en, mood.copy.zh)}</span>
+          <span className="mt-1 block text-sm leading-6 text-ink/60">{t(mood.copy.en, mood.copy.zh)}</span>
         </div>
       </div>
     </div>

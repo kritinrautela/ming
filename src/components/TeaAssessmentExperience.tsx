@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Check, Download, LockKeyhole, Loader2, RotateCcw } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Check, Download, LockKeyhole, Loader2, RotateCcw } from "lucide-react";
 import { buildInquiryPath } from "@/lib/inquiry";
 import { useLanguage } from "@/lib/language";
 import styles from "./TeaAssessmentExperience.module.css";
@@ -672,6 +672,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
   const [currentQuestionId, setCurrentQuestionId] = useState("goal");
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [saveState, setSaveState] = useState<"idle" | "saved">("idle");
+  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const currentQuestion = questions[currentQuestionId];
   const result = useMemo(() => calculateResult(answers), [answers]);
   const tea = useMemo(() => getTeaRecommendation(result), [result]);
@@ -683,6 +684,26 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
     return () => window.clearTimeout(timer);
   }, [phase]);
 
+  const quizAnchorRef = useRef<HTMLDivElement | null>(null);
+  const skipScrollOnMount = useRef(true);
+
+  // Keep the question in view whenever the quiz advances — without this, the
+  // next question can render off-screen and the transition reads as a glitch.
+  useEffect(() => {
+    if (skipScrollOnMount.current) {
+      skipScrollOnMount.current = false;
+      return;
+    }
+    if (phase !== "question" && phase !== "loading" && phase !== "result") return;
+    const reduceMotion =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    quizAnchorRef.current?.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "start"
+    });
+  }, [phase, currentQuestionId]);
+
   function handleStart() {
     setAnswers([]);
     setCurrentQuestionId("goal");
@@ -691,25 +712,31 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
   }
 
   function handleAnswer(option: AssessmentOption) {
-    const nextAnswers = [...answers, { questionId: currentQuestion.id, optionId: option.id }];
-    setAnswers(nextAnswers);
+    // Ignore further clicks while the selected answer is being acknowledged,
+    // so a double-click can't record two answers or skip a question.
+    if (selectedOptionId) return;
+
+    setSelectedOptionId(option.id);
     setSaveState("idle");
 
-    if (nextAnswers.length >= TOTAL_QUESTIONS) {
-      setPhase("loading");
-      return;
-    }
+    // Let the selection state register visually before the question changes —
+    // an instant switch reads as a glitch rather than progress.
+    window.setTimeout(() => {
+      const nextAnswers = [...answers, { questionId: currentQuestion.id, optionId: option.id }];
+      setAnswers(nextAnswers);
+      setSelectedOptionId(null);
 
-    if (!option.next) {
-      setPhase("loading");
-      return;
-    }
+      if (nextAnswers.length >= TOTAL_QUESTIONS || !option.next) {
+        setPhase("loading");
+        return;
+      }
 
-    window.setTimeout(() => setCurrentQuestionId(option.next ?? "goal"), 160);
+      setCurrentQuestionId(option.next ?? "goal");
+    }, 450);
   }
 
   function handleBack() {
-    if (answers.length === 0) return;
+    if (answers.length === 0 || selectedOptionId) return;
     const previous = answers[answers.length - 1];
     setAnswers((current) => current.slice(0, -1));
     setCurrentQuestionId(previous.questionId);
@@ -829,7 +856,12 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
 
       <section className="museum-section tea-mind-room" aria-label="Tea rhythm assessment">
         <div className="museum-container tea-mind-shell">
-          <div className="tea-mind-progress" aria-label="Assessment progress">
+          <div
+            className="tea-mind-progress"
+            aria-label="Assessment progress"
+            ref={quizAnchorRef}
+            style={{ scrollMarginTop: 96 }}
+          >
             <div>
               <span>
                 {phase === "intro"
@@ -888,8 +920,15 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                   <button
                     type="button"
                     role="radio"
-                    aria-checked="false"
+                    aria-checked={selectedOptionId === option.id}
                     key={`${currentQuestion.id}-${option.id}`}
+                    className={
+                      selectedOptionId
+                        ? selectedOptionId === option.id
+                          ? "is-selected"
+                          : "is-dimmed"
+                        : undefined
+                    }
                     onClick={() => handleAnswer(option)}
                   >
                     <span className="tea-mind-option-mark">{String.fromCharCode(65 + index)}</span>
@@ -899,7 +938,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
               </div>
               {answers.length > 0 ? (
                 <button type="button" className="tea-mind-back-button" onClick={handleBack}>
-                  {t("Back", "上一題")}
+                  <ArrowLeft size={14} aria-hidden="true" /> {t("Back to the previous question", "回到上一題")}
                 </button>
               ) : null}
             </fieldset>

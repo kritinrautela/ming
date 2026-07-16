@@ -8,6 +8,7 @@ import {
   ChazenSubpageMedia
 } from "@/components/ChazenSubpage";
 import { useLanguage } from "@/lib/language";
+import styles from "./page.module.css";
 
 const ritualSteps = [
   { zh: "溫器", en: "Warm the Teaware", copy: { zh: "讓茶具先承接溫度", en: "Let the teaware take on warmth first" } },
@@ -118,15 +119,15 @@ export default function TeaRitualPage() {
         english="A Six-Step Tea Ritual"
         tone="paper"
       >
-        <div className="chazen-card-grid">
+        <ul className={styles.ritualSteps}>
           {ritualSteps.map((step, index) => (
-            <article key={step.zh} className="chazen-subpage-card">
-              <span>{String(index + 1).padStart(2, "0")}</span>
+            <li key={step.zh} className={styles.ritualStep}>
+              <span className={styles.stepNumber}>{String(index + 1).padStart(2, "0")}</span>
               {language === "zh" ? <h3 lang="zh-Hant">{step.zh}</h3> : <h3>{step.en}</h3>}
               <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(step.copy.en, step.copy.zh)}</p>
-            </article>
+            </li>
           ))}
-        </div>
+        </ul>
       </ChazenContentSection>
 
       <ChazenContentSection

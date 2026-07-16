@@ -1,0 +1,79 @@
+/* Tea Ritual page editorial layouts */
+
+/* Six steps: 3×2 numbered hairline list */
+.ritualSteps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 2rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ritualStep {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+  border-top: 1px solid rgba(157, 129, 80, 0.28);
+  padding-top: 0.9rem;
+  transition: background 250ms ease, padding-left 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ritualStep:hover {
+  background: rgba(251, 250, 246, 0.4);
+  padding-left: 0.6rem;
+}
+
+.stepNumber {
+  display: inline-flex;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--cz-seal);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.4rem;
+}
+
+.ritualStep h3 {
+  margin: 0;
+  font-family: var(--cz-serif);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--cz-ink);
+}
+
+.ritualStep p {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(23, 23, 19, 0.55);
+}
+
+/* Common mistakes list - styled properly */
+.mistakesList {
+  display: grid;
+  gap: 0.55rem;
+  margin: 1rem 0 0;
+  padding-left: 1rem;
+  list-style: disc;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ritualSteps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .ritualSteps {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .ritualStep {
+    padding-top: 0.8rem;
+  }
+}

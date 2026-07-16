@@ -8,6 +8,7 @@ import {
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
 import { useLanguage } from "@/lib/language";
+import styles from "./page.module.css";
 
 const timeline = [
   {
@@ -144,17 +145,17 @@ export default function TeaCulturePage() {
         english="From Origin Story to Everyday Practice"
         tone="paper"
       >
-        <div className="chazen-card-grid">
+        <ul className={styles.timeline}>
           {timeline.map((item, index) => (
-            <article key={item.title.en} className="chazen-subpage-card">
-              <span>
+            <li key={item.title.en} className={styles.timelineItem}>
+              <span className={styles.timelineNumber}>
                 {t("Chapter", "篇章")} {String(index + 1).padStart(2, "0")}
               </span>
               {language === "zh" ? <h3 lang="zh-Hant">{item.title.zh}</h3> : <h3>{item.title.en}</h3>}
               <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
-            </article>
+            </li>
           ))}
-        </div>
+        </ul>
       </ChazenContentSection>
 
       <ChazenContentSection
@@ -163,14 +164,14 @@ export default function TeaCulturePage() {
         title="茶是一種看見生活的方式"
         english="Tea as a Way of Seeing Daily Life"
       >
-        <div className="chazen-card-grid">
+        <ul className={styles.philosophy}>
           {philosophy.map((item) => (
-            <article key={item.title.en} className="chazen-subpage-card">
+            <li key={item.title.en} className={styles.philosophyItem}>
               {language === "zh" ? <h3 lang="zh-Hant">{item.title.zh}</h3> : <h3>{item.title.en}</h3>}
               <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
-            </article>
+            </li>
           ))}
-        </div>
+        </ul>
       </ChazenContentSection>
 
       <ChazenContentSection
@@ -204,14 +205,14 @@ export default function TeaCulturePage() {
         title="把茶文化帶回現代生活"
         english="Bringing Tea Culture Into Modern Life"
       >
-        <div className="chazen-card-grid">
+        <ul className={styles.modernChazen}>
           {modernChazen.map((item) => (
-            <article key={item.title.en} className="chazen-subpage-card">
+            <li key={item.title.en} className={styles.modernItem}>
               <span>{t(item.title.en, item.title.zh)}</span>
               <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
-            </article>
+            </li>
           ))}
-        </div>
+        </ul>
       </ChazenContentSection>
 
       <ChazenCtaBand

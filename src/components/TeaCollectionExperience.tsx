@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { buildInquiryPath } from "@/lib/inquiry";
 import { useLanguage } from "@/lib/language";
+import styles from "./TeaCollectionExperience.module.css";
 
 const filters = [
   { en: "All", zh: "全部" },
@@ -230,12 +231,12 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
               <p className="museum-kicker">Curated Leaves / 茶葉標本</p>
               <h2>{t("A catalogue arranged like a quiet cabinet, not a shop shelf.", "一份如靜謐標本櫃般編排的目錄，而非店鋪貨架。")}</h2>
             </div>
-            <div className="tea-filter-tabs" aria-label="Tea filters">
+            <div className={styles["tea-filter-tabs"]} aria-label="Tea filters">
               {filters.map((filter) => (
                 <button
                   type="button"
                   key={filter.en}
-                  className={activeFilter === filter.en ? "is-active" : ""}
+                  className={activeFilter === filter.en ? styles["is-active"] : ""}
                   onClick={() => {
                     setActiveFilter(filter.en);
                     const nextTea = teas.find((tea) => filter.en === "All" || tea.family.en === filter.en);
@@ -283,7 +284,7 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
                   <dd>{t(selectedTea.caffeine.en, selectedTea.caffeine.zh)}</dd>
                 </div>
               </dl>
-              <div className="tea-curator-actions">
+              <div className={styles["tea-curator-actions"]}>
                 <a href={`${basePath}/tea-test/`}>{t("Add to Assessment Profile", "加入測評檔案")}</a>
                 <a
                   href={buildInquiryPath({
@@ -298,14 +299,14 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
               </div>
             </aside>
 
-            <div className="tea-scroll-gallery">
+            <div className={styles["tea-scroll-gallery"]}>
               {visibleTeas.map((tea, index) => (
                 <article
                   id={tea.slug}
                   key={tea.slug}
                   className={`tea-leaf-card tea-${tea.palette} ${selectedTea.slug === tea.slug ? "is-selected" : ""}`}
                 >
-                  <button type="button" className="tea-leaf-select" onClick={() => setSelectedTea(tea)}>
+                  <button type="button" className={styles["tea-leaf-select"]} onClick={() => setSelectedTea(tea)}>
                     <span className="leaf-specimen" aria-hidden="true">
                       <span className="leaf-dish" />
                       <span className="leaf leaf-one" />
@@ -315,7 +316,7 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
                       <em>{String(index + 1).padStart(2, "0")}</em>
                     </span>
                     <span className="tea-liquor-dot" style={{ backgroundColor: tea.liquor }} aria-hidden="true" />
-                    <span className="tea-leaf-copy">
+                    <span className={styles["tea-leaf-copy"]}>
                       <span>{t(tea.family.en, tea.family.zh)}</span>
                       <h2>{tea.name}</h2>
                       <strong lang="zh-Hant">{tea.chinese}</strong>

@@ -1,0 +1,166 @@
+/* Inquiry form — refined styling with focus states and validation */
+
+.form {
+  display: grid;
+  gap: 1.25rem;
+  border: 1px solid rgba(23, 23, 19, 0.1);
+  border-radius: 2px;
+  background: var(--cz-porcelain);
+  padding: clamp(1.25rem, 5vw, 2rem);
+  box-shadow: 0 2px 8px rgba(111, 74, 50, 0.08);
+}
+
+.fieldGroupRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .fieldGroupRow {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.label {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(23, 23, 19, 0.78);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.input,
+.select,
+.textarea {
+  border-radius: 2px;
+  border: 1px solid rgba(23, 23, 19, 0.12);
+  background: white;
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--cz-ink);
+  transition: all 250ms cubic-bezier(0.22, 1, 0.36, 1);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--cz-moss);
+  box-shadow: 0 0 0 3px rgba(63, 89, 69, 0.1), inset 0 0 0 0 rgba(63, 89, 69, 0.02);
+}
+
+.input[aria-invalid="true"],
+.select[aria-invalid="true"],
+.textarea[aria-invalid="true"] {
+  border-color: var(--cz-seal);
+  background: rgba(159, 63, 47, 0.02);
+}
+
+.input[aria-invalid="true"]:focus,
+.select[aria-invalid="true"]:focus,
+.textarea[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px rgba(159, 63, 47, 0.1);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 5.5rem;
+  line-height: 1.6;
+}
+
+.errorMessage {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cz-seal);
+  margin-top: -0.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.feedbackRegion {
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(23, 23, 19, 0.58);
+}
+
+.feedbackError {
+  font-weight: 600;
+  color: var(--cz-seal);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feedbackSending {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: var(--cz-moss);
+  font-weight: 500;
+}
+
+.feedbackSuccess {
+  font-weight: 600;
+  color: var(--cz-moss);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+/* Select dropdown styling */
+.select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23171713' d='M1 1l5 5 5-5' stroke='%23171713' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px 8px;
+  padding-right: 2.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .input,
+  .select,
+  .textarea {
+    transition: all 250ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input,
+  .select,
+  .textarea {
+    transition: none;
+  }
+}
+
+/* Accessibility */
+.input::placeholder,
+.select::placeholder,
+.textarea::placeholder {
+  color: rgba(23, 23, 19, 0.45);
+}
+
+.input:disabled,
+.select:disabled,
+.textarea:disabled {
+  background: rgba(23, 23, 19, 0.04);
+  color: rgba(23, 23, 19, 0.5);
+  cursor: not-allowed;
+  border-color: rgba(23, 23, 19, 0.08);
+}

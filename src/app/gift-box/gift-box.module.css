@@ -1,0 +1,246 @@
+/* Gift Box Page Editorial Layout */
+
+.gift-hero {
+  display: grid;
+  grid-template-columns: 0.86fr 1.14fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.gift-hero-copy h1 {
+  margin: 0;
+  font-family: var(--cz-serif);
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--cz-ink);
+}
+
+.gift-hero-price {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--cz-leaf);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+/* Gift box contents grid - 2x3 with numbered items */
+.gift-contents-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.gift-content-item {
+  display: grid;
+  grid-template-columns: 1.8rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  padding: 1.5rem;
+  background: rgba(251, 250, 246, 0.5);
+  border-radius: 2px;
+  transition: all 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gift-content-item:hover,
+.gift-content-item:focus-within {
+  background: #f2eadc;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(111, 74, 50, 0.1);
+}
+
+.gift-content-item strong {
+  display: block;
+  color: #9f3f2f;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.gift-content-item p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(23, 23, 19, 0.68);
+}
+
+/* Open Listen Pour section - numbered steps */
+.gift-ritual-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(2rem, 3vw, 3rem);
+}
+
+.gift-ritual-step {
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(157, 129, 80, 0.35);
+  display: grid;
+  gap: 1rem;
+}
+
+.gift-ritual-step-number {
+  color: #9f3f2f;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.gift-ritual-step h3 {
+  margin: 0;
+  font-family: var(--cz-serif);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--cz-leaf);
+}
+
+.gift-ritual-step p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: rgba(23, 23, 19, 0.62);
+  max-width: 52ch;
+}
+
+/* Perceived value cards - 3 columns */
+.gift-value-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.gift-value-card {
+  padding: 2rem;
+  background: #fbfaf6;
+  border: none;
+  border-top: 1px solid rgba(157, 129, 80, 0.35);
+  border-radius: 2px;
+  transition: all 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gift-value-card:hover,
+.gift-value-card:focus-within {
+  background: var(--cz-ivory);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(111, 74, 50, 0.12);
+}
+
+.gift-value-card h4 {
+  margin: 0;
+  font-family: var(--cz-serif);
+  font-size: clamp(1.5rem, 2.5vw, 1.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--cz-leaf);
+}
+
+.gift-value-card p {
+  margin: 1rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(23, 23, 19, 0.62);
+}
+
+/* B2B section - asymmetric split */
+.gift-b2b {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.gift-b2b-copy h2 {
+  margin: 0;
+  font-family: var(--cz-serif);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--cz-ink);
+}
+
+.gift-b2b-copy p {
+  margin: 1.5rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(23, 23, 19, 0.64);
+  max-width: 58ch;
+}
+
+.gift-b2b-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+/* Mobile responsive */
+@media (max-width: 1024px) {
+  .gift-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .gift-ritual-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .gift-value-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gift-b2b {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gift-contents-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gift-hero-copy h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+  }
+
+  .gift-ritual-step h3 {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+  }
+
+  .gift-value-card h4 {
+    font-size: 1.3rem;
+  }
+
+  .gift-b2b-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gift-b2b-actions a,
+  .gift-b2b-actions button {
+    width: 100%;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .gift-content-item,
+  .gift-value-card {
+    transition: none;
+  }
+
+  .gift-content-item:hover,
+  .gift-content-item:focus-within,
+  .gift-value-card:hover,
+  .gift-value-card:focus-within {
+    transform: none;
+  }
+}

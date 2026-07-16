@@ -7,6 +7,7 @@ import {
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
 import { useLanguage } from "@/lib/language";
+import styles from "./tea-boxes.module.css";
 
 const journeys = [
   {
@@ -157,11 +158,14 @@ export default function TeaBoxesPage() {
         english="Three Ways to Begin"
         tone="paper"
       >
-        <div className="chazen-three-column">
-          {journeys.map((item) => (
-            <article key={item.title.en} className="chazen-subpage-card">
-              <span>{t(item.title.en, item.title.zh)}</span>
-              <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
+        <div className={styles["tea-journey-index"]}>
+          {journeys.map((item, index) => (
+            <article key={item.title.en} className={styles["tea-journey-item"]}>
+              <strong>{String(index + 1).padStart(2, "0")}</strong>
+              <div>
+                <h3>{t(item.title.en, item.title.zh)}</h3>
+                <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
+              </div>
             </article>
           ))}
         </div>
@@ -173,17 +177,19 @@ export default function TeaBoxesPage() {
         title="茶盒是茶、故事與儀式的容器"
         english="Tea, Story, and Ritual in One Object"
       >
-        <div className="chazen-three-column">
-          {boxCards.map((box) => (
-            <article key={box.title.en} className="chazen-subpage-card">
-              <span>{t("Collection preview", "系列預覽")}</span>
-              <strong className="chazen-price-tag">{box.price}</strong>
-              <h3>{t(box.title.en, box.title.zh)}</h3>
-              <ul>
-                {box.items.map((item) => (
-                  <li key={item.en}>{t(item.en, item.zh)}</li>
-                ))}
-              </ul>
+        <div className={styles["tea-boxes-grid"]}>
+          {boxCards.map((box, index) => (
+            <article key={box.title.en} className={styles["tea-box-card"]}>
+              <strong>{String(index + 1).padStart(2, "0")}</strong>
+              <div>
+                <h3>{t(box.title.en, box.title.zh)}</h3>
+                <span className={styles["tea-box-price"]}>{box.price}</span>
+                <ul>
+                  {box.items.map((item) => (
+                    <li key={item.en}>{t(item.en, item.zh)}</li>
+                  ))}
+                </ul>
+              </div>
             </article>
           ))}
         </div>
@@ -195,7 +201,7 @@ export default function TeaBoxesPage() {
         title="用最簡單的方式比較"
         english="A Simple Comparison"
       >
-        <div className="chazen-subpage-table">
+        <div className={styles["tea-comparison-table"]}>
           <table>
             <thead>
               <tr>

@@ -49,11 +49,11 @@ export function ChapterHero({
             {title}
           </h1>
           <div className="mt-8 grid gap-8 lg:grid-cols-[0.7fr_0.55fr] lg:items-end">
-            <p className="display-title text-4xl leading-tight text-porcelain/92 md:text-6xl">
+            <p className="display-title text-4xl leading-tight text-porcelain/90 md:text-6xl">
               {chinese}
             </p>
-            <div className="border-l border-porcelain/22 pl-6">
-              <p className="max-w-xl text-base leading-8 text-porcelain/74">{t(copy, copyZh ?? copy)}</p>
+            <div className="border-l border-porcelain/20 pl-6">
+              <p className="max-w-xl text-base leading-8 text-porcelain/75">{t(copy, copyZh ?? copy)}</p>
               {children ? <div className="mt-8">{children}</div> : null}
             </div>
           </div>

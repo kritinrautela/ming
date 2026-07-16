@@ -5,6 +5,7 @@ import { ChapterHero } from "@/components/ChapterHero";
 import { StillnessRoom } from "@/components/StillnessRoom";
 import { MotionReveal } from "@/components/MotionReveal";
 import { useLanguage } from "@/lib/language";
+import styles from "./stillness.module.css";
 
 const pillars = [
   {
@@ -35,7 +36,7 @@ export default function StillnessModePage() {
   }, [language]);
 
   return (
-    <main>
+    <main className={styles.stillnessPage}>
       <ChapterHero
         chapter="Chapter 07 / Stillness Mode"
         chapterZh="第七章 / 靜心模式"
@@ -47,11 +48,11 @@ export default function StillnessModePage() {
         imageAlt="A dim, quiet tea room prepared for a moment of stillness."
       />
 
-      <section className="section bg-porcelain">
+      <section className={`section ${styles.stillnessHero}`}>
         <div className="container">
           <MotionReveal className="mb-12 max-w-3xl">
-            <p className="museum-label text-brass">{t("Interactive Meditation Chamber", "互動靜心室")}</p>
-            <h2 className="display-title mt-5 text-5xl leading-none text-ink md:text-7xl">
+            <p className={`museum-label ${styles.eyebrowBrass}`}>{t("Interactive Meditation Chamber", "互動靜心室")}</p>
+            <h2 className="display-title mt-5 text-5xl leading-none text-porcelain md:text-7xl">
               {t("Listen once. Breathe for sixty seconds.", "聆聽一次。呼吸六十秒。")}
             </h2>
           </MotionReveal>
@@ -61,13 +62,13 @@ export default function StillnessModePage() {
         </div>
       </section>
 
-      <section className="section bg-paper">
+      <section className="section" style={{ backgroundColor: "#0e100d" }}>
         <div className="container grid gap-8 md:grid-cols-3">
           {pillars.map((item, index) => (
             <MotionReveal key={item.title.en} delay={index * 0.06}>
-              <article className="border-l border-ink/12 pl-6">
-                <p className="museum-label text-moss">{t(item.title.en, item.title.zh)}</p>
-                <p className="mt-6 text-lg leading-8 text-ink/68">{t(item.copy.en, item.copy.zh)}</p>
+              <article className="border-l border-brass/20 pl-6">
+                <p className={`museum-label ${styles.eyebrowBrass}`}>{t(item.title.en, item.title.zh)}</p>
+                <p className="mt-6 text-lg leading-8 text-porcelain/70">{t(item.copy.en, item.copy.zh)}</p>
               </article>
             </MotionReveal>
           ))}

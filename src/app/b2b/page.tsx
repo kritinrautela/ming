@@ -7,6 +7,7 @@ import {
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
 import { useLanguage } from "@/lib/language";
+import styles from "./b2b.module.css";
 
 const useCases = [
   { en: "Corporate gifts", zh: "企業禮品" },
@@ -161,16 +162,19 @@ export default function B2BPage() {
         english="Gift Box Options"
         tone="paper"
       >
-        <div className="chazen-two-column">
-          <div className="chazen-card-grid">
-            {giftOptions.map((item) => (
-              <article key={item.title.en} className="chazen-subpage-card">
-                <span>{t(item.title.en, item.title.zh)}</span>
-                <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
+        <div className={styles.asymmetricGrid}>
+          <div className={styles.processGrid}>
+            {giftOptions.map((item, index) => (
+              <article key={item.title.en} className={styles.processCard}>
+                <div className={styles.processNumber}>{index + 1}</div>
+                <div className={styles.processContent}>
+                  <h3 lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.title.en, item.title.zh)}</h3>
+                  <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
+                </div>
               </article>
             ))}
           </div>
-          <article className="chazen-subpage-note">
+          <article className={styles.charzenFormNote}>
             <h3>{t("Designed for the handover moment", "為交收時刻而設")}</h3>
             <p>{t("From A$78 per box, with a minimum order of 10. Final pricing depends on tea, card, sleeve, and co-branding requirements.", "每盒 A$78 起，最低訂量 10 盒。最終價格按茶葉、賀卡、封套及聯名要求而定。")}</p>
           </article>

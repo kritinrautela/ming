@@ -23,8 +23,8 @@ const config: Config = {
         leaf: "#203a2b"
       },
       fontFamily: {
-        display: ["var(--font-serif)", "Cormorant Garamond", "Georgia", "serif"],
-        sans: ["var(--font-sans)", "Inter", "Avenir Next", "Helvetica Neue", "Arial", "sans-serif"]
+        display: ["var(--font-serif)", "Cormorant Garamond", "var(--font-cjk)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "Instrument Sans", "Avenir Next", "Helvetica Neue", "Arial", "sans-serif"]
       },
       boxShadow: {
         soft: "0 24px 80px rgba(32, 58, 43, 0.12)",

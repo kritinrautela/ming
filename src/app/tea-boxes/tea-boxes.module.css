@@ -1,0 +1,223 @@
+/* Tea Boxes Editorial Layout — Numbered lists with hairlines */
+
+.tea-journey-index {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid rgba(157, 129, 80, 0.35);
+}
+
+.tea-journey-item {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: start;
+  border-bottom: 1px solid rgba(157, 129, 80, 0.35);
+  padding: 2rem 0;
+}
+
+.tea-journey-item strong {
+  display: block;
+  color: #9f3f2f;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tea-journey-item h3 {
+  margin: 0;
+  font-family: var(--cz-serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.tea-journey-item p {
+  margin: 0.8rem 0 0;
+  color: rgba(23, 23, 19, 0.68);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 60ch;
+}
+
+/* Box cards with numbered 2×2 grid layout */
+.tea-boxes-grid {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(2, 1fr);
+  border-top: 1px solid rgba(157, 129, 80, 0.35);
+}
+
+.tea-box-card {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: start;
+  border-bottom: 1px solid rgba(157, 129, 80, 0.35);
+  border-right: 1px solid rgba(157, 129, 80, 0.35);
+  padding: 2rem;
+  transition: background-color 280ms cubic-bezier(0.22, 1, 0.36, 1), transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tea-box-card:nth-child(2n) {
+  border-right: none;
+}
+
+.tea-box-card:nth-last-child(-n+2) {
+  border-bottom: none;
+}
+
+.tea-box-card:hover,
+.tea-box-card:focus-within {
+  background-color: rgba(251, 250, 246, 0.5);
+  transform: translateY(-2px);
+}
+
+.tea-box-card strong {
+  display: block;
+  color: #9f3f2f;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.tea-box-card h3 {
+  margin: 0.6rem 0 0;
+  font-family: var(--cz-serif);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--cz-ink);
+}
+
+.tea-box-price {
+  display: block;
+  margin: 0.4rem 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--cz-leaf);
+  font-variant-numeric: tabular-nums;
+}
+
+.tea-box-card ul {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(23, 23, 19, 0.68);
+}
+
+.tea-box-card li {
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.tea-box-card li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: rgba(157, 129, 80, 0.55);
+}
+
+/* Comparison table editorial treatment */
+.tea-comparison-table {
+  overflow-x: auto;
+  border-top: 1px solid rgba(157, 129, 80, 0.35);
+  border-bottom: 1px solid rgba(157, 129, 80, 0.35);
+}
+
+.tea-comparison-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.tea-comparison-table th {
+  font-family: var(--cz-serif);
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-align: left;
+  padding: 1.5rem 1.2rem;
+  border-bottom: 1px solid rgba(157, 129, 80, 0.35);
+  color: var(--cz-ink);
+  background: rgba(246, 241, 231, 0.5);
+}
+
+.tea-comparison-table td {
+  padding: 1.2rem;
+  border-bottom: 1px solid rgba(157, 129, 80, 0.2);
+  color: rgba(23, 23, 19, 0.68);
+  line-height: 1.6;
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+.tea-comparison-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tea-comparison-table td:first-child {
+  font-weight: 600;
+  color: var(--cz-ink);
+  font-family: var(--cz-serif);
+  font-size: 1rem;
+}
+
+.tea-comparison-table td:nth-child(2) {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--cz-leaf);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .tea-boxes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tea-box-card {
+    border-right: none;
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .tea-journey-item {
+    grid-template-columns: 1.8rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.5rem 0;
+  }
+
+  .tea-comparison-table {
+    font-size: 0.78rem;
+  }
+
+  .tea-comparison-table th,
+  .tea-comparison-table td {
+    padding: 1rem 0.8rem;
+  }
+
+  .tea-comparison-table td {
+    max-width: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .tea-box-card {
+    transition: none;
+  }
+
+  .tea-box-card:hover,
+  .tea-box-card:focus-within {
+    transform: none;
+  }
+}

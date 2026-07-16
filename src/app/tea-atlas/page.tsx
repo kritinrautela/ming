@@ -5,6 +5,7 @@ import { ChapterHero } from "@/components/ChapterHero";
 import { TeaAtlasExhibit } from "@/components/TeaAtlasExhibit";
 import { MotionReveal } from "@/components/MotionReveal";
 import { useLanguage } from "@/lib/language";
+import styles from "./page.module.css";
 
 const atlasReading = [
   {
@@ -73,10 +74,10 @@ export default function TeaAtlasPage() {
             </h2>
           </MotionReveal>
           <MotionReveal delay={0.08}>
-            <div className="atlas-reading">
+            <div className={styles.atlasReading}>
               {atlasReading.map((item) => (
-                <article key={item.title.en}>
-                  <p className="museum-label text-clay">{t(item.title.en, item.title.zh)}</p>
+                <article key={item.title.en} className={styles.atlasReadingItem}>
+                  <p>{t(item.title.en, item.title.zh)}</p>
                   <p>{t(item.copy.en, item.copy.zh)}</p>
                 </article>
               ))}

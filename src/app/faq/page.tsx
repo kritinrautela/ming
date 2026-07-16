@@ -5,6 +5,7 @@ import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
 import { useLanguage } from "@/lib/language";
 import { site } from "@/lib/site";
+import styles from "./faq.module.css";
 
 const questions = [
   { enQ: "What is Chazen?", zhQ: "Chazen 是甚麼？", enA: "Chazen is a culture-first Chinese tea brand bringing together guided tea discovery, practical ritual, cultural learning, stillness, and meaningful gifting.", zhA: "Chazen 是一個以文化為本的中國茶品牌，結合引導式選茶、實用茶儀式、文化學習、靜心與有意義的贈禮。" },
@@ -18,14 +19,27 @@ const questions = [
 export default function FaqPage() {
   const { t, language } = useLanguage();
   useEffect(() => { document.title = language === "zh" ? "常見問題 | Chazen" : "FAQ | Chazen"; }, [language]);
-  return <main><section className="section"><div className="container">
-    <SectionHeading eyebrow="Helpful details" eyebrowZh="實用資料" title="Frequently asked questions." titleZh="常見問題。" copy="A clear starting point for tea discovery, gifting, orders, and support." copyZh="關於選茶、贈禮、訂單與支援的清晰起點。" />
-    <div className="mt-12 grid max-w-4xl gap-4">
-      {questions.map((item) => <details key={item.enQ} className="border border-ink/10 bg-porcelain p-5 shadow-soft">
-        <summary className="cursor-pointer font-semibold text-ink">{t(item.enQ, item.zhQ)}</summary>
-        <p className="mt-4 leading-8 text-ink/66">{t(item.enA, item.zhA)}</p>
-      </details>)}
-    </div>
-    <Link href="/contact" className="button-primary mt-10">{t("Contact Chazen", "聯絡 Chazen")}</Link>
-  </div></section></main>;
+  return (
+    <main>
+      <section className="section">
+        <div className="container">
+          <SectionHeading eyebrow="Helpful details" eyebrowZh="實用資料" title="Frequently asked questions." titleZh="常見問題。" copy="A clear starting point for tea discovery, gifting, orders, and support." copyZh="關於選茶、贈禮、訂單與支援的清晰起點。" />
+          <div className={styles.faqContainer}>
+            {questions.map((item, index) => (
+              <article key={item.enQ} className={styles.faqItem}>
+                <div className={styles.faqQuestion}>
+                  <span className={styles.faqNumber}>{index + 1}</span>
+                  <h3 className={styles.faqQuestionText} lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.enQ, item.zhQ)}</h3>
+                </div>
+                <p className={styles.faqAnswer} lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.enA, item.zhA)}</p>
+              </article>
+            ))}
+          </div>
+          <div className={styles.faqCta}>
+            <Link href="/contact" className="button-primary">{t("Contact Chazen", "聯絡 Chazen")}</Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }

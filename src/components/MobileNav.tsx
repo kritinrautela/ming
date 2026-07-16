@@ -15,7 +15,7 @@ export function MobileNav() {
     <div className="mobile-nav relative lg:hidden">
       <button
         type="button"
-        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-porcelain/16 text-porcelain transition hover:bg-porcelain/10"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-porcelain/15 text-porcelain transition hover:bg-porcelain/10"
         aria-label={open ? "Close navigation" : "Open navigation"}
         aria-expanded={open}
         aria-controls="mobile-navigation"
@@ -36,7 +36,7 @@ export function MobileNav() {
                 className={
                   item.href === "/tea-test"
                     ? "mobile-nav-tea-test-pill"
-                    : "min-h-12 px-4 py-3 text-sm font-semibold text-ink/72 transition hover:bg-paper hover:text-leaf"
+                    : "min-h-12 px-4 py-3 text-sm font-semibold text-ink/70 transition hover:bg-paper hover:text-leaf"
                 }
                 onClick={() => setOpen(false)}
               >

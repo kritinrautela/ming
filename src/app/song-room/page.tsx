@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { ChapterHero } from "@/components/ChapterHero";
 import { MotionReveal } from "@/components/MotionReveal";
 import { useLanguage } from "@/lib/language";
+import styles from "./page.module.css";
 
 const exhibits = [
   {
@@ -89,14 +90,14 @@ export default function SongRoomPage() {
 
       <section className="section bg-paper">
         <div className="container">
-          <div className="exhibit-grid">
+          <div className={styles.exhibitGrid}>
             {exhibits.map((item, index) => (
               <MotionReveal key={item.title} delay={index * 0.06}>
-                <article className="museum-exhibit-card">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <h3 className="display-title">{item.cn}</h3>
-                  <p className="mt-2 font-semibold text-ink">{item.title}</p>
-                  <p className="mt-6 text-sm leading-7 text-ink/62">{t(item.copy.en, item.copy.zh)}</p>
+                <article className={styles.exhibitCard}>
+                  <span className={styles.exhibitNumber}>{String(index + 1).padStart(2, "0")}</span>
+                  <h3>{item.cn}</h3>
+                  <p className={styles.exhibitCardTitle}>{item.title}</p>
+                  <p>{t(item.copy.en, item.copy.zh)}</p>
                 </article>
               </MotionReveal>
             ))}
@@ -113,7 +114,7 @@ export default function SongRoomPage() {
             </h2>
           </MotionReveal>
           <MotionReveal delay={0.08}>
-            <p className="max-w-2xl border-l border-porcelain/20 pl-7 text-xl leading-10 text-porcelain/72">
+            <p className="max-w-2xl border-l border-porcelain/20 pl-7 text-xl leading-10 text-porcelain/70">
               {t(
                 "No loud ornament, no theatrical abundance. The room asks visitors to look at a bowl until the bowl becomes weather, time, hand, fire, and breath.",
                 "沒有喧鬧的裝飾，沒有戲劇化的豐盛。這個空間邀請訪客凝視一只茶盞，直到它化為天氣、時間、手、火與呼吸。"

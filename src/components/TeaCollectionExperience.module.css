@@ -1,0 +1,230 @@
+/* Tea Collection Experience — Museum editorial styling */
+
+.tea-scroll-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-height: 75vh;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.tea-scroll-gallery::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tea-scroll-gallery::-webkit-scrollbar-track {
+  background: rgba(157, 129, 80, 0.1);
+}
+
+.tea-scroll-gallery::-webkit-scrollbar-thumb {
+  background: rgba(157, 129, 80, 0.3);
+  border-radius: 3px;
+}
+
+.tea-scroll-gallery::-webkit-scrollbar-thumb:hover {
+  background: rgba(157, 129, 80, 0.5);
+}
+
+/* Tea leaf card improved styling */
+.tea-leaf-card {
+  border-top: 1px solid rgba(157, 129, 80, 0.35);
+  padding: 1.5rem 0;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), background-color 280ms ease;
+}
+
+.tea-leaf-card:hover {
+  transform: translateY(-2px);
+}
+
+.tea-leaf-select {
+  width: 100%;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+}
+
+.tea-leaf-select:focus-visible {
+  outline: 2px solid rgba(200, 167, 101, 0.85);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.tea-leaf-copy {
+  display: block;
+}
+
+.tea-leaf-copy h2 {
+  margin: 0;
+  font-family: var(--cz-serif);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.tea-leaf-copy strong {
+  display: block;
+  font-family: var(--cz-serif);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: rgba(23, 23, 19, 0.68);
+  margin-top: 0.3rem;
+}
+
+.tea-leaf-copy > span {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9f3f2f;
+  margin-bottom: 0.4rem;
+}
+
+.tea-leaf-copy dl {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.tea-leaf-copy dt {
+  font-weight: 600;
+  color: rgba(23, 23, 19, 0.68);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.tea-leaf-copy dd {
+  margin: 0 0 0.4rem;
+  color: rgba(23, 23, 19, 0.68);
+  line-height: 1.5;
+}
+
+/* Tea curator panel styling */
+.tea-curator-panel {
+  border-top: 1px solid rgba(157, 129, 80, 0.35);
+  padding-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.tea-curator-panel strong {
+  display: block;
+  color: var(--cz-ink);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.tea-curator-panel h3 {
+  margin: 0;
+  font-family: var(--cz-serif);
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.tea-curator-actions {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.tea-curator-actions a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.2rem;
+  background: var(--cz-leaf);
+  color: var(--cz-porcelain);
+  border-radius: 2px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tea-curator-actions a:hover {
+  transform: translateY(-2px);
+  background: #2b4d38;
+  box-shadow: 0 8px 20px rgba(32, 58, 43, 0.2);
+}
+
+.tea-curator-actions a:focus-visible {
+  outline: 2px solid rgba(200, 167, 101, 0.85);
+  outline-offset: 2px;
+}
+
+/* Tea catalogue head (filters) */
+.tea-filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.tea-filter-tabs button {
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: 1px solid rgba(157, 129, 80, 0.35);
+  border-radius: 2px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(23, 23, 19, 0.68);
+  cursor: pointer;
+  transition: all 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tea-filter-tabs button:hover {
+  border-color: var(--cz-leaf);
+  color: var(--cz-leaf);
+  transform: translateY(-2px);
+}
+
+.tea-filter-tabs button.is-active {
+  background: var(--cz-leaf);
+  border-color: var(--cz-leaf);
+  color: var(--cz-porcelain);
+}
+
+.tea-filter-tabs button:focus-visible {
+  outline: 2px solid rgba(200, 167, 101, 0.85);
+  outline-offset: 2px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .tea-scroll-gallery {
+    max-height: none;
+    padding-right: 0;
+  }
+
+  .tea-leaf-copy h2 {
+    font-size: 1.3rem;
+  }
+
+  .tea-curator-panel h3 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .tea-leaf-card,
+  .tea-curator-actions a,
+  .tea-filter-tabs button {
+    transition: none;
+  }
+
+  .tea-leaf-card:hover,
+  .tea-curator-actions a:hover,
+  .tea-filter-tabs button:hover {
+    transform: none;
+  }
+}

@@ -11,15 +11,16 @@
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  border-bottom: 1px solid rgba(111, 74, 50, 0.14);
+  border-bottom: 1px solid rgba(157, 129, 80, 0.2);
   padding: 0 0 0.7rem;
-  color: rgba(23, 23, 19, 0.76);
+  color: rgba(23, 23, 19, 0.7);
   line-height: 1.55;
+  font-size: 0.95rem;
 }
 
 .scope :global(.tea-mind-purpose-list svg) {
   flex: 0 0 auto;
-  color: #6f4a32;
+  color: var(--cz-moss);
 }
 
 .scope :global(.tea-mind-report-heading) {
@@ -28,31 +29,34 @@
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: clamp(1.5rem, 3vw, 2.4rem);
-  border-bottom: 1px solid rgba(111, 74, 50, 0.18);
+  border-bottom: 1px solid rgba(157, 129, 80, 0.25);
   padding-bottom: 0.75rem;
 }
 
 .scope :global(.tea-mind-report-heading span),
 .scope :global(.tea-mind-report-heading em) {
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  font-weight: 700;
 }
 
 .scope :global(.tea-mind-report-heading span) {
-  color: var(--mind-accent);
-  font-weight: 900;
+  color: var(--cz-seal);
+  font-variant-numeric: tabular-nums;
 }
 
 .scope :global(.tea-mind-report-heading em) {
-  color: rgba(23, 23, 19, 0.52);
+  color: rgba(23, 23, 19, 0.48);
   font-style: normal;
+  font-weight: 500;
 }
 
 .scope :global(.tea-mind-result-character) {
-  font-size: clamp(9rem, 15vw, 15rem);
-  line-height: 0.8;
+  font-size: clamp(4rem, 9vw, 6rem);
+  line-height: 1;
   text-align: center;
+  color: rgba(157, 129, 80, 0.1);
 }
 
 .scope :global(.tea-mind-full-plan) {
@@ -60,21 +64,129 @@
   grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.78fr);
   gap: clamp(1.2rem, 4vw, 3rem);
   margin-top: clamp(2.2rem, 5vw, 4rem);
-  border: 1px solid color-mix(in srgb, var(--mind-accent) 38%, transparent);
-  border-radius: 6px;
-  background:
-    radial-gradient(circle at 88% 14%, var(--mind-accent-soft), transparent 18rem),
-    linear-gradient(135deg, rgba(255, 252, 243, 0.94), rgba(242, 234, 220, 0.74));
-  padding: clamp(1.2rem, 3.5vw, 2.5rem);
+  border-top: 1px solid rgba(157, 129, 80, 0.3);
+  border-radius: 0;
+  background: transparent;
+  padding: clamp(1.2rem, 3.5vw, 2.5rem) 0;
+}
+
+/* Intro panel styling */
+.scope :global(.tea-mind-intro-panel) {
+  text-align: center;
+  padding: clamp(1.5rem, 4vw, 2.5rem) 0;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.scope :global(.tea-mind-oracle-character) {
+  font-size: clamp(3rem, 7vw, 5rem);
+  line-height: 1;
+  color: rgba(157, 129, 80, 0.06);
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  font-weight: 300;
+}
+
+.scope :global(.tea-mind-intro-panel h2) {
+  font-family: var(--cz-serif);
+  font-size: clamp(2rem, 4.5vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--cz-ink);
+  text-wrap: balance;
+  margin: 1rem 0 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.scope :global(.tea-mind-intro-panel p) {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  color: rgba(23, 23, 19, 0.65);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.scope :global(.tea-mind-primary-action) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--cz-moss);
+  color: var(--cz-porcelain);
+  border: none;
+  border-radius: 2px;
+  padding: 0.95rem 2rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 2rem;
+  transition: all 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 8px 18px rgba(63, 89, 69, 0.12);
+}
+
+.scope :global(.tea-mind-primary-action:hover) {
+  background: #2d4a37;
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(63, 89, 69, 0.25);
+}
+
+.scope :global(.tea-mind-primary-action:active) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(63, 89, 69, 0.15);
+}
+
+/* Progress styling */
+.scope :global(.tea-mind-progress) {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  padding: clamp(1.2rem, 3vw, 1.8rem) 0;
+  border-bottom: 1px solid rgba(157, 129, 80, 0.18);
+}
+
+.scope :global(.tea-mind-progress > div:first-child) {
+  display: grid;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.scope :global(.tea-mind-progress span) {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cz-seal);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.scope :global(.tea-mind-progress strong) {
+  font-size: 0.95rem;
+  color: rgba(23, 23, 19, 0.68);
+  font-weight: 500;
+}
+
+.scope :global(.tea-mind-progress-track) {
+  height: 3px;
+  background: rgba(157, 129, 80, 0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.scope :global(.tea-mind-progress-track span) {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--cz-brass), var(--cz-seal));
+  transition: width 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: 2px;
 }
 
 .scope :global(.tea-mind-full-plan h3) {
   max-width: 690px;
   margin: 0.55rem 0 0;
   color: #171713;
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-family: var(--cz-serif);
   font-size: clamp(2rem, 4vw, 3.35rem);
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.02;
 }
 
@@ -93,6 +205,87 @@
   line-height: 1.5;
 }
 
+/* Product panel styling */
+.scope :global(.tea-mind-product-panel) {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: 1fr auto;
+  margin: clamp(1.5rem, 3vw, 2.5rem) 0;
+  padding: clamp(1rem, 3vw, 2rem) 0;
+  border-top: 1px solid rgba(157, 129, 80, 0.2);
+  border-bottom: 1px solid rgba(157, 129, 80, 0.2);
+  align-items: start;
+}
+
+.scope :global(.tea-mind-product-panel > div:first-child) {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.scope :global(.tea-mind-product-panel > div:first-child > span) {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cz-seal);
+  font-weight: 700;
+}
+
+.scope :global(.tea-mind-product-panel > div:first-child > strong) {
+  font-family: var(--cz-serif);
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  font-weight: 300;
+  color: var(--cz-ink);
+}
+
+.scope :global(.tea-mind-result-actions) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 200px;
+}
+
+.scope :global(.tea-mind-result-actions a),
+.scope :global(.tea-mind-result-actions button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.7rem 1rem;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scope :global(.tea-mind-result-actions a) {
+  background: var(--cz-moss);
+  color: var(--cz-porcelain);
+  border: none;
+  box-shadow: 0 10px 24px rgba(63, 89, 69, 0.15);
+}
+
+.scope :global(.tea-mind-result-actions a:hover) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(63, 89, 69, 0.22);
+  background: #2d4a37;
+}
+
+.scope :global(.tea-mind-result-actions button) {
+  background: rgba(157, 129, 80, 0.08);
+  color: var(--cz-brass);
+  border: 1px solid rgba(157, 129, 80, 0.2);
+}
+
+.scope :global(.tea-mind-result-actions button:hover) {
+  background: rgba(157, 129, 80, 0.14);
+  border-color: var(--cz-brass);
+}
+
 .scope :global(.tea-mind-plan-price) {
   display: flex;
   align-items: baseline;
@@ -101,10 +294,11 @@
 }
 
 .scope :global(.tea-mind-plan-price strong) {
-  color: var(--mind-accent);
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-  font-size: 2.35rem;
-  font-weight: 400;
+  color: var(--cz-seal);
+  font-family: var(--cz-serif);
+  font-size: 2.2rem;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
 }
 
 .scope :global(.tea-mind-plan-price span) {
@@ -119,16 +313,16 @@
 }
 
 .scope :global(.tea-mind-plan-includes) {
-  border-left: 1px solid rgba(111, 74, 50, 0.18);
+  border-left: 1px solid rgba(157, 129, 80, 0.22);
   padding-left: clamp(1rem, 3vw, 2rem);
 }
 
 .scope :global(.tea-mind-plan-includes > span) {
   display: block;
-  color: var(--mind-accent);
-  font-size: 0.7rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
+  color: var(--cz-seal);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -143,37 +337,484 @@
 .scope :global(.tea-mind-plan-includes li) {
   display: grid;
   gap: 0.24rem;
-  border-bottom: 1px solid rgba(111, 74, 50, 0.13);
+  border-bottom: 1px solid rgba(157, 129, 80, 0.14);
   padding: 0.78rem 0;
 }
 
 .scope :global(.tea-mind-plan-includes strong) {
   color: #171713;
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
-  font-size: 1rem;
-  font-weight: 400;
+  font-family: var(--cz-serif);
+  font-size: 0.95rem;
+  font-weight: 300;
 }
 
 .scope :global(.tea-mind-plan-includes em) {
   color: rgba(23, 23, 19, 0.58);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-style: normal;
   line-height: 1.5;
+}
+
+.scope :global(.tea-mind-unlock-button) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--cz-moss);
+  color: var(--cz-porcelain);
+  border: none;
+  border-radius: 2px;
+  padding: 0.9rem 1.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 10px 24px rgba(63, 89, 69, 0.15);
+}
+
+.scope :global(.tea-mind-unlock-button:hover) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(63, 89, 69, 0.22);
+}
+
+.scope :global(.tea-mind-unlock-button:active) {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(63, 89, 69, 0.12);
 }
 
 .scope :global(.tea-mind-product-panel .tea-mind-tea-fit),
 .scope :global(.tea-mind-product-panel .tea-mind-suitable-teas) {
   max-width: 720px;
-  border-top: 1px solid rgba(111, 74, 50, 0.12);
+  border-top: 1px solid rgba(157, 129, 80, 0.14);
   padding-top: 0.55rem;
   font-size: 0.86rem;
   line-height: 1.6;
+  color: rgba(23, 23, 19, 0.65);
+  margin-top: 0.6rem;
 }
 
 .scope :global(.tea-mind-product-panel .tea-mind-tea-fit b),
 .scope :global(.tea-mind-product-panel .tea-mind-suitable-teas b) {
   color: rgba(23, 23, 19, 0.78);
-  font-weight: 800;
+  font-weight: 600;
+}
+
+/* Locked preview and quick tea styling */
+.scope :global(.tea-mind-locked) {
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  border: 1px solid rgba(157, 129, 80, 0.18);
+  border-radius: 2px;
+  background: rgba(251, 250, 246, 0.3);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.scope :global(.tea-mind-locked-preview) {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.scope :global(.tea-mind-locked-preview p) {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cz-seal);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.scope :global(.tea-mind-locked-grid) {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.scope :global(.tea-mind-locked-grid span) {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: rgba(23, 23, 19, 0.6);
+}
+
+.scope :global(.tea-mind-locked-overlay) {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(251, 250, 246, 0.92);
+  text-align: center;
+  z-index: 10;
+}
+
+.scope :global(.tea-mind-locked-overlay svg) {
+  color: var(--cz-brass);
+}
+
+.scope :global(.tea-mind-locked-overlay p) {
+  max-width: 340px;
+  color: rgba(23, 23, 19, 0.65);
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.scope :global(.tea-mind-locked-overlay span) {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cz-seal);
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+.scope :global(.tea-mind-quick-tea) {
+  margin-top: clamp(2rem, 5vw, 3rem);
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+  border-top: 1px solid rgba(157, 129, 80, 0.18);
+}
+
+.scope :global(.tea-mind-quick-tea > span) {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cz-seal);
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.scope :global(.tea-mind-quick-tea p) {
+  color: rgba(23, 23, 19, 0.68);
+  line-height: 1.7;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+}
+
+.scope :global(.tea-mind-quick-tea small) {
+  display: block;
+  color: rgba(23, 23, 19, 0.52);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  margin-top: 0.6rem;
+}
+
+/* Question panel and option cards styling */
+.scope :global(.tea-mind-question-panel) {
+  background: transparent;
+  border: none;
+  border-top: 1px solid rgba(157, 129, 80, 0.25);
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  min-height: 0;
+  max-width: 760px;
+  padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(1.5rem, 3vw, 2rem);
+  margin: 0;
+  animation: czQuestionIn 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes czQuestionIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scope :global(.tea-mind-question-panel legend) {
+  display: grid;
+  gap: 0.8rem;
+  margin-bottom: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.scope :global(.tea-mind-question-panel legend span) {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cz-seal);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.scope :global(.tea-mind-question-panel legend span)::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 1px;
+  background: var(--cz-seal);
+  transform: rotate(45deg);
+}
+
+.scope :global(.tea-mind-question-panel legend strong) {
+  font-family: var(--cz-serif);
+  font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--cz-ink);
+  text-wrap: balance;
+}
+
+.scope :global(.tea-mind-question-context) {
+  display: block;
+  font-size: 0.88rem;
+  font-style: italic;
+  font-family: var(--cz-serif);
+  color: rgba(23, 23, 19, 0.55);
+  margin-top: 0.3rem;
+}
+
+.scope :global(.tea-mind-options) {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+  max-width: 640px;
+}
+
+.scope :global(.tea-mind-options button) {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 60px;
+  border: 1px solid rgba(157, 129, 80, 0.22);
+  border-left: 2px solid rgba(157, 129, 80, 0.35);
+  background: rgba(251, 250, 246, 0.9);
+  border-radius: 2px;
+  padding: 1rem 1.2rem;
+  text-align: left;
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: var(--cz-ink);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+  box-shadow: none;
+  transform: none;
+  transition: background 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease, color 220ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease, opacity 220ms ease;
+}
+
+.scope :global(.tea-mind-options button)::after {
+  content: none;
+}
+
+.scope :global(.tea-mind-options button:hover),
+.scope :global(.tea-mind-options button:focus-visible) {
+  background: var(--cz-porcelain);
+  border-color: var(--cz-brass);
+  border-left-color: var(--cz-seal);
+  color: var(--cz-ink);
+  transform: translateX(4px);
+  box-shadow: 0 12px 30px rgba(111, 74, 50, 0.12);
+}
+
+.scope :global(.tea-mind-options button:active) {
+  transform: translateX(4px) scale(0.99);
+}
+
+/* Selected answer: settles into moss before the next question arrives. */
+.scope :global(.tea-mind-options button.is-selected) {
+  background: var(--cz-leaf);
+  border-color: var(--cz-leaf);
+  border-left-color: var(--cz-brass-bright);
+  color: var(--cz-porcelain);
+  transform: translateX(4px);
+  box-shadow: 0 16px 36px rgba(32, 58, 43, 0.28);
+}
+
+.scope :global(.tea-mind-options button.is-dimmed) {
+  opacity: 0.4;
+  pointer-events: none;
+  transform: none;
+}
+
+.scope :global(.tea-mind-option-mark) {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 2px;
+  background: rgba(157, 129, 80, 0.14);
+  color: var(--cz-seal);
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: inherit;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  transition: background 220ms ease, color 220ms ease;
+}
+
+.scope :global(.tea-mind-options button:hover .tea-mind-option-mark) {
+  background: rgba(157, 129, 80, 0.28);
+  color: var(--cz-clay);
+}
+
+.scope :global(.tea-mind-options button.is-selected .tea-mind-option-mark) {
+  background: rgba(251, 250, 246, 0.18);
+  color: var(--cz-porcelain);
+}
+
+.scope :global(.tea-mind-back-button) {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(23, 23, 19, 0.15);
+  border-radius: 2px;
+  padding: 0.8rem 1.2rem;
+  background: transparent;
+  color: var(--cz-ink);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scope :global(.tea-mind-back-button:hover) {
+  border-color: var(--cz-brass);
+  background: rgba(157, 129, 80, 0.06);
+}
+
+.scope :global(.tea-mind-back-button:active) {
+  transform: scale(0.96);
+}
+
+/* Loading state */
+.scope :global(.tea-mind-loading) {
+  text-align: center;
+  padding: clamp(2rem, 8vw, 4rem) clamp(1rem, 3vw, 2rem);
+}
+
+.scope :global(.tea-mind-loading-cup) {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.scope :global(.tea-mind-loading-cup svg) {
+  color: var(--cz-moss);
+  opacity: 0.8;
+}
+
+.scope :global(.tea-mind-loading h2) {
+  font-family: var(--cz-serif);
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 300;
+  margin-top: 0.8rem;
+}
+
+.scope :global(.tea-mind-loading p) {
+  color: rgba(23, 23, 19, 0.58);
+  margin-top: 0.5rem;
+}
+
+/* Result styling */
+.scope :global(.tea-mind-result) {
+  background: transparent;
+  border-radius: 0;
+  padding: clamp(1.5rem, 4vw, 3rem) 0;
+}
+
+.scope :global(.tea-mind-result-hero) {
+  display: grid;
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  align-items: start;
+  grid-template-columns: auto 1fr;
+}
+
+.scope :global(.tea-mind-result-character) {
+  color: rgba(157, 129, 80, 0.15);
+  opacity: 0.8;
+  line-height: 1;
+}
+
+.scope :global(.tea-mind-result-hero h2) {
+  font-family: var(--cz-serif);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 400;
+  color: var(--cz-ink);
+  margin-top: 0;
+  letter-spacing: -0.01em;
+}
+
+.scope :global(.tea-mind-result-hero h3) {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgba(23, 23, 19, 0.7);
+  margin-top: 0.2rem;
+  font-family: inherit;
+}
+
+.scope :global(.tea-mind-result-grid) {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+}
+
+.scope :global(.tea-mind-result-grid article) {
+  border-top: 1px solid rgba(157, 129, 80, 0.18);
+  padding-top: 1.5rem;
+}
+
+.scope :global(.tea-mind-result-grid span) {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cz-seal);
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+
+.scope :global(.tea-mind-result-grid p) {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(23, 23, 19, 0.68);
+}
+
+.scope :global(.tea-mind-detail-grid) {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin: clamp(2rem, 5vw, 3rem) 0;
+}
+
+.scope :global(.tea-mind-detail-grid h4) {
+  font-family: var(--cz-serif);
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  color: var(--cz-ink);
+}
+
+.scope :global(.tea-mind-detail-grid ul),
+.scope :global(.tea-mind-detail-grid ol) {
+  padding-left: 1.5rem;
+  color: rgba(23, 23, 19, 0.68);
+  line-height: 1.8;
+}
+
+.scope :global(.tea-mind-detail-grid li) {
+  margin-bottom: 0.6rem;
+  font-size: 0.95rem;
 }
 
 @media (max-width: 1120px) {
@@ -182,10 +823,14 @@
   }
 
   .scope :global(.tea-mind-plan-includes) {
-    border-top: 1px solid rgba(111, 74, 50, 0.18);
+    border-top: 1px solid rgba(157, 129, 80, 0.2);
     border-left: 0;
     padding-top: 1rem;
     padding-left: 0;
+  }
+
+  .scope :global(.tea-mind-result-hero) {
+    grid-template-columns: auto 1fr;
   }
 }
 

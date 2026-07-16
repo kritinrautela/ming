@@ -1,9 +1,10 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { ArrowRight, CheckCircle2, LoaderCircle } from "lucide-react";
+import { ArrowRight, CheckCircle2, LoaderCircle, AlertCircle } from "lucide-react";
 import { inquiryTypes, type InquiryPayload, type InquiryType } from "@/lib/inquiry";
 import { useLanguage } from "@/lib/language";
+import styles from "./InquiryForm.module.css";
 
 const inquiryEndpoint =
   "https://script.google.com/macros/s/AKfycbxUYXnFHhxpjCB1lqt7RdvtuI3JQiFAqWNThjwzs_v6QmxmdwYt-nYTW-Id3IHKqbHfpw/exec";
@@ -143,7 +144,7 @@ export function InquiryForm({
   return (
     <form
       id="inquiry-form"
-      className="grid gap-5 border border-ink/10 bg-porcelain p-5 shadow-soft md:p-8"
+      className={styles.form}
       noValidate
       onSubmit={handleSubmit}
     >
@@ -155,8 +156,8 @@ export function InquiryForm({
         className="hidden"
         aria-hidden="true"
       />
-      <div className="grid gap-4 md:grid-cols-2">
-        <label className="grid gap-2 text-sm font-semibold text-ink/78">
+      <div className={styles.fieldGroupRow}>
+        <label className={styles.label}>
           {t("Name", "姓名")}
           <input
             name="name"
@@ -164,16 +165,17 @@ export function InquiryForm({
             autoComplete="name"
             aria-invalid={Boolean(errors.name)}
             aria-describedby={errors.name ? "inquiry-name-error" : undefined}
-            className="h-12 border border-ink/12 bg-white px-4 text-base outline-none transition focus:border-leaf"
+            className={styles.input}
             onChange={(event) => updateField("name", event.target.value)}
           />
           {errors.name ? (
-            <span id="inquiry-name-error" className="text-xs font-semibold text-seal">
+            <span id="inquiry-name-error" className={styles.errorMessage}>
+              <AlertCircle size={14} aria-hidden="true" />
               {errors.name}
             </span>
           ) : null}
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-ink/78">
+        <label className={styles.label}>
           {t("Email", "電郵")}
           <input
             name="email"
@@ -182,34 +184,35 @@ export function InquiryForm({
             autoComplete="email"
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "inquiry-email-error" : undefined}
-            className="h-12 border border-ink/12 bg-white px-4 text-base outline-none transition focus:border-leaf"
+            className={styles.input}
             onChange={(event) => updateField("email", event.target.value)}
           />
           {errors.email ? (
-            <span id="inquiry-email-error" className="text-xs font-semibold text-seal">
+            <span id="inquiry-email-error" className={styles.errorMessage}>
+              <AlertCircle size={14} aria-hidden="true" />
               {errors.email}
             </span>
           ) : null}
         </label>
       </div>
-      <div className="grid gap-4 md:grid-cols-2">
-        <label className="grid gap-2 text-sm font-semibold text-ink/78">
+      <div className={styles.fieldGroupRow}>
+        <label className={styles.label}>
           {t("Company", "公司")}
           <input
             name="company"
             value={payload.company}
             autoComplete="organization"
-            className="h-12 border border-ink/12 bg-white px-4 text-base outline-none transition focus:border-leaf"
+            className={styles.input}
             onChange={(event) => updateField("company", event.target.value)}
           />
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-ink/78">
+        <label className={styles.label}>
           {t("Inquiry type", "查詢類型")}
           <select
             name="inquiryType"
             value={payload.type}
             aria-invalid={Boolean(errors.type)}
-            className="h-12 border border-ink/12 bg-white px-4 text-base outline-none transition focus:border-leaf"
+            className={styles.select}
             onChange={(event) => updateField("type", event.target.value as InquiryType)}
           >
             {inquiryTypes.map((type) => (
@@ -220,47 +223,47 @@ export function InquiryForm({
           </select>
         </label>
       </div>
-      <div className="grid gap-4 md:grid-cols-2">
-        <label className="grid gap-2 text-sm font-semibold text-ink/78">
+      <div className={styles.fieldGroupRow}>
+        <label className={styles.label}>
           {t("Approximate quantity", "大約數量")}
           <input
             name="quantity"
             value={payload.quantity}
             inputMode="numeric"
-            className="h-12 border border-ink/12 bg-white px-4 text-base outline-none transition focus:border-leaf"
+            className={styles.input}
             onChange={(event) => updateField("quantity", event.target.value)}
           />
         </label>
-        <label className="grid gap-2 text-sm font-semibold text-ink/78">
+        <label className={styles.label}>
           {t("Preferred timing", "希望的時間")}
           <input
             name="timing"
             value={payload.timing}
             placeholder={t("e.g. August settlement gifts", "例如：八月交收禮物")}
-            className="h-12 border border-ink/12 bg-white px-4 text-base outline-none transition focus:border-leaf"
+            className={styles.input}
             onChange={(event) => updateField("timing", event.target.value)}
           />
         </label>
       </div>
-      <label className="grid gap-2 text-sm font-semibold text-ink/78">
+      <label className={styles.label}>
         {t("Message", "訊息")}
         <textarea
           name="message"
-          rows={5}
           value={payload.message}
           placeholder={t("Optional: tell us anything else we should know.", "選填：如有其他需要，請告訴我們。")}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={errors.message ? "inquiry-message-error" : undefined}
-          className="border border-ink/12 bg-white px-4 py-3 text-base outline-none transition focus:border-leaf"
+          className={styles.textarea}
           onChange={(event) => updateField("message", event.target.value)}
         />
         {errors.message ? (
-          <span id="inquiry-message-error" className="text-xs font-semibold text-seal">
+          <span id="inquiry-message-error" className={styles.errorMessage}>
+            <AlertCircle size={14} aria-hidden="true" />
             {errors.message}
           </span>
         ) : null}
       </label>
-      <div className="flex flex-wrap gap-3">
+      <div className={styles.actions}>
         <button type="submit" className="button-primary" disabled={status === "sending"}>
           {status === "sending" ? (
             <>
@@ -273,24 +276,26 @@ export function InquiryForm({
           )}
         </button>
       </div>
-      <div className="grid gap-2 text-xs leading-6 text-ink/58" aria-live="polite">
+      <div className={styles.feedbackRegion} aria-live="polite">
         {hasErrors ? (
-          <p className="font-semibold text-seal">
+          <p className={styles.feedbackError}>
+            <AlertCircle size={16} aria-hidden="true" />
             {t("Please fix the highlighted fields before sending.", "請先修正標示的欄位再送出。")}
           </p>
         ) : null}
         {status === "sending" ? (
-          <p className="flex max-w-xl items-start gap-2">
-            <LoaderCircle className="mt-1 shrink-0 animate-spin text-leaf" size={15} />
+          <p className={styles.feedbackSending}>
+            <LoaderCircle className="animate-spin shrink-0" size={16} />
             {t("Sending your inquiry…", "正在送出你的查詢…")}
           </p>
         ) : status === "sent" ? (
-          <p className="flex max-w-xl items-start gap-2 font-semibold text-leaf">
-            <CheckCircle2 className="mt-1 shrink-0" size={15} />
+          <p className={styles.feedbackSuccess}>
+            <CheckCircle2 className="shrink-0" size={16} />
             {t("Thank you — your inquiry has been sent. We will be in touch soon.", "謝謝，你的查詢已成功送出。我們會盡快與你聯絡。")}
           </p>
         ) : status === "error" ? (
-          <p className="font-semibold text-seal">
+          <p className={styles.feedbackError}>
+            <AlertCircle size={16} aria-hidden="true" />
             {t("We could not send your inquiry. Please check your connection and try again.", "未能送出你的查詢。請檢查網絡後再試。")}
           </p>
         ) : null}

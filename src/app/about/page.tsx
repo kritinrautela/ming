@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import { SectionHeading } from "@/components/SectionHeading";
 import { useLanguage } from "@/lib/language";
+import styles from "./about.module.css";
 
 const pillars = [
   {
@@ -41,47 +42,49 @@ export default function AboutPage() {
             copyZh="Chazen 茶禪是一個以文化為本的中國茶品牌。我們相信，一杯茶可以為平靜、專注與連結留出空間。"
           />
 
-          <div className="mt-14 grid gap-8 border-y border-ink/10 py-12 lg:grid-cols-[0.8fr_1.2fr]">
-            <p className="display-title text-4xl leading-tight text-leaf md:text-5xl">
-              {t("茶禪一味", "茶禪一味")}
-            </p>
-            <div className="grid gap-6 text-base leading-8 text-ink/66">
-              <p>{t(
-                "The name Chazen brings tea and Zen into one idea. It reflects the long relationship between tea, awareness, hospitality, and the art of slowing down.",
-                "Chazen 將「茶」與「禪」放在同一個概念之中，回應茶、覺察、待客之道與慢下來的藝術之間悠久的連結。"
-              )}</p>
-              <p>{t(
-                "We are building a modern tea house beyond a physical room: tea rituals, cultural stories, guided discovery, sound, and meaningful gifts designed to meet people where they are.",
-                "我們正在建立一間不受實體空間限制的現代茶文化之家，透過茶儀式、文化故事、引導式探索、聲音與有意義的贈禮，讓不同的人都能找到自己的入口。"
-              )}</p>
-              <p>{t(
-                "Our intention is not to simplify Chinese tea into a trend. It is to make the first step welcoming while keeping the culture visible, respected, and worth learning.",
-                "我們的目的不是把中國茶簡化成潮流，而是讓第一步更容易親近，同時讓文化保持可見、受到尊重，並值得繼續學習。"
-              )}</p>
+          <div className={styles.storySection}>
+            <div className={styles.storyGrid}>
+              <p className={styles.pullStatement}>
+                {t("茶禪一味", "茶禪一味")}
+              </p>
+              <div className={styles.storyText}>
+                <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(
+                  "The name Chazen brings tea and Zen into one idea. It reflects the long relationship between tea, awareness, hospitality, and the art of slowing down.",
+                  "Chazen 將「茶」與「禪」放在同一個概念之中，回應茶、覺察、待客之道與慢下來的藝術之間悠久的連結。"
+                )}</p>
+                <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(
+                  "We are building a modern tea house beyond a physical room: tea rituals, cultural stories, guided discovery, sound, and meaningful gifts designed to meet people where they are.",
+                  "我們正在建立一間不受實體空間限制的現代茶文化之家，透過茶儀式、文化故事、引導式探索、聲音與有意義的贈禮，讓不同的人都能找到自己的入口。"
+                )}</p>
+                <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(
+                  "Our intention is not to simplify Chinese tea into a trend. It is to make the first step welcoming while keeping the culture visible, respected, and worth learning.",
+                  "我們的目的不是把中國茶簡化成潮流，而是讓第一步更容易親近，同時讓文化保持可見、受到尊重，並值得繼續學習。"
+                )}</p>
+              </div>
             </div>
           </div>
 
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
+          <div className={styles.pillarsGrid}>
             {pillars.map((item) => (
-              <article key={item.en[0]} className="border-t border-ink/12 pt-7">
-                <h2 className="display-title text-3xl text-leaf">{t(item.en[0], item.zh[0])}</h2>
-                <p className="mt-5 text-sm leading-7 text-ink/62">{t(item.en[1], item.zh[1])}</p>
+              <article key={item.en[0]} className={styles.pillarCard}>
+                <h2 className={styles.pillarTitle} lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.en[0], item.zh[0])}</h2>
+                <p className={styles.pillarText} lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.en[1], item.zh[1])}</p>
               </article>
             ))}
           </div>
 
-          <div className="mt-16 bg-porcelain p-7 shadow-soft md:p-10">
-            <p className="eyebrow">{t("What we are building", "我們正在建立")}</p>
-            <h2 className="display-title mt-4 max-w-3xl text-4xl leading-tight text-ink">
+          <div className={styles.missionPanel}>
+            <p className={styles.missionEyebrow}>{t("What we are building", "我們正在建立")}</p>
+            <h2 className={styles.missionHeading} lang={language === "zh" ? "zh-Hant" : undefined}>
               {t("A thoughtful path from curiosity to personal ritual.", "一條從好奇心走向個人茶儀式的清晰路徑。")}
             </h2>
-            <p className="mt-5 max-w-3xl leading-8 text-ink/66">
+            <p className={styles.missionCopy} lang={language === "zh" ? "zh-Hant" : undefined}>
               {t(
                 "Chazen brings together guided tea discovery, practical brewing rituals, cultural education, the Five Cups philosophy, and gifting for personal and professional milestones.",
                 "Chazen 結合引導式選茶、實用沖泡儀式、文化內容、五盞理念，以及為個人與企業重要時刻而設的贈禮。"
               )}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className={styles.missionActions}>
               <Link href="/tea-test" className="button-primary">{t("Begin with the tea test", "從茶測試開始")} <ArrowRight size={17} /></Link>
               <Link href="/b2b" className="button-secondary">{t("Explore cultural gifting", "探索文化贈禮")}</Link>
             </div>
