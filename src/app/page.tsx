@@ -164,15 +164,63 @@ const ritualSteps = [
   { zh: "慢飲", en: "Sip slowly", copy: { zh: "一口茶，一次呼吸。", en: "One sip, one breath." } }
 ];
 
-const journalCategories = [
-  { zh: "茶歷史", en: "Tea history" },
-  { zh: "茶與睡眠", en: "Tea & sleep" },
-  { zh: "茶與專注", en: "Tea & focus" },
-  { zh: "茶與壓力", en: "Tea & stress" },
-  { zh: "如何沖茶", en: "How to brew" },
-  { zh: "茶具介紹", en: "Teaware guide" },
-  { zh: "中國送禮文化", en: "Chinese gifting culture" },
-  { zh: "Chazen 故事", en: "The Chazen story" }
+const journalEntries = [
+  {
+    zh: "茶歷史",
+    en: "Tea history",
+    noteZh: "從神農傳說到宋代點茶",
+    noteEn: "From the Shennong legend to the Song whisk",
+    href: "/tea-culture"
+  },
+  {
+    zh: "如何沖茶",
+    en: "How to brew",
+    noteZh: "到沖泡室練習一泡",
+    noteEn: "Practice a pour in the Brewing Room",
+    href: "/brew-simulator"
+  },
+  {
+    zh: "茶具介紹",
+    en: "Teaware guide",
+    noteZh: "蓋碗、公道杯與六個步驟",
+    noteEn: "Gaiwan, cha hai, and the six steps",
+    href: "/tea-ritual"
+  },
+  {
+    zh: "茶與專注",
+    en: "Tea & focus",
+    noteZh: "先找出你現在的節奏",
+    noteEn: "Find your current rhythm first",
+    href: "/tea-test"
+  },
+  {
+    zh: "茶與睡眠",
+    en: "Tea & sleep",
+    noteZh: "在靜心模式放慢晚間",
+    noteEn: "Slow the evening in Stillness Mode",
+    href: "/stillness-mode"
+  },
+  {
+    zh: "茶與壓力",
+    en: "Tea & stress",
+    noteZh: "聲音、呼吸與一杯不急的茶",
+    noteEn: "Sound, breath, and one unhurried cup",
+    href: "/song-room"
+  },
+  {
+    zh: "中國送禮文化",
+    en: "Chinese gifting culture",
+    noteZh: "把儀式放進一份禮物",
+    noteEn: "Putting a ritual inside a gift",
+    href: "/gift-box"
+  },
+  {
+    zh: "Chazen 故事",
+    en: "The Chazen story",
+    noteZh: "以茶，回到當下",
+    noteEn: "Tea as a way to return",
+    href: "/about"
+  }
 ];
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -582,11 +630,17 @@ export default function Home() {
               <>Read slowly, learn tea slowly</>
             )}
           </motion.h2>
-          <motion.div className="cz-journal-tags" variants={stagger}>
-            {journalCategories.map((category) => (
-              <motion.span key={category.en} variants={fadeUp}>
-                <Link href="/tea-culture" className="cz-journal-tag">
-                  {t(category.en, category.zh)}
+          <motion.div className="cz-journal-index" variants={stagger}>
+            {journalEntries.map((entry) => (
+              <motion.span key={entry.en} variants={fadeUp}>
+                <Link href={entry.href} className="cz-journal-row">
+                  <span className="cz-journal-row-title" lang={language === "zh" ? "zh-Hant" : undefined}>
+                    {t(entry.en, entry.zh)}
+                  </span>
+                  <span className="cz-journal-row-note" lang={language === "zh" ? "zh-Hant" : undefined}>
+                    {t(entry.noteEn, entry.noteZh)}
+                  </span>
+                  <ArrowRight size={15} aria-hidden="true" className="cz-journal-row-arrow" />
                 </Link>
               </motion.span>
             ))}

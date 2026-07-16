@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { legalItems, site } from "@/lib/site";
 import { useLanguage } from "@/lib/language";
+import styles from "./Footer.module.css";
 
 const footerGroups = [
   {
@@ -43,6 +44,29 @@ export function Footer() {
   return (
     <footer className="museum-site-footer">
       <div className="container">
+        <div className={styles.beginBand}>
+          <p className={styles.beginText}>
+            {t("Begin with one cup.", "從一盞茶開始。")}
+          </p>
+          <div className={styles.beginLinks}>
+            <Link
+              href="/tea-test"
+              className={styles.beginLink}
+              aria-label={t("Start the Tea Test", "開始茶測試")}
+            >
+              {t("Start the Tea Test", "開始茶測試")}
+            </Link>
+            <Link
+              href="/brew-simulator"
+              className={styles.beginLink}
+              aria-label={t("Practice in the Brewing Room", "在沖泡室中練習")}
+            >
+              {t("Practice in the Brewing Room", "在沖泡室中練習")}
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="container">
         <div className="museum-footer-top">
           <div className="museum-footer-brand">
             <p className="display-title">
@@ -64,7 +88,7 @@ export function Footer() {
               <div key={group.heading.en}>
                 <p>{t(group.heading.en, group.heading.zh)}</p>
                 {group.links.map((item) => (
-                  <Link key={item.href} href={item.href}>
+                  <Link key={item.href} href={item.href} className={styles.footerLink}>
                     {t(item.label, item.labelZh)}
                   </Link>
                 ))}
@@ -79,7 +103,7 @@ export function Footer() {
           <p>© {new Date().getFullYear()} Chazen 茶禪. {t("All rights reserved.", "版權所有。")}</p>
           <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label={t("Legal", "法律資訊")}>
             {legalItems.map((item) => (
-              <Link key={item.href} href={item.href}>
+              <Link key={item.href} href={item.href} className={styles.footerLink}>
                 {t(item.label, item.labelZh)}
               </Link>
             ))}
