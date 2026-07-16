@@ -10,6 +10,7 @@ export const site = {
 export const navItems = [
   { label: "Tea Test", labelZh: "茶測試", href: "/tea-test" },
   { label: "Ritual", labelZh: "茶儀式", href: "/tea-ritual" },
+  { label: "Brew", labelZh: "沖泡室", href: "/brew-simulator" },
   { label: "Tea", labelZh: "茶品", href: "/tea-collection" },
   { label: "Culture", labelZh: "茶文化", href: "/tea-culture" },
   { label: "Five Cups", labelZh: "五盞", href: "/five-cups" },
@@ -19,6 +20,7 @@ export const navItems = [
 export const footerItems = [
   { label: "Tea Test", labelZh: "茶測試", href: "/tea-test" },
   { label: "Tea Ritual", labelZh: "茶儀式", href: "/tea-ritual" },
+  { label: "Brewing Room", labelZh: "沖泡室", href: "/brew-simulator" },
   { label: "Tea Culture", labelZh: "茶文化", href: "/tea-culture" },
   { label: "Tea Collection", labelZh: "茶品收藏", href: "/tea-collection" },
   { label: "Tea Boxes", labelZh: "茶盒", href: "/tea-boxes" },

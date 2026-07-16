@@ -162,9 +162,9 @@ export default function TeaRitualPage() {
       <ChazenCtaBand
         title="開始你的茶儀式"
         titleEn="Begin Your Tea Ritual"
-        copy="Begin with one cup, one vessel, and enough quiet to notice the aroma."
-        copyZh="從一杯茶、一件器具，以及足夠留意香氣的靜謐開始。"
-        primary={{ href: "/tea-ritual", label: "Start Your Tea Ritual", labelZh: "開始你的茶儀式" }}
+        copy="Begin with one cup, one vessel, and enough quiet to notice the aroma. Or practice the pour first in the Brewing Room."
+        copyZh="從一杯茶、一件器具，以及足夠留意香氣的靜謐開始。或先在沖泡室練習一泡。"
+        primary={{ href: "/brew-simulator", label: "Practice in the Brewing Room", labelZh: "到沖泡室練習" }}
         secondary={{ href: "/tea-test", label: "Start Tea Test", labelZh: "開始茶測試" }}
         next={{ href: "/tea-boxes", label: "Starter Tea Box", labelZh: "入門茶盒" }}
       />

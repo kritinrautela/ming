@@ -515,6 +515,9 @@ export default function Home() {
               <Link href="/tea-ritual" className="button-secondary">
                 {t("Learn the full ritual", "學習完整儀式")}
               </Link>
+              <Link href="/brew-simulator" className="cz-text-link">
+                {t("Practice a pour in the Brewing Room", "先到沖泡室練習一泡")} <ArrowRight size={14} aria-hidden="true" />
+              </Link>
               <Link href="/stillness-mode" className="cz-text-link">
                 {t("Or simply sit in stillness", "或者，只是靜靜地坐一會")} <ArrowRight size={14} aria-hidden="true" />
               </Link>
