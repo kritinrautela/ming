@@ -1,10 +1,13 @@
-/* FAQ page — side-by-side editorial list with question numbers */
+/* FAQ page — elegant editorial Q&A layout with refined typography */
 
 .faqContainer {
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
   margin-top: 2rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (min-width: 768px) {
@@ -18,11 +21,23 @@
   display: grid;
   gap: 1rem;
   border-bottom: 1px solid rgba(23, 23, 19, 0.12);
-  padding-bottom: 1.5rem;
+  padding: 1.75rem 0;
+  padding-bottom: 1.75rem;
+  transition: all 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faqItem:first-child {
+  padding-top: 0;
 }
 
 .faqItem:last-child {
   border-bottom: none;
+  padding-bottom: 0;
+}
+
+.faqItem:hover {
+  background: rgba(63, 89, 69, 0.01);
+  transform: translateX(2px);
 }
 
 .faqQuestion {
@@ -46,23 +61,42 @@
   font-weight: 400;
   font-variant-numeric: tabular-nums;
   flex-shrink: 0;
+  border: 1px solid rgba(159, 63, 47, 0.15);
+  transition: all 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faqItem:hover .faqNumber {
+  background: rgba(159, 63, 47, 0.12);
+  border-color: rgba(159, 63, 47, 0.3);
+  transform: scale(1.08);
 }
 
 .faqQuestionText {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   line-height: 1.4;
   color: var(--cz-ink);
   letter-spacing: -0.01em;
+  font-family: var(--cz-serif);
+  transition: color 200ms ease;
+}
+
+.faqItem:hover .faqQuestionText {
+  color: var(--cz-brass);
 }
 
 .faqAnswer {
   margin: 0;
   font-size: 0.9rem;
-  line-height: 1.65;
+  line-height: 1.7;
   color: rgba(23, 23, 19, 0.66);
   margin-left: 2.75rem;
+  transition: color 200ms ease;
+}
+
+.faqItem:hover .faqAnswer {
+  color: rgba(23, 23, 19, 0.75);
 }
 
 .faqAnswer a {
@@ -80,9 +114,48 @@
 .faqCta {
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
-  padding-top: 2rem;
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
   border-top: 1px solid rgba(23, 23, 19, 0.1);
+}
+
+.faqCta button {
+  transition: all 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faqCta button:hover {
+  transform: translateY(-2px);
+}
+
+.faqCta button:active {
+  transform: scale(0.99);
+}
+
+.faqCta button:focus-visible {
+  outline: 2px solid var(--cz-moss);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faqItem {
+    transition: none;
+  }
+
+  .faqNumber {
+    transition: none;
+  }
+
+  .faqQuestionText {
+    transition: none;
+  }
+
+  .faqAnswer {
+    transition: none;
+  }
+
+  .faqCta button {
+    transition: none;
+  }
 }
 
 @media (max-width: 767px) {

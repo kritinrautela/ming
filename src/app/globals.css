@@ -3485,6 +3485,32 @@ a {
 
 ::selection {
   background: rgba(157, 129, 80, 0.28);
+  color: #171713;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(23, 23, 19, 0.25);
+  border-radius: 4px;
+  transition: background 200ms ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(23, 23, 19, 0.45);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: rgba(23, 23, 19, 0.25) transparent;
+  scrollbar-width: thin;
 }
 
 a:focus-visible,

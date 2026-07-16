@@ -13,6 +13,12 @@
   align-items: start;
   border-bottom: 1px solid rgba(157, 129, 80, 0.35);
   padding: 2rem 0;
+  transition: background-color 200ms ease;
+}
+
+.tea-journey-item:hover,
+.tea-journey-item:focus-within {
+  background-color: rgba(251, 250, 246, 0.3);
 }
 
 .tea-journey-item strong {
@@ -70,8 +76,9 @@
 
 .tea-box-card:hover,
 .tea-box-card:focus-within {
-  background-color: rgba(251, 250, 246, 0.5);
+  background-color: rgba(251, 250, 246, 0.6);
   transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(111, 74, 50, 0.06);
 }
 
 .tea-box-card strong {
@@ -137,6 +144,7 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 0.88rem;
+  transition: opacity 200ms ease;
 }
 
 .tea-comparison-table th {

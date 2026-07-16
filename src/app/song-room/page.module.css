@@ -14,11 +14,14 @@
   align-content: start;
   border-top: 1px solid rgba(157, 129, 80, 0.28);
   padding-top: 1.2rem;
-  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms ease;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), background-color 280ms ease, box-shadow 280ms ease;
 }
 
-.exhibitCard:hover {
-  transform: translateY(-4px);
+.exhibitCard:hover,
+.exhibitCard:focus-within {
+  transform: translateY(-3px);
+  background-color: rgba(251, 250, 246, 0.25);
+  box-shadow: 0 6px 12px rgba(111, 74, 50, 0.05);
 }
 
 .exhibitNumber {
@@ -64,5 +67,17 @@
 
   .exhibitCard h3 {
     font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .exhibitCard {
+    transition: background-color 200ms ease;
+  }
+
+  .exhibitCard:hover,
+  .exhibitCard:focus-within {
+    transform: none;
   }
 }
