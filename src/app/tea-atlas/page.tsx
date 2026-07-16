@@ -47,7 +47,7 @@ export default function TeaAtlasPage() {
         chinese="茶之地圖"
         copy="A living map of mountain, mist, altitude, processing, and ritual. The leaf remembers where it came from."
         copyZh="一幅關於山、霧、海拔、製茶工序與儀式的活地圖。茶葉記得它從何而來。"
-        image="chazen-shanshui-chapter-2.png"
+        image="chazen-shanshui-chapter-2.jpg"
         imageAlt="A misted mountain and water landscape evoking the origins of Chinese tea."
       />
 

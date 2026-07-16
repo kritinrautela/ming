@@ -111,7 +111,7 @@ export default function B2BPage() {
         copy="Chazen 企業茶禮盒適合公司、客戶答謝、地產交收禮物、節日送禮與文化活動。"
         copyEn="Chazen's corporate tea gift boxes suit companies, client appreciation, real estate settlement gifts, festival gifting, and cultural events."
         media={{
-          asset: "chazen-gift-box-v1.png",
+          asset: "chazen-gift-box-v1.jpg",
           alt: "A refined Chazen cultural gift box designed for settlement, client, and corporate gifting.",
           type: "image"
         }}

@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Chazen 茶禪",
     images: [
       {
-        url: "images/chazen-tea-room-hero-v2.png",
+        url: "images/chazen-tea-room-hero-v2.jpg",
         width: 1672,
         height: 941,
         alt: "Chazen tea room — modern Chinese tea culture and quiet ritual."
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Chazen 茶禪 | One Cup. One Breath. One Return.",
     description: site.description,
-    images: ["images/chazen-tea-room-hero-v2.png"]
+    images: ["images/chazen-tea-room-hero-v2.jpg"]
   }
 };
 

@@ -145,7 +145,7 @@ export default function TeaBoxesPage() {
         copy="Chazen 茶盒不是單純產品，而是把茶、儀式、文化與心境帶入日常的方式。"
         copyEn="A Chazen tea box isn't just a product — it's a way of bringing tea, ritual, culture, and mindset into daily life."
         media={{
-          asset: "chazen-gift-box-v1.png",
+          asset: "chazen-gift-box-v1.jpg",
           alt: "A refined Chazen cultural tea gift box presented with tea ware and story cards.",
           type: "image"
         }}

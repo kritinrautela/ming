@@ -815,7 +815,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
     <main className={`assessment-page tea-mind-page ${styles.scope}`}>
       <section className="assessment-hero tea-mind-hero" aria-labelledby="assessment-title">
         <Image
-          src={`${basePath}/images/chazen-hero-gongfu-room-v3.png`}
+          src={`${basePath}/images/chazen-hero-gongfu-room-v3.jpg`}
           alt="A quiet Chinese tea room prepared for a reflective tea assessment."
           fill
           priority

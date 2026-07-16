@@ -228,7 +228,7 @@ export default function Home() {
       {/* ————— Hero ————— */}
       <section className="cz-hero">
         <Image
-          src={withBasePath("/images/chazen-hero-gongfu-room-v3.png")}
+          src={withBasePath("/images/chazen-hero-gongfu-room-v3.jpg")}
           alt={t(
             "A gongfu tea table in a quiet, warmly lit tea room.",
             "溫暖燈光下安靜茶室裡的功夫茶席。"
@@ -393,7 +393,7 @@ export default function Home() {
           </motion.div>
           <div className="cz-test-media">
             <Image
-              src={withBasePath("/images/chazen-tea-table-topdown-v3.png")}
+              src={withBasePath("/images/chazen-tea-table-topdown-v3.jpg")}
               alt={t(
                 "Top-down view of a tea table with gaiwan, cups, and utensils.",
                 "俯瞰茶桌：蓋碗、茶杯與茶具。"
@@ -410,7 +410,7 @@ export default function Home() {
         <div className="cz-culture-grid">
           <div className="cz-culture-media">
             <Image
-              src={withBasePath("/images/chazen-shanshui-chapter-2.png")}
+              src={withBasePath("/images/chazen-shanshui-chapter-2.jpg")}
               alt={t(
                 "Ink-wash shanshui landscape painting in warm tones.",
                 "暖色調的山水墨畫。"
@@ -468,7 +468,7 @@ export default function Home() {
         <div className="cz-ritual-grid">
           <div className="cz-ritual-media">
             <Image
-              src={withBasePath("/images/chazen-song-diancha-v1.png")}
+              src={withBasePath("/images/chazen-song-diancha-v1.jpg")}
               alt={t(
                 "Song dynasty style whisked tea preparation in a dark bowl.",
                 "宋代點茶：黑釉盞中的擊拂茶湯。"
@@ -554,7 +554,7 @@ export default function Home() {
           </motion.div>
           <div className="cz-gift-media">
             <Image
-              src={withBasePath("/images/chazen-gift-box-v1.png")}
+              src={withBasePath("/images/chazen-gift-box-v1.jpg")}
               alt={t(
                 "Chazen cultural gift box with tea, teaware, and ritual cards.",
                 "Chazen 文化禮盒：茶葉、茶具與儀式卡。"

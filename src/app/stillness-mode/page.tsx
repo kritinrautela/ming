@@ -44,7 +44,7 @@ export default function StillnessModePage() {
         chinese="靜心茶室"
         copy="A quiet digital tea room for one minute of breath, bowl sound, and a tea recommendation based on the mood you bring to the cup."
         copyZh="一間安靜的數位茶室，給你一分鐘的呼吸、缽音，以及一份根據你此刻心情而定的茶推薦。"
-        image="chazen-tea-room-hero-v2.png"
+        image="chazen-tea-room-hero-v2.jpg"
         imageAlt="A dim, quiet tea room prepared for a moment of stillness."
       />
 

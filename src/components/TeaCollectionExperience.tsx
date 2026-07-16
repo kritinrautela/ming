@@ -202,7 +202,7 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
     <main className="tea-collection-page tea-collection-cinematic">
       <section className="tea-collection-hero">
         <Image
-          src={`${basePath}/images/chazen-tea-collection-v1.png`}
+          src={`${basePath}/images/chazen-tea-collection-v1.jpg`}
           alt="Premium Chinese tea collection with loose leaves, tea canisters, and teaware."
           fill
           priority

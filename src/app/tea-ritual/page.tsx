@@ -82,7 +82,7 @@ export default function TeaRitualPage() {
             </p>
           </article>
           <ChazenSubpageMedia
-            asset="chazen-tea-table-topdown-v3.png"
+            asset="chazen-tea-table-topdown-v3.jpg"
             alt="A top-down view of the tea table set for the ritual: gaiwan, fairness pitcher, and cups arranged in sequence."
           />
         </div>

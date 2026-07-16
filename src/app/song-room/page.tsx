@@ -57,7 +57,7 @@ export default function SongRoomPage() {
         chinese="宋室"
         copy="A quiet exhibition on Song dynasty tea aesthetics: foam, dark ceramic, scholar restraint, and the luxury of saying almost nothing."
         copyZh="一場關於宋代茶美學的安靜展覽：泡沫、黑釉瓷器、文人的克制，以及近乎無言的奢侈。"
-        image="chazen-song-diancha-v1.png"
+        image="chazen-song-diancha-v1.jpg"
         imageAlt="A Song dynasty style dian cha tea whisking scene with dark ceramic bowl and pale foam."
       />
 

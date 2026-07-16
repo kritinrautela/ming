@@ -29,7 +29,7 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     context: "Mythic time / before written tea culture",
     object: "Wild leaf, heat, body",
     visualLabel: "Steam over mountain herb",
-    image: "chazen-shanshui-chapter-2.png",
+    image: "chazen-shanshui-chapter-2.jpg",
     story: "The myth of Shennong frames tea as a discovery of balance: leaf, body, heat, and attention. Before tea became taste, it was a way of reading nature.",
     chazenMeaning: "CHAZEN begins here: tea as a threshold between the body and the landscape."
   },
@@ -55,7 +55,7 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     context: "Song dynasty / 960-1279",
     object: "Jian bowl, bamboo whisk, powdered tea foam",
     visualLabel: "Powdered tea, foam, Jian bowl",
-    image: "chazen-song-diancha-v1.png",
+    image: "chazen-song-diancha-v1.jpg",
     story: "Song dian cha turned powdered tea into a luminous surface. Whisk, bowl, foam, wrist, and silence became a visual art of discipline.",
     chazenMeaning: "Song restraint gives CHAZEN its quiet visual discipline: less decoration, more attention."
   },
@@ -68,7 +68,7 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     context: "Ming dynasty / 1368-1644",
     object: "Loose leaf, teapot, infusion water",
     visualLabel: "Gongfu vessels and loose leaf",
-    image: "chazen-tea-table-topdown-v3.png",
+    image: "chazen-tea-table-topdown-v3.jpg",
     story: "Loose-leaf infusion changed the grammar of tea. Leaves were no longer hidden in powder; shape, fragrance, and repeated steeping became part of the experience.",
     chazenMeaning: "This is why CHAZEN treats the dry leaf as a museum object before water arrives."
   },
@@ -81,7 +81,7 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     context: "Qing dynasty / 1644-1912",
     object: "Gaiwan, fairness cup, tasting cups",
     visualLabel: "Small cups, quick pour, shared table",
-    image: "chazen-tea-table-topdown-v3.png",
+    image: "chazen-tea-table-topdown-v3.jpg",
     story: "Gongfu is not speed. It is cultivated skill: water controlled by time, leaf revealed through sequence, and hospitality made precise.",
     chazenMeaning: "The CHAZEN table borrows this grammar of care: equal cups, exact timing, and a host who notices."
   },
@@ -94,7 +94,7 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     context: "Now / tea, stillness, sound, gifting",
     object: "Gaiwan, singing bowl, gift vessel",
     visualLabel: "Tea room, sound, return",
-    image: "chazen-hero-gongfu-room-v3.png",
+    image: "chazen-hero-gongfu-room-v3.jpg",
     story: "CHAZEN brings origin, teaware, breathing, sound, and cultural memory into one contemporary room for returning to the present.",
     chazenMeaning: "The old forms are not copied as nostalgia. They are edited into a living ritual for modern attention."
   }

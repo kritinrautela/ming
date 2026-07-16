@@ -132,7 +132,7 @@ export default function TeaCulturePage() {
         copy="從神農傳說、唐代《茶經》、宋代點茶，到現代 Chazen，茶一直不只是飲品，而是一種文化與生活方式。"
         copyEn="From the legend of Shennong, to the Tang dynasty's Classic of Tea, to Song dynasty whisked tea, to modern Chazen — tea has always been more than a drink; it is a culture and a way of life."
         media={{
-          asset: "chazen-song-diancha-v1.png",
+          asset: "chazen-song-diancha-v1.jpg",
           alt: "A Song dynasty style whisked-tea (dian cha) scene, evoking the literati aesthetic this chapter of tea history is known for.",
           type: "image"
         }}
