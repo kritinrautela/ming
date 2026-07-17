@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const isGithubPages = process.env.GITHUB_PAGES === "true";
-const githubRepoName = "chazen-website";
+const githubRepoName = "ming";
 const configuredBasePath = process.env.NEXT_PUBLIC_BASE_PATH;
 const basePath = configuredBasePath ?? (isGithubPages ? `/${githubRepoName}` : "");
 

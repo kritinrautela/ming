@@ -34,11 +34,11 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`
   },
   description: site.description,
-  metadataBase: new URL("https://kritinrautela.github.io/chazen-website/"),
+  metadataBase: new URL("https://kritinrautela.github.io/ming/"),
   openGraph: {
     title: "Chazen 茶禪 | One Cup. One Breath. One Return.",
     description: site.description,
-    url: "https://kritinrautela.github.io/chazen-website/",
+    url: "https://kritinrautela.github.io/ming/",
     siteName: "Chazen 茶禪",
     images: [
       {
