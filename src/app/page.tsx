@@ -605,10 +605,10 @@ export default function Home() {
           </motion.div>
           <div className="cz-gift-media">
             <Image
-              src={withBasePath("/images/chazen-gift-box-v1.jpg")}
+              src={withBasePath("/images/chazen-gift-box-packaging-real.png")}
               alt={t(
-                "Chazen cultural gift box with tea, teaware, and ritual cards.",
-                "Chazen 文化禮盒：茶葉、茶具與儀式卡。"
+                "The real Chazen gift box: gold-foil packaging with crane, bamboo, and blossom motifs on black, jade, and ivory sleeves.",
+                "真正的 Chazen 禮盒：黑、綠、米三色茶包，燙金鶴紋、竹紋與花紋。"
               )}
               fill
               sizes="(min-width: 1024px) 46vw, 100vw"
