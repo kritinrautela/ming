@@ -2,577 +2,458 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Download, LockKeyhole, Loader2, RotateCcw } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Share2 } from "lucide-react";
 import { buildInquiryPath } from "@/lib/inquiry";
 import { useLanguage } from "@/lib/language";
 import styles from "./TeaAssessmentExperience.module.css";
 
-type Dimension = "pressure" | "calm" | "focus" | "energy" | "sleep" | "emotional" | "grounding" | "ritualReadiness";
-type TagKey = "solo" | "sound" | "social" | "quick" | "full" | "deep" | "minimal" | "light" | "rock" | "warm" | "neutral" | "taste" | "grounding";
-type ResultKey = "mountainCalm" | "rockStability" | "sunlitFocus" | "eveningWindDown" | "balancedHarmony" | "beginnerGentle";
+type CupKey = "faith" | "effort" | "stillness" | "mindfulness" | "wisdom";
+type ComfortKey = "afterFeast" | "quietCare";
+type RouteKey = "self" | "gift" | "team";
+type FormatKey = "convenience" | "ritual" | "either";
 
 type AssessmentOption = {
   id: string;
   label: string;
   labelZh: string;
-  detail: string;
-  detailZh: string;
-  scores?: Partial<Record<Dimension, number>>;
-  tags?: Partial<Record<TagKey, number>>;
-  anchor?: string;
-  anchorZh?: string;
+  insight: string;
+  insightZh: string;
+  scores?: Partial<Record<CupKey, number>>;
+  next?: string;
+  route?: RouteKey;
+  format?: FormatKey;
+  comfortResult?: ComfortKey;
 };
 
 type AssessmentQuestion = {
   id: string;
   question: string;
   questionZh: string;
-  multi?: boolean;
-  max?: number;
   options: AssessmentOption[];
 };
 
 type Answer = {
   questionId: string;
-  optionIds: string[];
+  optionId: string;
 };
 
-type ResultProfile = {
-  key: ResultKey;
+type CupProfile = {
+  key: CupKey;
   character: string;
-  chineseName: string;
   englishName: string;
-  summary: string;
-  summaryZh: string;
+  chineseGloss: string;
+  headline: string;
+  headlineZh: string;
   reading: string;
   readingZh: string;
-  mainTea: string;
-  mainTeaZh: string;
-  mainTeaCopy: string;
-  mainTeaCopyZh: string;
-  flowerTea: string;
-  flowerTeaZh: string;
-  flowerTeaCopy: string;
-  flowerTeaCopyZh: string;
-  ritual: string[];
-  ritualZh: string[];
-  product: string;
-  productZh: string;
+  serves: string;
+  servesZh: string;
+  ritual: string;
+  ritualZh: string;
 };
 
-const TOTAL_QUESTIONS = 10;
+type ComfortProfile = {
+  key: ComfortKey;
+  name: string;
+  nameZh: string;
+  headline: string;
+  headlineZh: string;
+  reading: string;
+  readingZh: string;
+  ritual: string;
+  ritualZh: string;
+};
 
-const resultProfiles: Record<ResultKey, ResultProfile> = {
-  mountainCalm: {
-    key: "mountainCalm",
-    character: "靜",
-    chineseName: "山中靜心",
-    englishName: "Mountain Calm",
-    summary: "Your pressure wants quiet space, softer evenings, and a tea that helps the mind come down gently.",
-    summaryZh: "你的壓力渴望安靜的空間、更柔和的夜晚，以及一杯能讓心慢慢沉澱的茶。",
-    reading: "Mountain Calm appears when pressure is high and the deeper need is calm. This profile does not ask you to become more productive. It gives you a pale cup, slow breath, and a small return to yourself.",
-    readingZh: "當壓力偏高、內心真正需要的是平靜時，便會出現「山中靜心」。這不是要你變得更有效率，而是給你一杯淡雅的茶、一段緩慢的呼吸，以及一次微小的回歸自己。",
-    mainTea: "Bai Hao Yin Zhen White Tea",
-    mainTeaZh: "白毫銀針白茶",
-    mainTeaCopy: "Light white tea for softness, spaciousness, and a clean evening reset.",
-    mainTeaCopyZh: "清淡白茶，帶來柔和、寬闊感與潔淨的晚間收尾。",
-    flowerTea: "Chrysanthemum or Lily",
-    flowerTeaZh: "菊花或百合",
-    flowerTeaCopy: "A gentle flower pairing for cooling the mood and softening the edges of the day.",
-    flowerTeaCopyZh: "溫和花茶配搭，舒緩情緒、柔化一天的稜角。",
-    ritual: ["Use low light and a quiet cup.", "Warm the cup before brewing.", "Pour slowly and breathe for four counts.", "Take the first sip without checking your phone.", "End with one minute of silence."],
-    ritualZh: ["調暗燈光，選一個安靜的杯子。", "沖泡前先溫杯。", "緩緩注水，數四下呼吸。", "第一口茶前，先放下手機。", "以一分鐘的靜默作結。"],
-    product: "Mountain Calm Tea Selection",
-    productZh: "山中靜心茶選"
+const TOTAL_QUESTIONS = 8;
+
+const cupProfiles: Record<CupKey, CupProfile> = {
+  faith: {
+    key: "faith",
+    character: "信",
+    englishName: "Faith — The Reset",
+    chineseGloss: "信 · 願意停下，即是歸途",
+    headline: "Return to stillness. A quiet reset in a cup.",
+    headlineZh: "回到平靜。一盞茶裡的安靜歸零。",
+    reading:
+      "Your days are loud, and you have learned to shout over them. Faith asks for something smaller: the willingness to pause at all. This cup does not solve what is waiting for you — it gives you a pale liquor, a slow breath, and a moment in which nothing is asked of you.",
+    readingZh:
+      "你的日子很吵，而你早已學會與它比聲量。「信」所求的更小：只是願意停下來。這一盞不會替你解決正在等你的事——它給你的是一泓淡湯、一口慢呼吸，以及一個什麼都不被要求的片刻。",
+    serves: "For the overloaded mind — stress, noise, too many open threads.",
+    servesZh: "給超載的心——壓力、噪音，與太多未收的線頭。",
+    ritual: "Before the first sip, set the phone face down in another room, and let the steam reach your face first.",
+    ritualZh: "第一口之前，把手機翻面放到另一個房間，先讓茶的熱氣，抵達你的臉。"
   },
-  rockStability: {
-    key: "rockStability",
+  effort: {
+    key: "effort",
+    character: "精進",
+    englishName: "Effort — The Clear Line",
+    chineseGloss: "精進 · 一念相續，如水長流",
+    headline: "One task. One cup. A single unbroken thread.",
+    headlineZh: "一事，一盞，一條不斷的線。",
+    reading:
+      "You do not lack drive; you lack a container for it. Effort is not about pushing harder — it is the art of returning to the same thread each time it slips. This cup sits beside your work like a quiet metronome: each steep a fresh start, each sip a return to the one thing in front of you.",
+    readingZh:
+      "你不缺動力，缺的是盛放動力的器皿。「精進」不是更用力，而是每當線索滑落，都能回到同一條線上的功夫。這一盞茶安坐在你的工作旁，像一具安靜的節拍器：每一泡是重新開始，每一口是回到眼前唯一的事。",
+    serves: "For work, study, and decisions that deserve a clear mind.",
+    servesZh: "給工作、學習，以及值得以清明之心面對的抉擇。",
+    ritual: "Brew before you begin, not after you stall — let the first infusion mark the start of a single, undivided hour.",
+    ritualZh: "在開始之前泡茶，而不是卡住之後——讓第一泡，為一段完整不分心的時光開場。"
+  },
+  stillness: {
+    key: "stillness",
     character: "定",
-    chineseName: "岩骨安定",
-    englishName: "Rock Stability",
-    summary: "Your answers point toward grounding, strength, and a tea with enough depth to hold pressure.",
-    summaryZh: "你的答案指向扎根、力量，以及一杯足以承載壓力的茶。",
-    reading: "Rock Stability is a profile of backbone. You may be carrying pressure, but your system wants structure rather than sweetness alone. A roasted mineral cup gives the ritual weight, warmth, and steadiness.",
-    readingZh: "「岩骨安定」是有骨氣的結果。你或許正承受壓力，但你的系統需要的是結構，而不只是甜味。焙火帶礦物感的茶，能為儀式帶來份量、溫度與穩定。",
-    mainTea: "Da Hong Pao Rock Oolong",
-    mainTeaZh: "大紅袍岩茶",
-    mainTeaCopy: "A roasted Wuyi-style oolong for mineral depth, warmth, and grounded presence.",
-    mainTeaCopyZh: "焙火武夷岩茶，帶來礦物深度、溫暖與扎根感。",
-    flowerTea: "Osmanthus",
-    flowerTeaZh: "桂花",
-    flowerTeaCopy: "A golden floral lift that softens roasted depth without losing strength.",
-    flowerTeaCopyZh: "金黃花香，柔化焙火的深度，同時不失力量。",
-    ritual: ["Warm the cup until it holds heat.", "Take one grounded breath before pouring.", "Use a small serving and short infusion.", "Notice roast, mineral, and returning sweetness.", "Use the final sip as a boundary between tasks."],
-    ritualZh: ["溫杯直到留住熱度。", "注水前先做一次扎根呼吸。", "份量小、沖泡時間短。", "留意焙火、礦物與回甘。", "以最後一口作為工作之間的界線。"],
-    product: "Rock Stability Tea Selection",
-    productZh: "岩骨安定茶選"
+    englishName: "Stillness — The Descent",
+    chineseGloss: "定 · 身心俱歇，如夜歸山",
+    headline: "Let the day set, the way light does.",
+    headlineZh: "讓這一天落下，如同天光。",
+    reading:
+      "Your mind keeps the office open long after the body has gone home. Stillness is the practice of closing the day on purpose — a warm, caffeine-gentle cup, dim light, and the permission to stop producing. This result does not ask you to sleep better; it asks you to arrive at evening more slowly.",
+    readingZh:
+      "身體早已下班，你的心卻仍替這一天加班。「定」是刻意為一天收尾的功課——一盞溫和低咖啡因的茶、一室昏黃的光，以及一份允許自己停止產出的許可。這個結果不要求你睡得更好，只邀請你更緩慢地走進夜晚。",
+    serves: "For the evening transition — winding down, closing the day, making room for rest.",
+    servesZh: "給向晚的過渡——鬆開、收尾，為休息騰出位置。",
+    ritual: "Make this the last lit screen of your night: brew, dim the lights, and let the empty cup be the day's final full stop.",
+    ritualZh: "讓這盞茶成為今晚最後的亮光：沏茶、調暗燈光，讓見底的茶盞，作這一天最後的句號。"
   },
-  sunlitFocus: {
-    key: "sunlitFocus",
-    character: "晨",
-    chineseName: "晨光專注",
-    englishName: "Sunlit Focus",
-    summary: "You need clarity, precision, and clean energy without becoming overstimulated.",
-    summaryZh: "你需要清晰、精準，以及不會過度刺激的乾淨能量。",
-    reading: "Sunlit Focus belongs to people who want the mind to become bright, not frantic. Your tea should feel green, clean, and deliberate, like opening a window before beginning meaningful work.",
-    readingZh: "「晨光專注」屬於希望頭腦明亮、而非急躁的人。你的茶應該清爽、乾淨、有意識，就像在開始重要工作前先打開一扇窗。",
-    mainTea: "Longjing Green Tea",
-    mainTeaZh: "龍井綠茶",
-    mainTeaCopy: "A clear green tea for focus, freshness, and light structure.",
-    mainTeaCopyZh: "清澈綠茶，帶來專注、清新與輕盈的結構。",
-    flowerTea: "Jasmine Buds",
-    flowerTeaZh: "茉莉花蕾",
-    flowerTeaCopy: "A fragrant companion for clarity and gentle uplift.",
-    flowerTeaCopyZh: "芬芳的搭配，帶來清晰感與溫和提振。",
-    ritual: ["Prepare tea in the morning or early afternoon.", "Use water that is warm, not boiling.", "Set one intention before pouring.", "Take three sips before opening your laptop.", "Begin the task immediately after the cup."],
-    ritualZh: ["在早上或午後較早時沖泡。", "水溫溫熱、非滾燙。", "注水前先設定一個意圖。", "打開電腦前先喝三口。", "喝完後立即開始工作。"],
-    product: "Sunlit Focus Tea Selection",
-    productZh: "晨光專注茶選"
+  mindfulness: {
+    key: "mindfulness",
+    character: "念",
+    englishName: "Mindfulness — The Practice",
+    chineseGloss: "念 · 手中有盞，心在此處",
+    headline: "Not a drink. A practice you can hold.",
+    headlineZh: "不只是一杯飲品，而是一門握得住的修行。",
+    reading:
+      "You are not looking for tea; you are looking for a handrail — something with weight, sequence, and repetition, to bring the attention home. Mindfulness gives you the full ceremony: leaf, water, vessel, and the small choreography between them. When the hands are occupied with something careful, the mind stops running errands.",
+    readingZh:
+      "你要找的其實不是茶，而是一道扶手——一件有重量、有次第、可以重複的事，把注意力領回家。「念」給你的是完整的茶儀：葉、水、器，以及它們之間細小的手勢編排。當雙手忙於一件細緻的事，心就不再四處奔走。",
+    serves: "For those ready for loose leaf and the full brewing ceremony — a daily practice, not a beverage.",
+    servesZh: "給準備好泡散茶、行完整茶儀的人——這是一門日課，不是一杯飲料。",
+    ritual: "Choose one fixed time each day, and brew the same tea in the same vessel — repetition is where the ritual begins to hold you back.",
+    ritualZh: "每天選定同一個時刻，用同一件器皿泡同一款茶——在重複之中，儀式才開始反過來扶住你。"
   },
-  eveningWindDown: {
-    key: "eveningWindDown",
-    character: "夜",
-    chineseName: "夜間緩解",
-    englishName: "Evening Wind-Down",
-    summary: "Your profile asks for a lower-pressure evening, gentler sleep cues, and a ritual that closes the day.",
-    summaryZh: "你的結果需要壓力較低的夜晚、更溫和的睡眠提示，以及一個能為一天畫上句號的儀式。",
-    reading: "Evening Wind-Down appears when sleep and calm are both important. The tea should not feel like another task. It should become a small threshold: warm cup, dim light, slower breath, then rest.",
-    readingZh: "當睡眠與平靜同樣重要時，會出現「夜間緩解」。茶不應該成為另一項任務，而應該成為一個小小的門檻：溫杯、昏暗燈光、更慢的呼吸，然後休息。",
-    mainTea: "White Tea or Light Ripe Pu'er",
-    mainTeaZh: "白茶或淡泡熟普",
-    mainTeaCopy: "A soft, forgiving tea direction for evening quiet and day-end recovery.",
-    mainTeaCopyZh: "柔和、寬容的茶感方向，適合夜晚安靜與一天結束後的恢復。",
-    flowerTea: "Rose + Jujube",
-    flowerTeaZh: "玫瑰紅棗",
-    flowerTeaCopy: "A warm floral-fruit blend for softness and emotional ease.",
-    flowerTeaCopyZh: "溫暖花果組合，帶來柔軟感與情緒上的舒緩。",
-    ritual: ["Begin after dinner or before screen-free time.", "Use dim light and a smaller cup.", "Hold the cup with both hands.", "Exhale longer than you inhale.", "Let the final sip close the day."],
-    ritualZh: ["在晚餐後或無螢幕時間前開始。", "燈光昏暗，使用較小的杯子。", "雙手捧杯。", "呼氣比吸氣更長。", "以最後一口為一天作結。"],
-    product: "Evening Wind-Down Tea Selection",
-    productZh: "夜間緩解茶選"
-  },
-  balancedHarmony: {
-    key: "balancedHarmony",
-    character: "和",
-    chineseName: "中和安住",
-    englishName: "Balanced Harmony",
-    summary: "Your needs are balanced. You do not need an extreme tea; you need a steady practice that can meet many kinds of days.",
-    summaryZh: "你的需求相對平衡。你不需要極端的茶，而需要一個能應付各種日子的穩定練習。",
-    reading: "Balanced Harmony suggests your answers are spread across pressure, focus, rest, and taste. A flexible tea practice suits you best: refined but simple, culturally grounded, and easy to repeat.",
-    readingZh: "「中和安住」代表你的答案平均分布在壓力、專注、休息與口感之間。最適合你的是靈活的茶葉練習：精緻但簡單、扎根於文化，而且容易重複。",
-    mainTea: "Gentle Oolong or Seasonal Tea Match",
-    mainTeaZh: "溫和烏龍或時令配茶",
-    mainTeaCopy: "A balanced tea direction chosen by taste: light, roasted, warm, or neutral.",
-    mainTeaCopyZh: "按口感選擇的平衡茶感方向：清爽、焙火、溫暖或中性。",
-    flowerTea: "Chrysanthemum + Goji",
-    flowerTeaZh: "菊花杞子",
-    flowerTeaCopy: "A balanced flower pairing for clarity, warmth, and daily ease.",
-    flowerTeaCopyZh: "平衡的花茶組合，帶來清晰、溫暖與日常的自在。",
-    ritual: ["Use the same cup for seven days.", "Keep the steps simple and repeatable.", "Take one sip before responding to messages.", "Notice body, breath, and room.", "Let the ritual be modest, not perfect."],
-    ritualZh: ["連續七天使用同一個杯子。", "保持步驟簡單、可重複。", "回覆訊息前先喝一口。", "留意身體、呼吸與空間。", "讓儀式保持樸實，而非完美。"],
-    product: "Balanced Harmony Tea Selection",
-    productZh: "中和安住茶選"
-  },
-  beginnerGentle: {
-    key: "beginnerGentle",
-    character: "溫",
-    chineseName: "溫和新手",
-    englishName: "Gentle Beginner",
-    summary: "You are best served by an easy tea entry: simple brewing, clear guidance, and a ritual that does not feel difficult.",
-    summaryZh: "最適合你的是簡單易上手的茶：簡易沖泡、清楚指引，以及不會令人卻步的儀式。",
-    reading: "Gentle Beginner does not mean basic taste. It means the ritual should respect real life. Your Chazen match should be easy to brew, forgiving in timing, and supported by a short ritual card.",
-    readingZh: "「溫和新手」不代表口感基本，而是代表儀式應該尊重真實生活。你的 Chazen 配對應該容易沖泡、時間上有彈性，並附有簡短的儀式卡。",
-    mainTea: "Easy-Brew White Tea or Gentle Oolong",
-    mainTeaZh: "易沖白茶或溫和烏龍",
-    mainTeaCopy: "A low-friction tea that tastes refined without requiring advanced tools.",
-    mainTeaCopyZh: "低門檻的茶，味道精緻但不需要進階工具。",
-    flowerTea: "Jasmine or Chrysanthemum",
-    flowerTeaZh: "茉莉或菊花",
-    flowerTeaCopy: "A familiar flower direction that adds fragrance and makes the first ritual feel welcoming.",
-    flowerTeaCopyZh: "熟悉的花香方向，為第一次儀式增添香氣與親切感。",
-    ritual: ["Use a mug, infuser, or simple cup.", "Brew for 3-5 minutes.", "Take three quiet breaths before the first sip.", "Notice one taste word: sweet, warm, floral, or roasted.", "Repeat at the same time tomorrow."],
-    ritualZh: ["使用馬克杯、濾茶器或簡單茶杯。", "沖泡三至五分鐘。", "第一口前先靜靜呼吸三次。", "留意一個味道詞：甜、暖、花香或焙火。", "明天在同一時間重複。"],
-    product: "Gentle Beginner Tea Selection",
-    productZh: "溫和新手茶選"
+  wisdom: {
+    key: "wisdom",
+    character: "慧",
+    englishName: "Wisdom — The Long View",
+    chineseGloss: "慧 · 一盞之中，見千年",
+    headline: "In one cup, a thousand years of attention.",
+    headlineZh: "一盞茶中，千年的凝視。",
+    reading:
+      "For you, tea is not a mood; it is a lineage. You want to know why the cup is shaped this way, why this mountain, why this season — and what it means to give such a thing to someone you care for. Wisdom is the cup of the student and the gift-giver: it holds not just liquor, but the story of every hand that carried it here.",
+    readingZh:
+      "對你而言，茶不是一種情緒，而是一脈傳承。你想知道盞為何是這個形狀、為何是這座山、為何是這個季節——以及把這樣一件事物贈予所愛之人，意味著什麼。「慧」是求學者與贈禮者之盞：它盛著的不只是茶湯，還有一路將它捧到此處的、每一雙手的故事。",
+    serves: "For gift-givers and culture learners — those who want the story, not just the leaf.",
+    servesZh: "給贈禮者與文化的求學者——想要的不只是茶葉，還有它的故事。",
+    ritual: "With each new tea, learn one thing about where it comes from before you brew it — the cup tastes different once you know.",
+    ritualZh: "每遇一款新茶，沖泡之前先認識它來處的一件事——知道了以後，這盞茶的滋味便不一樣了。"
   }
 };
 
-const questions: AssessmentQuestion[] = [
-  {
+const comfortProfiles: Record<ComfortKey, ComfortProfile> = {
+  afterFeast: {
+    key: "afterFeast",
+    name: "After the Feast",
+    nameZh: "飯後 · 解膩之茶",
+    headline: "The table is cleared. The tea comes out.",
+    headlineZh: "席散之後，正是茶登場的時候。",
+    reading:
+      "After a rich meal, Chinese tables have always turned to tea — pu-erh and dark oolong most of all, brewed strong and shared slowly while the conversation winds down. It is not medicine; it is punctuation, the full stop at the end of a generous sentence. For centuries, the last course has not been dessert. It has been a pot.",
+    readingZh:
+      "豐盛的一餐之後，中國的餐桌向來以茶收尾——尤以普洱與濃香烏龍為最，濃濃地泡，慢慢地分，讓談話隨茶湯緩緩降落。這不是藥方，而是標點——一句豐盛長句末尾的句號。千百年來，宴席最後一道，從來不是甜點，而是一壺茶。",
+    ritual: "Brew a small pot of ripe pu-erh a shade stronger than usual, and let the table linger a little longer.",
+    ritualZh: "泡一小壺熟普洱，比平常略濃一些，讓這一桌人再多坐一會兒。"
+  },
+  quietCare: {
+    key: "quietCare",
+    name: "Quiet Care",
+    nameZh: "靜養 · 安頓之茶",
+    headline: "A warm cup for a low day.",
+    headlineZh: "低潮的日子，一盞溫熱的茶。",
+    reading:
+      "On days when you are simply not at your best, Chinese households have long turned to something warm — ginger and jujube simmered slowly, or a mild tea taken by the window, wrapped in a blanket. This is not a remedy; it is a ritual of being gentle with yourself. Warmth, quiet, and a slow cup — the oldest form of keeping company with your own body.",
+    readingZh:
+      "在狀態不佳的日子裡，中國人的家中總會端出一些溫熱的東西——慢火煨的薑棗，或裹著毯子、坐在窗邊喝的一盞淡茶。這不是療方，而是一種善待自己的儀式。溫暖、安靜、一杯慢慢喝的茶——這是陪伴自己身體最古老的方式。",
+    ritual: "Choose the mildest tea on your shelf, brew it lighter than usual, and let holding the warm cup be half the ritual.",
+    ritualZh: "選架上最溫和的一款茶，泡得比平常更淡，讓捧著暖盞的雙手，完成儀式的一半。"
+  }
+};
+
+const questions: Record<string, AssessmentQuestion> = {
+  q1: {
     id: "q1",
-    question: "Among people, which role do you most often become?",
-    questionZh: "你在人群中，常常成為哪一種角色？",
+    question: "Who is this tea moment for?",
+    questionZh: "這一盞茶，是為誰而泡？",
     options: [
-      { id: "quiet", label: "The quiet one, a little apart from the center.", labelZh: "安靜的人，稍微遊離於中心之外。", detail: "I listen more than I speak.", detailZh: "我聆聽多於發言。", scores: { calm: 2 }, tags: { solo: 1 } },
-      { id: "anchor", label: "The one others lean on.", labelZh: "別人依靠的對象。", detail: "People settle when I'm steady.", detailZh: "我在時，大家會安定下來。", scores: { grounding: 2 }, tags: { rock: 1 } },
-      { id: "warmth", label: "The one who keeps the room warm.", labelZh: "讓氣氛變暖的人。", detail: "I carry the mood, sometimes without meaning to.", detailZh: "我常在不自覺間承擔了整個場合的情緒。", scores: { energy: 2 }, tags: { warm: 1, social: 1 } },
-      { id: "spent", label: "The one who arrives already spent.", labelZh: "還未開始就已經很疲累的人。", detail: "I show up, but not all of me does.", detailZh: "我出現了，但不是全部的我都在。", scores: { pressure: 2, sleep: 1 } }
+      { id: "self", label: "For myself", labelZh: "為自己", insight: "Beginning with yourself is not indulgence. It is where attention starts.", insightZh: "從自己開始，並非放縱，而是專注的起點。", route: "self", next: "q2" },
+      { id: "gift", label: "A gift for someone else", labelZh: "想送給某個人", insight: "Choosing tea for another is a quiet way of saying: I have been paying attention to you.", insightZh: "為他人選茶，是一種安靜的表達：我一直有留意你。", route: "gift", next: "q2" },
+      { id: "team", label: "My team or workspace", labelZh: "給我的團隊或工作空間", insight: "A shared pause changes a room more than any meeting agenda.", insightZh: "一次共同的停頓，比任何會議議程更能改變一個空間。", route: "team", next: "q2" }
     ]
   },
-  {
+  q2: {
     id: "q2",
-    question: "In a gathering, which chair do you usually take?",
-    questionZh: "在聚會裡，你通常會坐在哪一個位置？",
+    question: "Right now, my mind feels —",
+    questionZh: "此刻，我的心像是——",
     options: [
-      { id: "window", label: "Near the window, slightly outside the circle.", labelZh: "靠近窗邊，稍微遊離圈外。", detail: "Close enough to belong, far enough to breathe.", detailZh: "剛好足夠歸屬，也剛好足夠呼吸。", tags: { solo: 2 } },
-      { id: "company", label: "Beside whoever seems to need company.", labelZh: "坐在需要陪伴的人身邊。", detail: "I notice who is quiet and sit there.", detailZh: "我會留意誰比較安靜，然後坐過去。", scores: { emotional: 2 }, tags: { social: 1 } },
-      { id: "lively", label: "Wherever the conversation is liveliest.", labelZh: "哪裡最熱鬧就往哪裡去。", detail: "I'm drawn toward the energy in the room.", detailZh: "我會被場合中的能量吸引。", scores: { energy: 1 }, tags: { social: 2 } },
-      { id: "desk", label: "Wherever I sat, but my mind is still at my desk.", labelZh: "人坐下了，但思緒仍在辦公桌前。", detail: "Presence is the hardest part.", detailZh: "在場，是最難的部分。", scores: { pressure: 2, focus: 1 } }
+      { id: "loud", label: "Loud. Too many things asking for me at once.", labelZh: "很吵。太多事情同時在向我伸手。", insight: "Noise is rarely about volume. It is about how many directions you are being pulled.", insightZh: "吵，往往無關音量，而在於你被拉向多少個方向。", scores: { faith: 2, stillness: 1 }, next: "q3" },
+      { id: "scattered", label: "Scattered. I start things and lose the thread.", labelZh: "渙散。事情開了頭，線索卻總是斷掉。", insight: "Focus is not forced. It gathers, the way leaves settle in still water.", insightZh: "專注無法強求。它像茶葉在靜水中，慢慢沉定。", scores: { effort: 2 }, next: "q3" },
+      { id: "wired", label: "Tired, but somehow still wired.", labelZh: "累了，卻靜不下來。", insight: "The body asks for rest long before the mind agrees to it.", insightZh: "身體早已請求休息，只是心遲遲不肯答應。", scores: { stillness: 2 }, next: "q2a" },
+      { id: "curious", label: "Curious. I want tea to mean something, not just taste good.", labelZh: "好奇。我希望茶有它的意義，不只是好喝。", insight: "Wanting meaning in small things is not a small want.", insightZh: "想在微小事物中尋找意義，並不是微小的願望。", scores: { wisdom: 2, mindfulness: 1 }, next: "q3" },
+      { id: "restless", label: "Restless. I want a ritual to hold onto.", labelZh: "心浮。我想要一個可以安放自己的儀式。", insight: "A ritual is a handrail for the attention. You reach for it because you know you drift.", insightZh: "儀式是專注的扶手。你伸手去握，因為你知道自己會飄。", scores: { mindfulness: 2, faith: 1 }, next: "q2b" }
     ]
   },
-  {
+  q2a: {
+    id: "q2a",
+    question: "How many hours do you usually sleep?",
+    questionZh: "你平常睡多少小時？",
+    options: [
+      { id: "under5", label: "Under 5", labelZh: "少於五小時", insight: "The day has been borrowing from the night.", insightZh: "白天一直在向夜晚借時間。", scores: { stillness: 2 }, next: "q3" },
+      { id: "five-six", label: "5 to 6", labelZh: "五至六小時", insight: "Enough to function. Perhaps not enough to feel like yourself.", insightZh: "足夠運轉，卻未必足夠讓你像你自己。", scores: { stillness: 1 }, next: "q3" },
+      { id: "seven-eight", label: "7 to 8", labelZh: "七至八小時", insight: "The hours are there. Sometimes it is the descent into them that needs care.", insightZh: "時數是有的。有時需要照料的，是入睡前那段下坡路。", next: "q3" },
+      { id: "nine-plus", label: "9 or more", labelZh: "九小時以上", insight: "Long rest and deep rest are not always the same thing.", insightZh: "睡得長，和睡得深，不一定是同一回事。", next: "q3" }
+    ]
+  },
+  q2b: {
+    id: "q2b",
+    question: "What is actually derailing your calm?",
+    questionZh: "真正擾亂你平靜的，是什麼？",
+    options: [
+      { id: "work", label: "The weight of work, and the way it follows me home.", labelZh: "工作的重量，以及它跟著我回家的樣子。", insight: "Work rarely stays where it was left.", insightZh: "工作很少乖乖留在原地。", scores: { effort: 1 }, next: "q3" },
+      { id: "discomfort", label: "My body feels a bit off today.", labelZh: "今天身體有點不對勁。", insight: "The body speaks first, and it prefers to be listened to, not argued with.", insightZh: "身體總是先開口。它希望被傾聽，而不是被反駁。", next: "comfort1" },
+      { id: "pace", label: "Nothing in particular. Just the pace and noise of the day.", labelZh: "沒有特定原因，只是這一天的節奏與聲音。", insight: "Sometimes the day itself is the weather. You do not fix weather; you find shelter.", insightZh: "有時日子本身就是天氣。天氣無法修理，只能尋一處安身。", scores: { faith: 1 }, next: "q3" }
+    ]
+  },
+  comfort1: {
+    id: "comfort1",
+    question: "What kind of discomfort?",
+    questionZh: "是哪一種不對勁？",
+    options: [
+      { id: "feast", label: "I just ate something heavy — a big barbecue, something rich or fried.", labelZh: "剛吃了很重的東西——燒烤、油炸，或一頓豐盛的大餐。", insight: "Generations before you finished the same kind of meal, and reached for the same kind of tea.", insightZh: "千百年來，人們吃完同樣豐盛的一餐，也伸手取過同樣的一壺茶。", comfortResult: "afterFeast" },
+      { id: "rundown", label: "I'm feeling a bit run down, a little under the weather.", labelZh: "有些疲乏，狀態不太好。", insight: "On low days, warmth itself is the point.", insightZh: "在低潮的日子裡，溫暖本身就是意義。", comfortResult: "quietCare" },
+      { id: "neither", label: "Neither, really. I just want to relax.", labelZh: "都不是，我只是想放鬆。", insight: "Then let us set the body aside and pour for the mind.", insightZh: "那麼，讓我們把身體放到一旁，為心斟一盞。", scores: { faith: 1 }, next: "q3" }
+    ]
+  },
+  q3: {
     id: "q3",
-    question: "Which quiet struggle do you carry most days?",
-    questionZh: "你日常最常帶著的，是哪一種內在拉扯？",
+    question: "The hardest part of your day is —",
+    questionZh: "一天之中，最難的部分是——",
     options: [
-      { id: "mind", label: "A mind that will not slow down.", labelZh: "停不下來的思緒。", detail: "Thoughts keep arriving after you've asked them to stop.", detailZh: "即使叫它停下，念頭仍然持續出現。", scores: { calm: 3 } },
-      { id: "scatter", label: "Attention that scatters before the task is finished.", labelZh: "還沒做完就已經分心的注意力。", detail: "You begin well, then drift.", detailZh: "你開始得很好，然後就飄走了。", scores: { focus: 3 } },
-      { id: "tired", label: "A tiredness that sleep doesn't actually fix.", labelZh: "睡眠也修復不了的疲憊。", detail: "You wake up still owing yourself rest.", detailZh: "醒來後，仍然欠自己一份休息。", scores: { energy: 2, sleep: 1 } },
-      { id: "loud", label: "Evenings that stay loud long after the day should have ended.", labelZh: "夜晚在該結束時仍然喧鬧。", detail: "The day won't close on time.", detailZh: "這一天總是無法準時結束。", scores: { sleep: 3 } }
+      { id: "starting", label: "Starting it. Mornings arrive before I do.", labelZh: "開始。早晨總比我先到。", insight: "How a day begins tends to echo through it.", insightZh: "一天如何開始，往往會在整天裡迴響。", scores: { effort: 2 }, next: "q4" },
+      { id: "middle", label: "The middle stretch. My focus thins out.", labelZh: "中段。專注力慢慢變薄。", insight: "Afternoons ask for endurance no one trained us for.", insightZh: "午後所需要的耐力，從來沒有人教過我們。", scores: { effort: 2, mindfulness: 1 }, next: "q4" },
+      { id: "ending", label: "Ending it. My mind refuses to close the day.", labelZh: "結束。心不肯替這一天收尾。", insight: "A day without a closing gesture stays open all night.", insightZh: "沒有收尾動作的一天，會整夜敞著門。", scores: { stillness: 2 }, next: "q4" },
+      { id: "meaning", label: "No single part. I just want ordinary moments to hold more.", labelZh: "沒有哪個部分特別難。我只是希望平凡的時刻能盛得更多。", insight: "You are not looking for escape. You are looking for depth.", insightZh: "你尋找的不是逃離，而是深度。", scores: { wisdom: 2, faith: 1 }, next: "q4" }
     ]
   },
-  {
+  q4: {
     id: "q4",
-    question: "When that struggle peaks, what do you notice first?",
-    questionZh: "這種拉扯最強烈時，你最先察覺到的是？",
+    question: "Your ideal tea moment looks like —",
+    questionZh: "你理想中的茶時刻，是——",
     options: [
-      { id: "thoughts", label: "My thoughts, not my body.", labelZh: "思緒，而不是身體。", detail: "The noise is entirely internal.", detailZh: "所有的雜音，都完全來自內心。", scores: { calm: 2, emotional: 1 } },
-      { id: "body", label: "My body — heavy, wired, or restless.", labelZh: "身體——沉重、緊繃或不安。", detail: "It shows up physically before I can name it.", detailZh: "在我能說出來之前，身體已經先反應。", scores: { energy: 2, pressure: 1 } },
-      { id: "patience", label: "My patience — small things land bigger than they should.", labelZh: "耐性——小事的反應變得比例失衡。", detail: "I react before I mean to.", detailZh: "我還沒想清楚，就已經反應了。", scores: { emotional: 2, calm: 1 } },
-      { id: "fine", label: "Nothing dramatic. I want refinement, not repair.", labelZh: "沒甚麼特別。我想要的是精煉，而不是修復。", detail: "Your ritual should sharpen a life that already works.", detailZh: "你的儀式，應該令已經運作良好的生活更加細緻。" }
+      { id: "fast", label: "A fast reset between tasks.", labelZh: "兩件事之間，一次快速的歸零。", insight: "Even a brief pause, taken fully, counts as a pause.", insightZh: "停頓再短，只要全然地停，就算數。", scores: { effort: 2 }, next: "q5" },
+      { id: "ceremony", label: "A slow, unhurried ceremony.", labelZh: "一場緩慢、不趕時間的茶儀。", insight: "Slowness is a skill, and you seem ready to practise it.", insightZh: "慢，是一種需要練習的能力。而你似乎準備好了。", scores: { mindfulness: 2, wisdom: 1 }, next: "q5" },
+      { id: "winddown", label: "Warm light, quiet, the day winding down.", labelZh: "暖光、安靜、一天緩緩落幕。", insight: "Evenings reward those who arrive at them gently.", insightZh: "夜晚，善待那些溫柔走向它的人。", scores: { stillness: 2 }, next: "q5" },
+      { id: "breathe", label: "One full minute, just to breathe.", labelZh: "完整的一分鐘，只用來呼吸。", insight: "A minute is small. What you bring to it is not.", insightZh: "一分鐘很小。你放進去的心，卻不小。", scores: { faith: 2 }, next: "q5" }
     ]
   },
-  {
+  q5: {
     id: "q5",
-    question: "Which taste direction attracts you first?",
-    questionZh: "你偏好茶的口感？",
+    question: "How do you want to actually drink it?",
+    questionZh: "你想怎麼喝這杯茶？",
     options: [
-      { id: "fresh", label: "Fresh and light.", labelZh: "清新淡雅。", detail: "Green tea or white tea: clean, pale, elegant.", detailZh: "綠茶或白茶：清淨、淡雅、優雅。", tags: { light: 3, taste: 2 } },
-      { id: "roasted", label: "Rich, roasted, and returning-sweet.", labelZh: "濃郁焙火、回甘。", detail: "Oolong or rock tea: mineral, deep, grounded.", detailZh: "烏龍或岩茶：礦物感、深沉、扎實。", tags: { rock: 3, grounding: 1, taste: 2 } },
-      { id: "warmsweet", label: "Warm and gently sweet.", labelZh: "溫暖微甜。", detail: "Black tea or ripe pu'er: soft, round, comforting.", detailZh: "紅茶或熟普：柔和、圓潤、療癒。", tags: { warm: 3, taste: 2 } },
-      { id: "nopref", label: "No strong preference.", labelZh: "沒有特別偏好。", detail: "You care more about the effect and ritual fit.", detailZh: "你更在意效果與儀式是否合適。", tags: { neutral: 2, taste: 1 } }
+      { id: "quick", label: "Quick steep, no fuss.", labelZh: "簡單沖泡，不講究。", insight: "Simplicity is its own kind of respect for the leaf.", insightZh: "簡單，也是對茶葉的一種敬意。", format: "convenience", next: "q6" },
+      { id: "full", label: "The full ritual, with a gaiwan or pot.", labelZh: "完整的儀式，用蓋碗或茶壺。", insight: "The vessel slows the hand, and the hand slows the mind.", insightZh: "器物讓手慢下來，手再讓心慢下來。", format: "ritual", scores: { mindfulness: 1 }, next: "q6" },
+      { id: "either", label: "Either. I just want it to help.", labelZh: "都可以。我只希望它有用。", insight: "Honest. The form matters less than the return.", insightZh: "很誠實。形式如何，不及回到當下重要。", format: "either", next: "q6" }
     ]
   },
-  {
+  q6: {
     id: "q6",
-    question: "How much real time do you have to brew tea?",
-    questionZh: "你平時沖茶的時間預算？",
+    question: "When do you drink tea most often?",
+    questionZh: "你最常在什麼時候喝茶？",
     options: [
-      { id: "five", label: "Within 5 minutes.", labelZh: "五分鐘之內。", detail: "Quick, reliable, and easy to repeat.", detailZh: "快速、可靠、容易重複。", scores: { ritualReadiness: 1 }, tags: { quick: 2 } },
-      { id: "fifteen", label: "10-15 minutes.", labelZh: "十至十五分鐘。", detail: "Enough time for a proper small ritual.", detailZh: "足夠時間進行一場正式的小儀式。", scores: { ritualReadiness: 3 }, tags: { full: 2 } },
-      { id: "slow", label: "No rush. I want to taste slowly.", labelZh: "不趕時間，我想慢慢品嚐。", detail: "You are open to a deeper tea table rhythm.", detailZh: "你願意進入更深層的茶席節奏。", scores: { ritualReadiness: 4 }, tags: { deep: 2 } }
+      { id: "morning", label: "Morning, to start well.", labelZh: "早晨，為了好好開始。", insight: "The first cup sets the register of the day.", insightZh: "第一盞茶，定下一天的音準。", scores: { effort: 2 }, next: "q7" },
+      { id: "midday", label: "Midday, to catch a breath.", labelZh: "日中，為了喘一口氣。", insight: "A breath taken on purpose is worth ten taken by accident.", insightZh: "一口有意識的呼吸，勝過十口不經意的。", scores: { faith: 2 }, next: "q7" },
+      { id: "evening", label: "Evening, to unwind.", labelZh: "傍晚，為了鬆開這一天。", insight: "Unwinding is not stopping. It is untying, knot by knot.", insightZh: "鬆開不是停止，而是一個結、一個結地解。", scores: { stillness: 2 }, next: "q7" },
+      { id: "varies", label: "It varies. Whenever I need to reset.", labelZh: "不一定。需要歸零的時候，就是時候。", insight: "You treat tea as a door, not a schedule. Doors can open anywhere.", insightZh: "對你而言，茶是一扇門，不是一張時間表。門，哪裡都能開。", scores: { faith: 1, effort: 1, stillness: 1, mindfulness: 1, wisdom: 1 }, next: "q7" }
     ]
   },
-  {
+  q7: {
     id: "q7",
-    question: "How far do you want the ritual to go?",
-    questionZh: "你對茶儀式的興趣程度？",
+    question: "How much does Chinese tea culture itself pull you in?",
+    questionZh: "中國茶文化本身，對你的吸引有多深？",
     options: [
-      { id: "simple", label: "I want a simple 3-5 minute version.", labelZh: "我想要簡單的三至五分鐘版本。", detail: "A small ritual I can actually keep.", detailZh: "一個我真的能持續下去的小儀式。", scores: { ritualReadiness: 1 }, tags: { quick: 2 } },
-      { id: "gaiwan", label: "I am willing to try a full gaiwan ritual.", labelZh: "我願意嘗試完整的蓋碗儀式。", detail: "I want the cultural feeling and the proper steps.", detailZh: "我想要文化的感覺與正式的步驟。", scores: { ritualReadiness: 4 }, tags: { full: 3 } },
-      { id: "justdrink", label: "I mainly want to drink tea.", labelZh: "我主要只是想喝茶。", detail: "The ritual can stay secondary.", detailZh: "儀式對我來說是次要的。", scores: { ritualReadiness: 0 }, tags: { minimal: 3 } }
+      { id: "notmuch", label: "Not much. I just want it to work.", labelZh: "不深。我只希望它有效。", insight: "Fair. The culture will wait; it has waited a thousand years.", insightZh: "無妨。文化等得起——它已經等了一千年。", next: "q8" },
+      { id: "alittle", label: "A little. I like knowing the story behind things.", labelZh: "有一點。我喜歡知道事物背後的故事。", insight: "A cup with a story in it tastes different. You already suspect this.", insightZh: "盛著故事的茶，滋味不同。這一點，你其實早就察覺了。", scores: { wisdom: 1 }, next: "q8" },
+      { id: "alot", label: "A lot. I want to actually learn the ritual.", labelZh: "很深。我想真正學會這套儀式。", insight: "To learn a ritual is to borrow centuries of other people's stillness.", insightZh: "學一套儀式，等於向千百年來他人的靜，借一點過來。", scores: { wisdom: 2, mindfulness: 1 }, next: "q8" }
     ]
   },
-  {
+  q8: {
     id: "q8",
-    question: "What would you most like to improve recently?",
-    questionZh: "你最近最想改善的狀態是？",
-    multi: true,
-    max: 2,
+    question: "One word for how you want to feel afterward —",
+    questionZh: "喝完之後，你想要的感覺，用一個詞——",
     options: [
-      { id: "stress", label: "Reduce stress.", labelZh: "減少壓力。", detail: "A calmer inner pace.", detailZh: "更平靜的內在節奏。", scores: { calm: 2 } },
-      { id: "focus", label: "Improve focus.", labelZh: "改善專注力。", detail: "Cleaner attention and fewer scattered starts.", detailZh: "更清晰的注意力，減少分心的開始。", scores: { focus: 2 } },
-      { id: "sleep", label: "Improve sleep.", labelZh: "改善睡眠。", detail: "A softer evening and steadier rest.", detailZh: "更柔和的夜晚與更穩定的休息。", scores: { sleep: 2 } },
-      { id: "calm", label: "Increase daily calm.", labelZh: "增加日常的平靜。", detail: "More stillness in ordinary moments.", detailZh: "在平凡時刻中，多一點安定。", scores: { calm: 2 } }
-    ]
-  },
-  {
-    id: "q9",
-    question: "What feeling do you most want tea to give you?",
-    questionZh: "你最想透過茶得到的感覺？",
-    options: [
-      { id: "breeze", label: "Like a clear breeze in the mountains.", labelZh: "像山中的一陣清風。", detail: "Quiet, spacious, and mentally soft.", detailZh: "安靜、寬闊，心境柔軟。", scores: { calm: 2 } },
-      { id: "rock", label: "Like rock: stable and strong.", labelZh: "像岩石一樣，穩定而強壯。", detail: "Grounded, substantial, and steady.", detailZh: "扎根、實在、穩固。", scores: { grounding: 3 }, tags: { rock: 1 } },
-      { id: "sunlight", label: "Like warm sunlight.", labelZh: "像溫暖的陽光。", detail: "Bright, gentle, and life-giving.", detailZh: "明亮、溫柔，充滿生命力。", scores: { energy: 2 }, tags: { warm: 1 } }
-    ]
-  },
-  {
-    id: "q10",
-    question: "If tea could hold one part of you steady today, which part?",
-    questionZh: "今天，如果一盞茶能穩住你其中一部分，你希望是哪一部分？",
-    options: [
-      { id: "breath", label: "My breath.", labelZh: "我的呼吸。", detail: "The simple act of slowing down.", detailZh: "單純地慢下來。", scores: { calm: 1 }, anchor: "your breath", anchorZh: "你的呼吸" },
-      { id: "focus", label: "My focus.", labelZh: "我的專注力。", detail: "A mind that stays where I put it.", detailZh: "一個能停留在原地的頭腦。", scores: { focus: 1 }, anchor: "your focus", anchorZh: "你的專注力" },
-      { id: "rest", label: "My rest.", labelZh: "我的休息。", detail: "An evening that actually ends.", detailZh: "一個真正結束的夜晚。", scores: { sleep: 1 }, anchor: "your rest", anchorZh: "你的休息" },
-      { id: "composure", label: "My composure around others.", labelZh: "我在人前的從容。", detail: "Steadiness that holds even in company.", detailZh: "即使在人群中也能維持的穩定。", scores: { emotional: 1, grounding: 1 }, anchor: "your composure around others", anchorZh: "你在人前的從容" }
+      { id: "calm", label: "Calm", labelZh: "平靜", insight: "Not the absence of things. The right distance from them.", insightZh: "不是萬事消失，而是與萬事保持恰當的距離。", scores: { faith: 2 } },
+      { id: "clear", label: "Clear", labelZh: "清明", insight: "Clarity is what remains when the sediment settles.", insightZh: "清明，是雜質沉底之後留下來的東西。", scores: { effort: 2 } },
+      { id: "rested", label: "Rested", labelZh: "安歇", insight: "Rest is not earned. It is allowed.", insightZh: "休息不需要掙來，只需要被允許。", scores: { stillness: 2 } },
+      { id: "grounded", label: "Grounded", labelZh: "落定", insight: "To be grounded is to feel the cup in your hands and nothing pulling you elsewhere.", insightZh: "落定，是手中有盞，而沒有任何事把你拉向別處。", scores: { mindfulness: 2 } },
+      { id: "whole", label: "Whole", labelZh: "完整", insight: "Whole is what you were before the day divided you.", insightZh: "完整，是這一天把你分割之前，你本來的樣子。", scores: { wisdom: 2 } }
     ]
   }
-];
+};
 
 type QuizPhase = "intro" | "question" | "loading" | "result";
 
-function clampValue(value: number, min: number, max: number) {
-  return Math.max(min, Math.min(max, value));
-}
+type QuizResult =
+  | { type: "comfort"; profile: ComfortProfile; route: RouteKey }
+  | {
+      type: "cup";
+      primary: CupProfile;
+      primaryPercent: number;
+      supporting: CupProfile;
+      supportingPercent: number;
+      isBlended: boolean;
+      route: RouteKey;
+      format: FormatKey;
+    };
 
-function getSelectedOptions(question: AssessmentQuestion | undefined, answer: Answer | undefined): AssessmentOption[] {
-  if (!question || !answer) return [];
-  return answer.optionIds
-    .map((id) => question.options.find((option) => option.id === id))
-    .filter((option): option is AssessmentOption => Boolean(option));
-}
-
-function calculateScores(answers: Answer[]) {
-  const totals: Record<Dimension, number> = {
-    pressure: 0,
-    calm: 0,
-    focus: 0,
-    energy: 0,
-    sleep: 0,
-    emotional: 0,
-    grounding: 0,
-    ritualReadiness: 0
-  };
-  const tags: Record<TagKey, number> = {
-    solo: 0,
-    sound: 0,
-    social: 0,
-    quick: 0,
-    full: 0,
-    deep: 0,
-    minimal: 0,
-    light: 0,
-    rock: 0,
-    warm: 0,
-    neutral: 0,
-    taste: 0,
-    grounding: 0
-  };
-  const selected: AssessmentOption[] = [];
+function calculateResult(answers: Answer[]): QuizResult {
+  const totals: Record<CupKey, number> = { faith: 0, effort: 0, stillness: 0, mindfulness: 0, wisdom: 0 };
+  let route: RouteKey = "self";
+  let format: FormatKey = "either";
+  let comfortKey: ComfortKey | undefined;
 
   answers.forEach((answer) => {
-    const question = questions.find((item) => item.id === answer.questionId);
-    getSelectedOptions(question, answer).forEach((option) => {
-      selected.push(option);
-      Object.entries(option.scores ?? {}).forEach(([dimension, value]) => {
-        totals[dimension as Dimension] += value ?? 0;
-      });
-      Object.entries(option.tags ?? {}).forEach(([tag, value]) => {
-        tags[tag as TagKey] += value ?? 0;
-      });
+    const question = questions[answer.questionId];
+    const option = question?.options.find((item) => item.id === answer.optionId);
+    if (!option) return;
+    if (option.route) route = option.route;
+    if (option.format) format = option.format;
+    if (option.comfortResult) comfortKey = option.comfortResult;
+    Object.entries(option.scores ?? {}).forEach(([key, value]) => {
+      totals[key as CupKey] += value ?? 0;
     });
   });
 
-  const needScores: Record<string, number> = {
-    calm: totals.calm,
-    focus: totals.focus,
-    sleep: totals.sleep,
-    energy: totals.energy,
-    grounding: totals.grounding,
-    emotional: totals.emotional
-  };
-  const primaryNeedKey = Object.entries(needScores).sort((a, b) => b[1] - a[1])[0][0];
-  const primaryNeedLabels: Record<string, [string, string]> = {
-    calm: ["Calm", "平靜"],
-    focus: ["Focus", "專注"],
-    sleep: ["Sleep", "睡眠"],
-    energy: ["Energy", "活力"],
-    grounding: ["Grounding", "扎根"],
-    emotional: ["Emotional Balance", "情緒平衡"]
-  };
+  if (comfortKey) {
+    return { type: "comfort", profile: comfortProfiles[comfortKey], route };
+  }
 
-  const tasteKeys: TagKey[] = ["light", "rock", "warm", "neutral"];
-  const tasteKey = [...tasteKeys].sort((a, b) => tags[b] - tags[a])[0];
-  const tasteLabels: Record<string, [string, string]> = {
-    light: ["Fresh / White / Longjing", "清新／白茶／龍井"],
-    rock: ["Rock / Da Hong Pao", "岩韻／大紅袍"],
-    warm: ["Warm / Black Tea / Ripe Pu'er", "溫暖／紅茶／熟普"],
-    neutral: ["Neutral / Effect First", "中性／效果優先"]
-  };
-
-  const ritualStyle: [string, string] =
-    tags.minimal >= 3 || tags.quick >= 4
-      ? ["Gentle 3-minute ritual", "溫和三分鐘儀式"]
-      : tags.full >= 3 || tags.deep >= 2
-        ? ["Full gaiwan ritual", "完整蓋碗儀式"]
-        : tags.solo >= 2
-          ? ["Solo quiet ritual", "獨處靜心儀式"]
-          : ["Simple daily tea ritual", "簡單日常茶儀式"];
-
-  const pressureIndex =
-    totals.pressure +
-    Math.min(totals.calm, 5) * 0.45 +
-    Math.min(totals.sleep, 5) * 0.45 +
-    Math.min(totals.focus, 5) * 0.25 +
-    Math.min(totals.emotional, 4) * 0.45;
-  const highestNeed = Math.max(...Object.values(needScores));
-  const highestTaste = Math.max(tags.light, tags.rock, tags.warm, tags.neutral, 1);
-
-  const weighted = {
-    pressureLevel: clampValue(Math.round((pressureIndex / 9) * 100), 0, 100),
-    primaryNeed: clampValue(Math.round((highestNeed / 9) * 100), 0, 100),
-    ritualReadiness: clampValue(Math.round((totals.ritualReadiness / 10) * 100), 0, 100),
-    tastePreference: clampValue(Math.round((highestTaste / 4) * 100), 0, 100)
-  };
-
-  const evidence = selected
-    .filter((option) => (option.scores?.[primaryNeedKey as Dimension] ?? 0) > 0)
-    .slice(0, 3);
-
-  const primaryKey: ResultKey = (() => {
-    if (weighted.ritualReadiness <= 25 || tags.minimal >= 3) return "beginnerGentle";
-    if (totals.sleep >= 5 && totals.calm >= 4) return "eveningWindDown";
-    if (weighted.pressureLevel >= 55 && (totals.grounding >= 3 || tags.rock >= 3 || tags.grounding >= 1)) return "rockStability";
-    if (primaryNeedKey === "focus" && weighted.pressureLevel <= 75) return "sunlitFocus";
-    if (weighted.pressureLevel >= 50 && totals.calm >= 4) return "mountainCalm";
-    return "balancedHarmony";
-  })();
-
-  const anchorOption = answers
-    .map((answer) => getSelectedOptions(questions.find((q) => q.id === answer.questionId), answer)[0])
-    .find((option) => option?.anchor);
+  const sortedCups = (Object.keys(totals) as CupKey[]).sort((a, b) => totals[b] - totals[a]);
+  const primaryKey = sortedCups[0];
+  const supportingKey = sortedCups[1];
+  const totalAll = Object.values(totals).reduce((sum, value) => sum + value, 0) || 1;
+  const primaryPercent = Math.round((totals[primaryKey] / totalAll) * 100);
+  const supportingPercent = Math.round((totals[supportingKey] / totalAll) * 100);
+  const isBlended = Math.abs(totals[primaryKey] - totals[supportingKey]) <= 1;
 
   return {
-    totals,
-    tags,
-    weighted,
-    primaryNeedLabel: primaryNeedLabels[primaryNeedKey],
-    tasteLabel: tasteLabels[tasteKey],
-    ritualStyle,
-    evidence,
-    primary: resultProfiles[primaryKey],
-    anchor: anchorOption ? ([anchorOption.anchor, anchorOption.anchorZh] as [string, string]) : null
+    type: "cup",
+    primary: cupProfiles[primaryKey],
+    primaryPercent,
+    supporting: cupProfiles[supportingKey],
+    supportingPercent,
+    isBlended,
+    route,
+    format
   };
 }
 
 export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [phase, setPhase] = useState<QuizPhase>("intro");
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentQuestionId, setCurrentQuestionId] = useState("q1");
   const [answers, setAnswers] = useState<Answer[]>([]);
-  const [saveState, setSaveState] = useState<"idle" | "saved">("idle");
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
-  const [multiSelected, setMultiSelected] = useState<string[]>([]);
-  const currentQuestion = questions[currentIndex];
-  const result = useMemo(() => calculateScores(answers), [answers]);
+  const [shareState, setShareState] = useState<"idle" | "shared" | "copied">("idle");
+  const currentQuestion = questions[currentQuestionId];
+  const result = useMemo(() => calculateResult(answers), [answers]);
   const progress = phase === "intro" ? 0 : Math.min((answers.length / TOTAL_QUESTIONS) * 100, 100);
 
   function handleStart() {
     setAnswers([]);
-    setCurrentIndex(0);
-    setMultiSelected([]);
-    setSaveState("idle");
+    setCurrentQuestionId("q1");
+    setShareState("idle");
     setPhase("question");
-  }
-
-  function advance(nextAnswers: Answer[]) {
-    setAnswers(nextAnswers);
-    if (currentIndex + 1 >= TOTAL_QUESTIONS) {
-      setPhase("loading");
-      window.setTimeout(() => setPhase("result"), 900);
-      return;
-    }
-    setCurrentIndex((index) => index + 1);
   }
 
   function handleAnswer(option: AssessmentOption) {
     if (selectedOptionId) return;
     setSelectedOptionId(option.id);
-    setSaveState("idle");
+    setShareState("idle");
     window.setTimeout(() => {
-      const nextAnswers = [...answers, { questionId: currentQuestion.id, optionIds: [option.id] }];
+      const nextAnswers = [...answers, { questionId: currentQuestion.id, optionId: option.id }];
+      setAnswers(nextAnswers);
       setSelectedOptionId(null);
-      advance(nextAnswers);
+      if (!option.next) {
+        setPhase("loading");
+        window.setTimeout(() => setPhase("result"), 900);
+        return;
+      }
+      setCurrentQuestionId(option.next);
     }, 450);
   }
 
-  function toggleMultiOption(option: AssessmentOption) {
-    setMultiSelected((current) => {
-      if (current.includes(option.id)) return current.filter((id) => id !== option.id);
-      if (current.length >= (currentQuestion.max ?? 2)) return current;
-      return [...current, option.id];
-    });
-  }
-
-  function handleMultiNext() {
-    if (multiSelected.length === 0) return;
-    setSaveState("idle");
-    const nextAnswers = [...answers, { questionId: currentQuestion.id, optionIds: multiSelected }];
-    setMultiSelected([]);
-    advance(nextAnswers);
-  }
-
   function handleBack() {
-    if (currentIndex === 0 || selectedOptionId) return;
-    const poppedAnswer = answers[answers.length - 1];
+    if (answers.length === 0 || selectedOptionId) return;
+    const previous = answers[answers.length - 1];
     setAnswers((current) => current.slice(0, -1));
-    setCurrentIndex((index) => index - 1);
-    setMultiSelected(poppedAnswer ? poppedAnswer.optionIds : []);
+    setCurrentQuestionId(previous.questionId);
   }
 
   function handleRestart() {
     setAnswers([]);
-    setCurrentIndex(0);
-    setMultiSelected([]);
-    setSaveState("idle");
+    setCurrentQuestionId("q1");
+    setShareState("idle");
     setPhase("intro");
   }
 
-  async function handleSaveResult() {
-    const evidence = result.evidence.map((option) => `- ${t(option.detail, option.detailZh)}`).join("\n");
-    const resultText = [
-      `Chazen Tea State: ${result.primary.character} ${result.primary.chineseName} | ${result.primary.englishName}`,
-      "",
-      t(result.primary.summary, result.primary.summaryZh),
-      "",
-      `${t("What we noticed", "我們留意到")}:`,
-      evidence || `- ${t("Your answers were evenly spread.", "你的答案相對平均分布。")}`,
-      "",
-      `${t("Tea match", "茶葉配對")}: ${t(result.primary.mainTea, result.primary.mainTeaZh)}`,
-      `${t("Flower pairing", "花茶配搭")}: ${t(result.primary.flowerTea, result.primary.flowerTeaZh)}`,
-      "",
-      t(
-        "This reflective tea pairing is inspired by traditional Chinese wellness ideas. It is not a medical diagnosis or treatment recommendation.",
-        "這個茶飲配對受傳統中式養生概念啟發，不是醫療診斷或治療建議。"
-      )
-    ].join("\n");
+  async function handleShare() {
+    const shareText =
+      result.type === "cup"
+        ? `My Chazen tea profile: ${result.primary.englishName} — ${result.primaryPercent}% ${result.primary.key}, ${result.supportingPercent}% ${result.supporting.key}. ${t(result.primary.headline, result.primary.headlineZh)}`
+        : `My Chazen tea result: ${result.profile.name}. ${t(result.profile.headline, result.profile.headlineZh)}`;
+    const shareUrl = `${basePath}/tea-test`;
 
-    try {
-      const blob = new Blob([resultText], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `chazen-tea-state-${result.primary.key}.txt`;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-      URL.revokeObjectURL(url);
-    } catch {
-      // The visible result remains available if file download is blocked.
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "My Chazen Tea Profile", text: shareText, url: shareUrl });
+        setShareState("shared");
+        return;
+      } catch {
+        // User cancelled the native share sheet; fall through to clipboard.
+      }
     }
-
     try {
-      await navigator.clipboard?.writeText(resultText);
+      await navigator.clipboard?.writeText(`${shareText} ${shareUrl}`);
+      setShareState("copied");
     } catch {
       // Clipboard permission is optional.
     }
-
-    setSaveState("saved");
   }
 
-  const ctaHref = buildInquiryPath({
-    basePath,
-    type: "Tea recommendation",
-    message: `I completed the Chazen Tea State Reflection. My result is ${result.primary.englishName}, and my tea match is ${result.primary.mainTea}. I would like to learn more about the ${result.primary.product}.`,
-    source: "Chazen Tea State Reflection"
-  });
-  const fullPlanHref = buildInquiryPath({
-    basePath,
-    type: "Tea recommendation",
-    message: `I completed the Chazen Tea State Reflection. My result is ${result.primary.englishName}, and my tea match is ${result.primary.mainTea}. I would like the A$25 First Pack with my matched tea, full report, brewing guide, and member access.`,
-    source: "Tea State Full Plan"
-  });
   const routeHref = (path: string) => `${basePath}${path}`;
+
+  const shopHref =
+    result.type === "cup" && result.route === "gift"
+      ? routeHref("/gift-box")
+      : result.type === "cup" && result.route === "team"
+        ? routeHref("/b2b")
+        : routeHref("/tea-collection");
+
+  const shopLabel =
+    result.type === "cup" && result.route === "gift"
+      ? { en: `A ${result.primary.englishName.split(" — ")[0]} gift, for someone who needs it`, zh: `一份「${result.primary.character}」的禮物，給需要的人` }
+      : result.type === "cup" && result.route === "team"
+        ? { en: "Request a Team Sample", zh: "為團隊申請試用樣品" }
+        : { en: "Shop This Ritual", zh: "選購這個儀式" };
+
+  const inquiryHref = buildInquiryPath({
+    basePath,
+    type: "Tea recommendation",
+    message:
+      result.type === "cup"
+        ? `I completed the Chazen Five Cups reflection. My result is ${result.primary.englishName} (${result.primaryPercent}% ${result.primary.key}, ${result.supportingPercent}% ${result.supporting.key}). I would like my full ritual card and the 10% first-box code.`
+        : `I completed the Chazen Five Cups reflection. My result is ${result.profile.name}. I would like my full ritual card and the 10% first-box code.`,
+    source: "Chazen Five Cups Reflection"
+  });
 
   return (
     <main className={`assessment-page tea-mind-page ${styles.scope}`}>
@@ -586,38 +467,39 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
         />
         <div className="assessment-hero-shade tea-mind-hero-shade" />
         <div className="assessment-hero-inner tea-mind-hero-inner">
-          <p className="museum-kicker">{t("Chazen Tea State Reflection", "茶禪狀態反思")}</p>
-          <h1 id="assessment-title">{t("What have you been carrying, without quite noticing?", "你一直帶著甚麼，卻不曾細看？")}</h1>
+          <p className="museum-kicker">{t("The Five Cups Reflection", "五盞反思")}</p>
+          <h1 id="assessment-title">{t("Which of the five cups is yours today?", "今天，五盞之中，哪一盞是你的？")}</h1>
           <p>
             {t(
-              "Ten short questions about who you are in a room, what quietly wears you down, and how you actually live with tea. Leave with a tea match, a flower pairing, and a ritual you can keep.",
-              "十條簡短問題，關於你在人群中的角色、日常悄悄消耗你的內在拉扯，以及你真正的飲茶習慣。完成後，你會得到適合的茶、花茶配搭，以及一個能持續的儀式。"
+              "Chazen maps five Jian Zhan cups to the Five Spiritual Faculties — Faith, Effort, Stillness, Mindfulness, Wisdom. A few honest questions, and a cup that answers back.",
+              "Chazen 以五盞建盞，對應五根：信、精進、定、念、慧。幾個誠實的問題，換來一盞回應你的茶。"
             )}
           </p>
-          <div className="tea-mind-character-rail" aria-label="Assessment principles">
-            <span><strong>今</strong><em>{t("Current state", "當下狀態")}</em></span>
-            <span><strong>茶</strong><em>{t("Personal tea match", "個人茶配對")}</em></span>
-            <span><strong>行</strong><em>{t("Practical next steps", "可行下一步")}</em></span>
-            <span><strong>非</strong><em>{t("No diagnosis", "不作診斷")}</em></span>
+          <div className="tea-mind-character-rail" aria-label="Five cups">
+            <span><strong>信</strong><em>{t("Faith", "信")}</em></span>
+            <span><strong>精進</strong><em>{t("Effort", "精進")}</em></span>
+            <span><strong>定</strong><em>{t("Stillness", "定")}</em></span>
+            <span><strong>念</strong><em>{t("Mindfulness", "念")}</em></span>
+            <span><strong>慧</strong><em>{t("Wisdom", "慧")}</em></span>
           </div>
           <p className="tea-mind-disclaimer">
             {t(
-              "Inspired by traditional Chinese wellness ideas for reflection and tea discovery. No name or email is required.",
-              "受傳統中式養生概念啟發，用於自我觀察與探索茶。毋須姓名或電郵。"
+              "The Five Cups is a lifestyle and cultural guide, offered in the spirit of tradition — it is not medical advice.",
+              "五盞之說是一份生活與文化的指引，承傳統之意而作——並非醫療建議。"
             )}
           </p>
           <div className="assessment-hero-meta">
-            <span>{t("10 Questions", "十條問題")}</span>
-            <span>{t("About 3 Minutes", "約三分鐘")}</span>
+            <span>{t("8 Questions", "八條問題")}</span>
+            <span>{t("About 2 Minutes", "約兩分鐘")}</span>
             <span>{t("Immediate Result", "即時結果")}</span>
           </div>
           <button type="button" className="tea-mind-start-button" onClick={handleStart}>
-            {t("Start Listening", "開始聽自己")}
+            {t("Begin", "開始")}
           </button>
         </div>
       </section>
 
-      <section className="museum-section tea-mind-room" aria-label="Tea state reflection">
+      <section className="museum-section tea-mind-room" aria-label="Five Cups reflection">
         <div className="museum-container tea-mind-shell">
           <div className="tea-mind-progress" aria-label="Assessment progress" style={{ scrollMarginTop: 96 }}>
             <div>
@@ -628,10 +510,10 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
               </span>
               <strong>
                 {phase === "result"
-                  ? t("Your tea state", "你的茶狀態")
+                  ? t("Your cup", "你的盞")
                   : phase === "loading"
-                    ? t("Bringing the clues together", "正在整理線索")
-                    : t("Each answer shapes your result", "你的答案會決定結果")}
+                    ? t("Settling the leaves", "讓茶葉沉澱")
+                    : t("Each answer shapes your cup", "你的答案會決定你的盞")}
               </strong>
             </div>
             <div className="assessment-progress-track tea-mind-progress-track" aria-hidden="true">
@@ -642,21 +524,21 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
           {phase === "intro" && (
             <section className="tea-mind-intro-panel" aria-label="Assessment introduction">
               <div className="tea-mind-oracle-character" aria-hidden="true">茶</div>
-              <p className="museum-kicker">{t("Your tea, with a reason", "適合你的茶，也有清楚原因")}</p>
-              <h2>{t("Begin with who you are, not just how you feel.", "從你是誰開始，而不只是你感覺如何。")}</h2>
+              <p className="museum-kicker">{t("Your cup, with a reason", "適合你的盞，也有清楚原因")}</p>
+              <h2>{t("Five cups, five ways back to yourself.", "五盞，五條回到自己的路。")}</h2>
               <p>
                 {t(
-                  "This short reflection moves from personality to daily struggle to how you actually live with tea, then turns those observations into a practical tea direction. A balanced result is a real result too — the test will never invent a problem just to recommend a product.",
-                  "這個簡短測試會由性格出發，走到日常的內在拉扯，再到你真正的飲茶習慣，然後將這些觀察轉化成實際的選茶方向。狀態平衡亦是一個真正結果；測試不會為了推薦產品而製造你沒有的問題。"
+                  "This short reflection moves from how your mind feels right now, through the hardest part of your day, to how you actually want to drink tea — then turns those answers into one cup, with a second cup close behind it.",
+                  "這個簡短測試會由你此刻的心境出發，走過一天中最難的部分，到你真正想怎麼喝茶——再將這些答案轉化成一盞主茶，以及緊隨其後的第二盞。"
                 )}
               </p>
               <ul className="tea-mind-purpose-list" aria-label={t("What you will receive", "你會得到甚麼")}>
-                <li><Check size={17} aria-hidden="true" />{t("A clear reading of your current state", "清楚了解你目前的狀態")}</li>
-                <li><Check size={17} aria-hidden="true" />{t("A tea match, a flower pairing, and a ritual to try", "適合的茶、花茶配搭與一個可實行的儀式")}</li>
-                <li><Check size={17} aria-hidden="true" />{t("A practical, repeatable daily approach", "一個實際、可重複的日常方向")}</li>
+                <li><Check size={17} aria-hidden="true" />{t("Your primary cup and a supporting cup, shown as a simple split", "你的主盞與副盞，以簡單比例呈現")}</li>
+                <li><Check size={17} aria-hidden="true" />{t("A tea direction and a ritual you can actually keep", "適合的茶方向，與一個真的能持續的儀式")}</li>
+                <li><Check size={17} aria-hidden="true" />{t("A result worth sharing, not just a label", "一個值得分享的結果，而不只是一個標籤")}</li>
               </ul>
               <button type="button" className="tea-mind-primary-action" onClick={handleStart}>
-                {t("Discover My Tea State", "找出我的茶狀態")}
+                {t("Find My Cup", "找出我的盞")}
                 <ArrowRight size={16} aria-hidden="true" />
               </button>
             </section>
@@ -669,68 +551,54 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                 style={{ backgroundImage: `url(${basePath}/images/chazen-shanshui-chapter-2.jpg)` }}
               >
                 <div className="tea-mind-split-media-shade" aria-hidden="true" />
-                <span className="tea-mind-split-media-character" aria-hidden="true">茶</span>
+                <span className="tea-mind-split-media-character" aria-hidden="true">盞</span>
                 <div className="tea-mind-split-media-copy">
-                  <p className="tea-mind-split-kicker">{t("Tea State Reflection", "茶狀態反思")}</p>
-                  <h2>{t("Begin with your current state.", "從你目前的狀態開始。")}</h2>
+                  <p className="tea-mind-split-kicker">{t("Five Cups Reflection", "五盞反思")}</p>
+                  <h2>{t("Begin with how you feel.", "從你的感受開始。")}</h2>
                   <p>
                     {t(
-                      "Each answer refines the reading. Your result pairs a primary tea, a flower tea, and the ritual that fits you.",
-                      "每個答案都會令結果更準確。你會得到一款主茶、一款花茶，以及最適合你的儀式。"
+                      "Each answer weighs toward one or two cups. Your result pairs a primary cup with the one closest behind it.",
+                      "每個答案都會傾向一或兩盞。你的結果會配對一盞主茶，以及緊隨其後的一盞。"
                     )}
                   </p>
                 </div>
               </aside>
               <fieldset key={currentQuestion.id} className="tea-mind-question-panel">
                 <legend>
-                  <span>{t("Question", "問題")} {currentIndex + 1}</span>
+                  <span>{t("Question", "問題")} {Math.min(answers.length + 1, TOTAL_QUESTIONS)}</span>
                   <strong>{t(currentQuestion.question, currentQuestion.questionZh)}</strong>
-                  {currentQuestion.multi ? (
-                    <em className="tea-mind-question-context">
-                      {t(`Choose up to ${currentQuestion.max ?? 2}.`, `最多選 ${currentQuestion.max ?? 2} 個。`)}
-                    </em>
-                  ) : null}
                 </legend>
                 <div
                   className="tea-mind-options"
-                  role={currentQuestion.multi ? "group" : "radiogroup"}
+                  role="radiogroup"
                   aria-label={t(currentQuestion.question, currentQuestion.questionZh)}
                 >
-                  {currentQuestion.options.map((option, index) => {
-                    const isSelected = currentQuestion.multi
-                      ? multiSelected.includes(option.id)
-                      : selectedOptionId === option.id;
-                    const isDimmed = !currentQuestion.multi && selectedOptionId !== null && selectedOptionId !== option.id;
-                    return (
-                      <button
-                        type="button"
-                        role={currentQuestion.multi ? "checkbox" : "radio"}
-                        aria-checked={isSelected}
-                        key={`${currentQuestion.id}-${option.id}`}
-                        className={isSelected ? "is-selected" : isDimmed ? "is-dimmed" : index % 2 === 0 ? "is-tinted" : undefined}
-                        onClick={() => (currentQuestion.multi ? toggleMultiOption(option) : handleAnswer(option))}
-                      >
-                        <span className="tea-mind-option-mark">{String.fromCharCode(65 + index)}</span>
-                        <span className="tea-mind-option-copy">
-                          <strong>{t(option.label, option.labelZh)}</strong>
-                          <em>{t(option.detail, option.detailZh)}</em>
-                        </span>
-                      </button>
-                    );
-                  })}
+                  {currentQuestion.options.map((option, index) => (
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={selectedOptionId === option.id}
+                      key={`${currentQuestion.id}-${option.id}`}
+                      className={
+                        selectedOptionId
+                          ? selectedOptionId === option.id
+                            ? "is-selected"
+                            : "is-dimmed"
+                          : index % 2 === 0
+                            ? "is-tinted"
+                            : undefined
+                      }
+                      onClick={() => handleAnswer(option)}
+                    >
+                      <span className="tea-mind-option-mark">{String.fromCharCode(65 + index)}</span>
+                      <span className="tea-mind-option-copy">
+                        <strong>{t(option.label, option.labelZh)}</strong>
+                        <em>{t(option.insight, option.insightZh)}</em>
+                      </span>
+                    </button>
+                  ))}
                 </div>
-                {currentQuestion.multi ? (
-                  <button
-                    type="button"
-                    className="tea-mind-primary-action"
-                    disabled={multiSelected.length === 0}
-                    onClick={handleMultiNext}
-                  >
-                    {t("Next", "下一題")}
-                    <ArrowRight size={16} aria-hidden="true" />
-                  </button>
-                ) : null}
-                {currentIndex > 0 ? (
+                {answers.length > 0 ? (
                   <button type="button" className="tea-mind-back-button" onClick={handleBack}>
                     <ArrowLeft size={14} aria-hidden="true" /> {t("Back to the previous question", "回到上一題")}
                   </button>
@@ -742,33 +610,40 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
           {phase === "loading" && (
             <section className="tea-mind-loading" aria-live="polite">
               <div className="tea-mind-loading-cup" aria-hidden="true">
-                <Loader2 size={28} />
                 <span />
               </div>
               <span>{t("Reading the pattern across your answers", "正在閱讀答案之間的脈絡")}</span>
-              <h2>{t("Bringing the clues together...", "正在整理線索……")}</h2>
+              <h2>{t("Settling the leaves...", "正在讓茶葉沉澱……")}</h2>
               <p>{t("No diagnosis. No forced label.", "不作診斷，不強加標籤。")}</p>
             </section>
           )}
 
-          {phase === "result" && (
+          {phase === "result" && result.type === "cup" && (
             <section className={`tea-mind-result tea-mind-tone-${result.primary.key}`} aria-live="polite">
               <div className="tea-mind-report-heading">
-                <span>{t("Free personal summary", "免費個人摘要")}</span>
+                <span>{t("Your Five Cups result", "你的五盞結果")}</span>
                 <em>{t("Included with your test", "完成測試即可查看")}</em>
               </div>
               <div className="tea-mind-result-hero">
                 <span className="tea-mind-result-character" aria-hidden="true">{result.primary.character}</span>
                 <div>
-                  <p className="museum-kicker">{t("Your current tea state", "你目前的茶狀態")}</p>
-                  <h2>{result.primary.chineseName}</h2>
-                  <h3>{result.primary.englishName}</h3>
-                  <p>{t(result.primary.summary, result.primary.summaryZh)}</p>
-                  {result.anchor ? (
-                    <p className="tea-mind-anchor-line">
-                      {t(`Today you came here for ${result.anchor[0]}.`, `今天，你來到這裡，是為了${result.anchor[1]}。`)}
-                    </p>
-                  ) : null}
+                  <p className="museum-kicker">
+                    {result.isBlended
+                      ? t(`${result.primary.character}–${result.supporting.character}`, `${result.primary.character}–${result.supporting.character}`)
+                      : t("Your primary cup", "你的主盞")}
+                  </p>
+                  <h2>{result.primary.englishName}</h2>
+                  <h3>{result.primary.chineseGloss}</h3>
+                  <p>{t(result.primary.headline, result.primary.headlineZh)}</p>
+                </div>
+              </div>
+
+              <div className="tea-mind-split-bar" role="img" aria-label={`${result.primaryPercent}% ${result.primary.englishName}, ${result.supportingPercent}% ${result.supporting.englishName}`}>
+                <div style={{ width: `${result.primaryPercent}%` }} className="tea-mind-split-bar-primary">
+                  <span>{result.primaryPercent}% {t(result.primary.character, result.primary.character)}</span>
+                </div>
+                <div style={{ width: `${result.supportingPercent}%` }} className="tea-mind-split-bar-supporting">
+                  <span>{result.supportingPercent}% {t(result.supporting.character, result.supporting.character)}</span>
                 </div>
               </div>
 
@@ -778,127 +653,124 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                   <p>{t(result.primary.reading, result.primary.readingZh)}</p>
                 </article>
                 <article>
-                  <span>{t("Your primary need", "你目前最需要的")}</span>
-                  <p>{t(result.primaryNeedLabel[0], result.primaryNeedLabel[1])}</p>
+                  <span>{t("Serves", "適合")}</span>
+                  <p>{t(result.primary.serves, result.primary.servesZh)}</p>
                 </article>
                 <article>
-                  <span>{t("Ritual style", "儀式風格")}</span>
-                  <p>{t(result.ritualStyle[0], result.ritualStyle[1])}</p>
+                  <span>{t("Your ritual", "你的儀式")}</span>
+                  <p>{t(result.primary.ritual, result.primary.ritualZh)}</p>
                 </article>
               </div>
 
-              <article className="tea-mind-detail-grid">
-                <article>
-                  <h4>{t("The signals behind your result", "結果背後的訊號")}</h4>
-                  <ul>
-                    {result.evidence.length > 0 ? result.evidence.map((option) => (
-                      <li key={option.id}>{t(option.detail, option.detailZh)}</li>
-                    )) : <li>{t("Your answers were evenly spread.", "你的答案相對平均分布。")}</li>}
-                  </ul>
-                </article>
-                <article>
-                  <h4>{t("Your daily ritual", "你的日常儀式")}</h4>
-                  <ol>
-                    {(language === "zh" ? result.primary.ritualZh : result.primary.ritual).map((step) => (
-                      <li key={step}>{step}</li>
-                    ))}
-                  </ol>
-                </article>
-              </article>
-
               <div className="tea-mind-product-panel">
                 <div>
-                  <span>{t("Your tea match", "你的茶葉配對")}</span>
-                  <strong>{t(result.primary.mainTea, result.primary.mainTeaZh)}</strong>
-                  <p>
-                    {t("Flower pairing", "花茶配搭")}: {t(result.primary.flowerTea, result.primary.flowerTeaZh)}
-                  </p>
-                  <p className="tea-mind-tea-fit">
-                    <b>{t("Why this fits", "為甚麼適合")}: </b>{t(result.primary.mainTeaCopy, result.primary.mainTeaCopyZh)}
-                  </p>
-                  <p className="tea-mind-suitable-teas">
-                    <b>{t("Flower tea notes", "花茶說明")}: </b>{t(result.primary.flowerTeaCopy, result.primary.flowerTeaCopyZh)}
-                  </p>
+                  <span>{t("Your supporting cup", "你的副盞")}</span>
+                  <strong>{result.supporting.englishName}</strong>
+                  <p className="tea-mind-tea-fit">{t(result.supporting.headline, result.supporting.headlineZh)}</p>
                 </div>
                 <div className="tea-mind-result-actions">
-                  <a href={ctaHref}>
-                    {t("Explore My Tea Match", "探索我的茶葉配對")}
+                  <a href={shopHref}>
+                    {t(shopLabel.en, shopLabel.zh)}
                     <ArrowRight size={16} aria-hidden="true" />
                   </a>
-                  <button type="button" onClick={handleSaveResult}>
-                    {saveState === "saved" ? <Check size={16} aria-hidden="true" /> : <Download size={16} aria-hidden="true" />}
-                    {saveState === "saved" ? t("Result Saved", "結果已儲存") : t("Save My Result", "儲存我的結果")}
+                  <a href={routeHref("/tea-ritual")}>
+                    {t("Explore the Ritual", "探索茶儀式")}
+                  </a>
+                  <button type="button" onClick={handleShare}>
+                    <Share2 size={16} aria-hidden="true" />
+                    {shareState === "shared"
+                      ? t("Shared", "已分享")
+                      : shareState === "copied"
+                        ? t("Copied", "已複製")
+                        : t("Share Your Tea Profile", "分享我的茶盞")}
                   </button>
                   <button type="button" onClick={handleRestart}>
-                    <RotateCcw size={16} aria-hidden="true" />
-                    {t("Retake Test", "重新測試")}
+                    {t("Retake Reflection", "重新測試")}
                   </button>
                 </div>
               </div>
 
               <section className="tea-mind-full-plan" aria-labelledby="full-plan-title">
                 <div className="tea-mind-full-plan-copy">
-                  <p className="museum-kicker">{t("The complete Chazen plan", "完整茶禪個人方案")}</p>
-                  <h3 id="full-plan-title">{t("Do not buy a report. Start with the right tea and a plan for using it.", "不只是買一份報告，而是帶走適合你的茶與實行方案。")}</h3>
+                  <p className="museum-kicker">{t("Take it further", "更進一步")}</p>
+                  <h3 id="full-plan-title">{t("Get your full ritual card and 10% off your first box.", "取得完整儀式卡，並享首次購買九折優惠。")}</h3>
                   <p>
                     {t(
-                      "The A$25 First Pack brings the insight, the tea, and the next step together. Your full report explains how your answers connect; your matched tea lets you put the plan into practice.",
-                      "A$25 初次體驗包將理解、茶葉與下一步放在一起。完整報告會解釋答案之間的關係；配對茶葉則讓你真正實踐建議。"
+                      "Your ritual card explains how your answers connect, and pairs your primary and supporting cups into one seven-day practice.",
+                      "你的儀式卡會解釋答案之間的關係，並將主盞與副盞結合成一套七日練習。"
                     )}
                   </p>
-                  <div className="tea-mind-plan-price">
-                    <strong>A$25</strong>
-                    <span>{t("One-time First Pack", "一次性初次體驗包")}</span>
-                  </div>
-                  <a className="tea-mind-unlock-button" href={fullPlanHref}>
-                    {t("Get My Complete Tea Plan", "取得我的完整茶方案")}
+                  <a className="tea-mind-unlock-button" href={inquiryHref}>
+                    {t("Get My Full Ritual Card", "取得我的完整儀式卡")}
                     <ArrowRight size={16} aria-hidden="true" />
                   </a>
-                  <small>{t("Product details, availability, and delivery are confirmed before payment.", "產品內容、供應與配送會在付款前確認。")}</small>
-                </div>
-
-                <div className="tea-mind-plan-includes">
-                  <span>{t("One purchase, four connected parts", "一次購買，四個互相配合的部分")}</span>
-                  <ul>
-                    <li><strong>{t("Your matched starter tea", "你的配對入門茶")}</strong><em>{t(result.primary.mainTea, result.primary.mainTeaZh)}</em></li>
-                    <li><strong>{t("Full Tea State Report", "完整茶狀態報告")}</strong><em>{t("Answer-by-answer interpretation, personal watch-points, and a detailed daily plan", "逐題分析、個人留意重點與詳細日常方案")}</em></li>
-                    <li><strong>{t("Personal brewing guide", "個人沖泡指南")}</strong><em>{t("Tea strength, timing, and a gentler alternative", "茶湯濃度、飲用時間與較柔和替代選擇")}</em></li>
-                    <li><strong>{t("Chazen Free Member access", "茶禪免費會員身份")}</strong><em>{t("Member updates, birthday tea note, and early product news after your first purchase", "首次購買後獲得會員更新、生日茶語與新品消息")}</em></li>
-                  </ul>
-                </div>
-              </section>
-
-              <section className="tea-mind-locked" aria-label={t("Full report preview", "完整報告預覽")}>
-                <div className="tea-mind-locked-preview" aria-hidden="true">
-                  <p>{t("Inside your full Tea State Report", "完整茶狀態報告內容")}</p>
-                  <div className="tea-mind-locked-grid">
-                    <span>{t("Your dominant and secondary signals", "主要與次要訊號")}</span>
-                    <span>{t("How context changed your result", "情境如何影響結果")}</span>
-                    <span>{t("Daily tea and timing schedule", "日常飲茶與時間安排")}</span>
-                    <span>{t("What to notice before your next check-in", "下次檢視前的留意重點")}</span>
-                  </div>
-                </div>
-                <div className="tea-mind-locked-overlay">
-                  <LockKeyhole size={24} aria-hidden="true" />
-                  <p>{t("Your free summary gives you the direction. The complete report shows how to apply it day by day.", "免費摘要提供方向；完整報告則逐日說明如何實行。")}</p>
-                  <span>{t("Included in the A$25 First Pack", "已包括在 A$25 初次體驗包內")}</span>
                 </div>
               </section>
 
               <article className="tea-mind-quick-tea">
-                <span>{t("Important fit and safety note", "重要配對與安全提示")}</span>
                 <p>
                   {t(
-                    "This reflective tea pairing is inspired by traditional Chinese wellness ideas. It is not a medical diagnosis or treatment recommendation.",
-                    "這個茶飲配對受傳統中式養生概念啟發，不是醫療診斷或治療建議。"
+                    "The Five Cups is a lifestyle and cultural guide, offered in the spirit of tradition — it is not medical advice.",
+                    "五盞之說是一份生活與文化的指引，承傳統之意而作——並非醫療建議。"
                   )}
                 </p>
-                <small>
+              </article>
+            </section>
+          )}
+
+          {phase === "result" && result.type === "comfort" && (
+            <section className="tea-mind-result" aria-live="polite">
+              <div className="tea-mind-report-heading">
+                <span>{t("Your result", "你的結果")}</span>
+                <em>{t("Included with your test", "完成測試即可查看")}</em>
+              </div>
+              <div className="tea-mind-result-hero">
+                <div>
+                  <p className="museum-kicker">{t("A traditional pairing", "一份傳統的搭配")}</p>
+                  <h2>{result.profile.name}</h2>
+                  <h3>{result.profile.nameZh}</h3>
+                  <p>{t(result.profile.headline, result.profile.headlineZh)}</p>
+                </div>
+              </div>
+
+              <div className="tea-mind-result-grid">
+                <article>
+                  <span>{t("What this means", "這代表甚麼")}</span>
+                  <p>{t(result.profile.reading, result.profile.readingZh)}</p>
+                </article>
+                <article>
+                  <span>{t("Your ritual", "你的儀式")}</span>
+                  <p>{t(result.profile.ritual, result.profile.ritualZh)}</p>
+                </article>
+              </div>
+
+              <div className="tea-mind-product-panel">
+                <div className="tea-mind-result-actions">
+                  <a href={routeHref("/tea-collection")}>
+                    {t("Explore Chazen Tea", "探索茶禪茶品")}
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </a>
+                  <button type="button" onClick={handleShare}>
+                    <Share2 size={16} aria-hidden="true" />
+                    {shareState === "shared"
+                      ? t("Shared", "已分享")
+                      : shareState === "copied"
+                        ? t("Copied", "已複製")
+                        : t("Share This Result", "分享這個結果")}
+                  </button>
+                  <button type="button" onClick={handleRestart}>
+                    {t("Retake Reflection", "重新測試")}
+                  </button>
+                </div>
+              </div>
+
+              <article className="tea-mind-quick-tea">
+                <p>
                   {t(
-                    "Check with a qualified health professional before using herbal blends if you take medicines, are pregnant, or have allergies or ongoing symptoms.",
-                    "如正服藥、懷孕、有過敏或持續症狀，使用花草配方前應先向合資格專業人士查詢。"
+                    "The Five Cups is a lifestyle and cultural guide, offered in the spirit of tradition — it is not medical advice.",
+                    "五盞之說是一份生活與文化的指引，承傳統之意而作——並非醫療建議。"
                   )}
-                </small>
+                </p>
               </article>
             </section>
           )}
@@ -909,15 +781,15 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
         <div className="chazen-subpage-container">
           <div>
             <p className="chazen-subpage-eyebrow">{t("Continue", "繼續旅程")}</p>
-            <h2>{t("Turn the result into a real tea ritual", "將結果變成真正的茶儀式")}</h2>
-            <p>{t("Explore the ritual and tea selection that fit your current state.", "探索配合你目前狀態的儀式與茶選。")}</p>
+            <h2>{t("Turn your cup into a real tea ritual", "將你的盞變成真正的茶儀式")}</h2>
+            <p>{t("Explore the ritual and tea selection that fit your cup.", "探索配合你的盞的儀式與茶選。")}</p>
           </div>
           <div className="chazen-subpage-actions">
             <a href={routeHref("/tea-ritual")} className="chazen-subpage-button chazen-subpage-button-primary">
               {t("Explore Tea Ritual", "探索茶儀式")} <ArrowRight size={16} aria-hidden="true" />
             </a>
-            <a href={routeHref("/tea-boxes")} className="chazen-subpage-button">
-              {t("Tea Boxes", "茶盒")}
+            <a href={routeHref("/five-cups")} className="chazen-subpage-button">
+              {t("Five Cups", "五盞")}
             </a>
           </div>
         </div>
