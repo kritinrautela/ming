@@ -520,13 +520,25 @@
 .scope :global(.tea-mind-split-media) {
   position: relative;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 2px;
+  border-top: 1px solid rgba(157, 129, 80, 0.35);
   min-height: 420px;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: flex-end;
   isolation: isolate;
+}
+
+.scope :global(.tea-mind-split-media-character) {
+  position: absolute;
+  top: clamp(1rem, 3vw, 2rem);
+  right: clamp(1rem, 3vw, 2rem);
+  z-index: 1;
+  font-size: clamp(3rem, 7vw, 4.5rem);
+  line-height: 1;
+  font-weight: 300;
+  color: rgba(251, 250, 246, 0.14);
 }
 
 .scope :global(.tea-mind-split-media-shade) {
@@ -547,16 +559,16 @@
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--cz-brass-bright, #d9bd86);
+  color: var(--cz-brass-bright);
   font-weight: 700;
   margin: 0 0 0.6rem;
 }
 
 .scope :global(.tea-mind-split-media-copy h2) {
   font-family: var(--cz-serif);
-  font-weight: 700;
+  font-weight: 400;
   font-size: clamp(2.2rem, 5vw, 3rem);
-  line-height: 1.04;
+  line-height: 1.06;
   margin: 0 0 1rem;
   text-wrap: balance;
 }
@@ -742,7 +754,7 @@
   flex: 0 0 auto;
   width: 2rem;
   height: 2rem;
-  border-radius: 50%;
+  border-radius: 2px;
   background: rgba(157, 129, 80, 0.14);
   color: var(--cz-seal);
   font-size: 0.75rem;
@@ -840,6 +852,13 @@
   color: rgba(157, 129, 80, 0.15);
   opacity: 0.8;
   line-height: 1;
+}
+
+.scope :global(.tea-mind-anchor-line) {
+  font-family: var(--cz-serif);
+  font-style: italic;
+  color: var(--cz-clay);
+  margin-top: 0.6rem;
 }
 
 .scope :global(.tea-mind-result-hero h2) {
