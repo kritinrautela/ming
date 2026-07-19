@@ -503,6 +503,72 @@
   margin-top: 0.6rem;
 }
 
+/* Split layout: sidebar art alongside the active question */
+.scope :global(.tea-mind-split) {
+  display: grid;
+  grid-template-columns: minmax(240px, 30%) 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .scope :global(.tea-mind-split) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.scope :global(.tea-mind-split-media) {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  min-height: 420px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  isolation: isolate;
+}
+
+.scope :global(.tea-mind-split-media-shade) {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(23, 23, 19, 0.15), rgba(23, 23, 19, 0.82) 78%);
+  z-index: 0;
+}
+
+.scope :global(.tea-mind-split-media-copy) {
+  position: relative;
+  z-index: 1;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  color: var(--cz-porcelain);
+}
+
+.scope :global(.tea-mind-split-kicker) {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cz-brass-bright, #d9bd86);
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+}
+
+.scope :global(.tea-mind-split-media-copy h2) {
+  font-family: var(--cz-serif);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  line-height: 1.04;
+  margin: 0 0 1rem;
+  text-wrap: balance;
+}
+
+.scope :global(.tea-mind-split-media-copy p) {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: rgba(251, 250, 246, 0.82);
+  margin: 0;
+  max-width: 34ch;
+}
+
 /* Question panel and option cards styling */
 .scope :global(.tea-mind-question-panel) {
   background: transparent;
@@ -585,7 +651,7 @@
 
 .scope :global(.tea-mind-options button) {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   min-height: 60px;
   border: 1px solid rgba(157, 129, 80, 0.22);
@@ -604,6 +670,36 @@
   box-shadow: none;
   transform: none;
   transition: background 220ms cubic-bezier(0.22, 1, 0.36, 1), border-color 220ms ease, color 220ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease, opacity 220ms ease;
+}
+
+.scope :global(.tea-mind-options button.is-tinted) {
+  background: rgba(63, 89, 69, 0.08);
+}
+
+.scope :global(.tea-mind-options button.is-tinted:hover) {
+  background: rgba(63, 89, 69, 0.14);
+}
+
+.scope :global(.tea-mind-option-copy) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  padding-top: 0.15rem;
+}
+
+.scope :global(.tea-mind-option-copy strong) {
+  font-weight: 700;
+}
+
+.scope :global(.tea-mind-option-copy em) {
+  font-style: normal;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: rgba(23, 23, 19, 0.56);
+}
+
+.scope :global(.tea-mind-options button.is-selected .tea-mind-option-copy em) {
+  color: rgba(251, 250, 246, 0.78);
 }
 
 .scope :global(.tea-mind-options button)::after {
@@ -646,11 +742,11 @@
   flex: 0 0 auto;
   width: 2rem;
   height: 2rem;
-  border-radius: 2px;
+  border-radius: 50%;
   background: rgba(157, 129, 80, 0.14);
   color: var(--cz-seal);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   font-family: inherit;
   line-height: 1;
   font-variant-numeric: tabular-nums;
