@@ -386,6 +386,13 @@
         line-height: 1.75;
       }
 
+      .anchor-line {
+        font-family: var(--serif);
+        font-style: italic;
+        color: var(--tea);
+        font-size: 1.05rem;
+      }
+
       .email-form {
         display: grid;
         gap: 0.8rem;
@@ -654,6 +661,7 @@
                 <p class="kicker">Your Chazen Profile / 你的茶禪狀態</p>
                 <h2 id="profile-name"></h2>
                 <p id="profile-summary"></p>
+                <p class="anchor-line" id="anchor-line"></p>
               </div>
 
               <div class="result-layout">
@@ -714,46 +722,46 @@
       const questions = [
         {
           id: "q1",
-          title: "Where does most of your daily pressure come from?",
-          cn: "你平時一日的壓力主要來自？",
+          title: "Among people, which role do you most often become?",
+          cn: "你在人群中，常常成為哪一種角色？",
           options: [
-            { key: "A", label: "Work or study deadlines.", detail: "A full calendar, pressure to perform, or unfinished tasks.", score: { pressure: 3 } },
-            { key: "B", label: "Emotions or relationships.", detail: "People, sensitivity, or inner emotional weather.", score: { pressure: 2, emotional: 1 } },
-            { key: "C", label: "Poor sleep quality.", detail: "Rest is not fully restoring you.", score: { pressure: 3, sleep: 2 } },
-            { key: "D", label: "Too many choices and information.", detail: "Your attention feels pulled in many directions.", score: { pressure: 2 } }
+            { key: "A", label: "The quiet one, a little apart from the center.", detail: "I listen more than I speak.", score: { calm: 2 }, tags: { solo: 1 } },
+            { key: "B", label: "The one others lean on.", detail: "People settle when I'm steady.", score: { grounding: 2 }, tags: { rock: 1 } },
+            { key: "C", label: "The one who keeps the room warm.", detail: "I carry the mood, sometimes without meaning to.", score: { energy: 2 }, tags: { warm: 1, social: 1 } },
+            { key: "D", label: "The one who arrives already spent.", detail: "I show up, but not all of me does.", score: { pressure: 2, sleep: 1 } }
           ]
         },
         {
           id: "q2",
-          title: "What do you most often feel you need more of?",
-          cn: "你最常覺得自己需要更多？",
+          title: "In a gathering, which chair do you usually take?",
+          cn: "在聚會裡，你通常會坐在哪一個位置？",
           options: [
-            { key: "A", label: "Relaxation and calm.", detail: "Less inner noise, more room to breathe.", score: { calm: 3 } },
-            { key: "B", label: "Clear focus.", detail: "A steadier mind for work, study, or decisions.", score: { focus: 3 } },
-            { key: "C", label: "Energy and vitality.", detail: "A brighter daily rhythm without forcing yourself.", score: { energy: 2, focus: 1 } },
-            { key: "D", label: "Better sleep.", detail: "A softer evening and deeper rest.", score: { sleep: 3 } }
+            { key: "A", label: "Near the window, slightly outside the circle.", detail: "Close enough to belong, far enough to breathe.", score: {}, tags: { solo: 2 } },
+            { key: "B", label: "Beside whoever seems to need company.", detail: "I notice who is quiet and sit there.", score: { emotional: 2 }, tags: { social: 1 } },
+            { key: "C", label: "Wherever the conversation is liveliest.", detail: "I'm drawn toward the energy in the room.", score: { energy: 1 }, tags: { social: 2 } },
+            { key: "D", label: "Wherever I sat, but my mind is still at my desk.", detail: "Presence is the hardest part.", score: { pressure: 2, focus: 1 } }
           ]
         },
         {
           id: "q3",
-          title: "At night, which pattern feels most familiar?",
-          cn: "夜晚你最容易出現以下哪種情況？",
+          title: "Which quiet struggle do you carry most days?",
+          cn: "你日常最常帶著的，是哪一種內在拉扯？",
           options: [
-            { key: "A", label: "My mind stays active and sleep feels far away.", detail: "Thoughts continue after the day has ended.", score: { calm: 3, sleep: 2 } },
-            { key: "B", label: "I wake easily or sleep lightly.", detail: "Rest happens, but it feels fragile.", score: { sleep: 2, calm: 1 } },
-            { key: "C", label: "I sleep early but still feel tired.", detail: "Recovery has not fully caught up.", score: { energy: 2 } },
-            { key: "D", label: "I crave sweets or caffeine at night.", detail: "The body asks for a small lift or comfort.", score: { pressure: 1, calm: 1 } }
+            { key: "A", label: "A mind that will not slow down.", detail: "Thoughts keep arriving after you've asked them to stop.", score: { calm: 3 } },
+            { key: "B", label: "Attention that scatters before the task is finished.", detail: "You begin well, then drift.", score: { focus: 3 } },
+            { key: "C", label: "A tiredness that sleep doesn't actually fix.", detail: "You wake up still owing yourself rest.", score: { energy: 2, sleep: 1 } },
+            { key: "D", label: "Evenings that stay loud long after the day should have ended.", detail: "The day won't close on time.", score: { sleep: 3 } }
           ]
         },
         {
           id: "q4",
-          title: "When working or studying, what do you notice most?",
-          cn: "工作或學習時，你最常感到？",
+          title: "When that struggle peaks, what do you notice first?",
+          cn: "這種拉扯最強烈時，你最先察覺到的是？",
           options: [
-            { key: "A", label: "I get distracted easily.", detail: "Attention moves before the task is complete.", score: { focus: 3 } },
-            { key: "B", label: "I become impatient or emotionally reactive.", detail: "Small frictions can feel larger than they are.", score: { calm: 2, emotional: 2 } },
-            { key: "C", label: "My stamina runs out.", detail: "I can begin, but sustaining energy is hard.", score: { energy: 2 } },
-            { key: "D", label: "Everything is mostly OK.", detail: "You want a tea ritual for refinement, not repair.", score: {} }
+            { key: "A", label: "My thoughts, not my body.", detail: "The noise is entirely internal.", score: { calm: 2, emotional: 1 } },
+            { key: "B", label: "My body — heavy, wired, or restless.", detail: "It shows up physically before I can name it.", score: { energy: 2, pressure: 1 } },
+            { key: "C", label: "My patience — small things land bigger than they should.", detail: "I react before I mean to.", score: { emotional: 2, calm: 1 } },
+            { key: "D", label: "Nothing dramatic. I want refinement, not repair.", detail: "Your ritual should sharpen a life that already works.", score: {} }
           ]
         },
         {
@@ -769,23 +777,22 @@
         },
         {
           id: "q6",
-          title: "What does your ideal relaxing moment look like?",
-          cn: "你理想中的放鬆時刻是？",
-          options: [
-            { key: "A", label: "Drinking tea quietly alone.", detail: "A private pause with very little noise.", score: { ritualReadiness: 2 }, tags: { solo: 2 } },
-            { key: "B", label: "Listening to music or sound.", detail: "Bowl tone, rain, water, or a soft track.", score: { ritualReadiness: 2 }, tags: { sound: 2 } },
-            { key: "C", label: "Sharing tea with friends or family.", detail: "A warm and human tea moment.", score: { ritualReadiness: 1 }, tags: { social: 1 } },
-            { key: "D", label: "A short reset.", detail: "Simple enough to fit into a real day.", score: { ritualReadiness: 1 }, tags: { quick: 2 } }
-          ]
-        },
-        {
-          id: "q7",
-          title: "How much time do you usually have to brew tea?",
+          title: "How much real time do you have to brew tea?",
           cn: "你平時沖茶的時間預算？",
           options: [
             { key: "A", label: "Within 5 minutes.", detail: "Quick, reliable, and easy to repeat.", score: { ritualReadiness: 1 }, tags: { quick: 2 } },
             { key: "B", label: "10-15 minutes.", detail: "Enough time for a proper small ritual.", score: { ritualReadiness: 3 }, tags: { full: 2 } },
             { key: "C", label: "No rush. I want to taste slowly.", detail: "You are open to a deeper tea table rhythm.", score: { ritualReadiness: 4 }, tags: { deep: 2 } }
+          ]
+        },
+        {
+          id: "q7",
+          title: "How far do you want the ritual to go?",
+          cn: "你對茶儀式的興趣程度？",
+          options: [
+            { key: "A", label: "I want a simple 3-5 minute version.", detail: "A small ritual I can actually keep.", score: { ritualReadiness: 1 }, tags: { quick: 2 } },
+            { key: "B", label: "I am willing to try a full gaiwan ritual.", detail: "I want the cultural feeling and the proper steps.", score: { ritualReadiness: 4 }, tags: { full: 3 } },
+            { key: "C", label: "I mainly want to drink tea.", detail: "The ritual can stay secondary.", score: { ritualReadiness: 0 }, tags: { minimal: 3 } }
           ]
         },
         {
@@ -803,22 +810,23 @@
         },
         {
           id: "q9",
-          title: "How interested are you in tea ritual?",
-          cn: "你對茶儀式的興趣程度？",
-          options: [
-            { key: "A", label: "I want a simple 3-5 minute version.", detail: "A small ritual I can actually keep.", score: { ritualReadiness: 1 }, tags: { quick: 2 } },
-            { key: "B", label: "I am willing to try a full gaiwan ritual.", detail: "I want the cultural feeling and the proper steps.", score: { ritualReadiness: 4 }, tags: { full: 3 } },
-            { key: "C", label: "I mainly want to drink tea.", detail: "The ritual can stay secondary.", score: { ritualReadiness: 0 }, tags: { minimal: 3 } }
-          ]
-        },
-        {
-          id: "q10",
           title: "What feeling do you most want tea to give you?",
           cn: "你最想透過茶得到的感覺？",
           options: [
             { key: "A", label: "Like a clear breeze in the mountains.", detail: "Quiet, spacious, and mentally soft.", score: { calm: 2 } },
             { key: "B", label: "Like rock: stable and strong.", detail: "Grounded, substantial, and steady.", score: { grounding: 3 }, tags: { rock: 1 } },
             { key: "C", label: "Like warm sunlight.", detail: "Bright, gentle, and life-giving.", score: { energy: 2 }, tags: { warm: 1 } }
+          ]
+        },
+        {
+          id: "q10",
+          title: "If tea could hold one part of you steady today, which part?",
+          cn: "今天，如果一盞茶能穩住你其中一部分，你希望是哪一部分？",
+          options: [
+            { key: "A", label: "My breath.", detail: "The simple act of slowing down.", score: { calm: 1 }, anchor: "your breath" },
+            { key: "B", label: "My focus.", detail: "A mind that stays where I put it.", score: { focus: 1 }, anchor: "your focus" },
+            { key: "C", label: "My rest.", detail: "An evening that actually ends.", score: { sleep: 1 }, anchor: "your rest" },
+            { key: "D", label: "My composure around others.", detail: "Steadiness that holds even in company.", score: { emotional: 1, grounding: 1 }, anchor: "your composure around others" }
           ]
         }
       ];
@@ -911,6 +919,7 @@
         resultPanel: document.getElementById("result-panel"),
         profileName: document.getElementById("profile-name"),
         profileSummary: document.getElementById("profile-summary"),
+        anchorLine: document.getElementById("anchor-line"),
         profileReading: document.getElementById("profile-reading"),
         barList: document.getElementById("bar-list"),
         mainTea: document.getElementById("main-tea"),
@@ -1124,6 +1133,12 @@
 
         el.profileName.textContent = profile.name;
         el.profileSummary.textContent = `${profile.summary} Primary need: ${scores.primaryNeedLabel}. Taste direction: ${scores.tasteLabel}. Ritual style: ${scores.ritualStyle}.`;
+
+        const anchorQuestion = questions.find((question) => question.id === "q10");
+        const anchorKey = getSelectedKeys(anchorQuestion)[0];
+        const anchorOption = anchorQuestion.options.find((option) => option.key === anchorKey);
+        el.anchorLine.textContent = anchorOption ? `Today you came here for ${anchorOption.anchor}.` : "";
+
         el.profileReading.textContent = profile.reading;
         el.mainTea.textContent = profile.mainTea;
         el.mainTeaCopy.textContent = profile.mainTeaCopy;
