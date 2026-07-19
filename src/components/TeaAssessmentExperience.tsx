@@ -73,7 +73,7 @@ type ResultProfile = {
   productZh: string;
 };
 
-const TOTAL_QUESTIONS = 8;
+const TOTAL_QUESTIONS = 9;
 const resultOrder: ResultKey[] = [
   "harmony",
   "restore",
@@ -321,6 +321,19 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
 };
 
 const questions: Record<string, AssessmentQuestion> = {
+  character: {
+    id: "character",
+    question: "Among people, which role do you most often become?",
+    questionZh: "你在人群中，常常成為哪一種角色？",
+    context: "There is no right answer — just notice what feels true.",
+    contextZh: "沒有標準答案，留意甚麼感覺最真實。",
+    options: [
+      { id: "quiet", label: "The quiet one, a little apart from the center", labelZh: "安靜的人，稍微遊離於中心之外", scores: { release: 2 }, next: "goal", insight: "You tend to hold space apart from the center", insightZh: "你傾向與中心保持一點距離" },
+      { id: "anchor", label: "The one others lean on to feel steady", labelZh: "別人依靠來感到安穩的人", scores: { harmony: 2 }, next: "goal", insight: "Others settle when you are steady", insightZh: "你在時，別人會安定下來" },
+      { id: "warmth", label: "The one who keeps the room warm, without meaning to", labelZh: "不自覺地讓氣氛變暖的人", scores: { restore: 2 }, next: "goal", insight: "You carry the room's mood, often at your own expense", insightZh: "你經常在不知不覺間承擔了整個場合的氣氛" },
+      { id: "spent", label: "The one who arrives already spent", labelZh: "還未開始就已經很疲累的人", scores: { restore: 3, settle: 1 }, next: "goal", insight: "You often show up carrying more than others see", insightZh: "你出現時，往往已經帶著別人看不見的疲憊" }
+    ]
+  },
   goal: {
     id: "goal",
     question: "What brings you to this tea assessment?",
@@ -669,7 +682,7 @@ function getTeaRecommendation(result: ReturnType<typeof calculateResult>) {
 export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
   const { t, language } = useLanguage();
   const [phase, setPhase] = useState<QuizPhase>("intro");
-  const [currentQuestionId, setCurrentQuestionId] = useState("goal");
+  const [currentQuestionId, setCurrentQuestionId] = useState("character");
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [saveState, setSaveState] = useState<"idle" | "saved">("idle");
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
@@ -706,7 +719,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
 
   function handleStart() {
     setAnswers([]);
-    setCurrentQuestionId("goal");
+    setCurrentQuestionId("character");
     setSaveState("idle");
     setPhase("question");
   }
@@ -745,7 +758,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
 
   function handleRestart() {
     setAnswers([]);
-    setCurrentQuestionId("goal");
+    setCurrentQuestionId("character");
     setSaveState("idle");
     setPhase("intro");
   }
