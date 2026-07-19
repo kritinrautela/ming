@@ -16,7 +16,33 @@ const filters = [
   { en: "Japanese", zh: "日本茶" }
 ];
 
-const teas = [
+type Tea = {
+  slug: string;
+  name: string;
+  chinese: string;
+  origin: { en: string; zh: string };
+  family: { en: string; zh: string };
+  process: { en: string; zh: string };
+  look: { en: string; zh: string };
+  taste: { en: string; zh: string };
+  aroma: { en: string; zh: string };
+  ritual: { en: string; zh: string };
+  note: { en: string; zh: string };
+  gift: { en: string; zh: string };
+  caffeine: { en: string; zh: string };
+  liquor: string;
+  palette: string;
+  // Checkout: this site is a static export (no server), so purchases go
+  // through Stripe Payment Links, not a custom checkout session. Create a
+  // Payment Link per tea in the Stripe Dashboard (Payment Links -> New),
+  // then set priceLabel and stripeLink here. Left undefined, the tea simply
+  // shows "Request This Tea" instead of "Buy Now" -- nothing breaks while
+  // pricing is still being finalized.
+  priceLabel?: string;
+  stripeLink?: string;
+};
+
+const teas: Tea[] = [
   {
     slug: "da-hong-pao",
     name: "Da Hong Pao",
@@ -261,6 +287,9 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
               <p className="museum-kicker">Selected Tea / 選中茶品</p>
               <h3>{selectedTea.name}</h3>
               <strong lang="zh-Hant">{selectedTea.chinese}</strong>
+              {selectedTea.priceLabel ? (
+                <p className={styles["tea-price"]}>{selectedTea.priceLabel}</p>
+              ) : null}
               <p>{t(selectedTea.note.en, selectedTea.note.zh)}</p>
               <dl>
                 <div>
@@ -285,6 +314,22 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
                 </div>
               </dl>
               <div className={styles["tea-curator-actions"]}>
+                {selectedTea.stripeLink ? (
+                  <a href={selectedTea.stripeLink} target="_blank" rel="noopener noreferrer">
+                    {t(`Buy Now — ${selectedTea.priceLabel ?? ""}`, `立即購買 — ${selectedTea.priceLabel ?? ""}`)}
+                  </a>
+                ) : (
+                  <a
+                    href={buildInquiryPath({
+                      basePath,
+                      type: "Tea recommendation",
+                      message: `I would like to purchase or be notified when ${selectedTea.name} is available to buy directly.`,
+                      source: "Tea collection"
+                    })}
+                  >
+                    {t("Request This Tea", "索取這款茶")}
+                  </a>
+                )}
                 <a href={`${basePath}/tea-test/`}>{t("Add to Assessment Profile", "加入測評檔案")}</a>
                 <a
                   href={buildInquiryPath({
@@ -320,6 +365,7 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
                       <span>{t(tea.family.en, tea.family.zh)}</span>
                       <h2>{tea.name}</h2>
                       <strong lang="zh-Hant">{tea.chinese}</strong>
+                      {tea.priceLabel ? <span className={styles["tea-price"]}>{tea.priceLabel}</span> : null}
                       <dl>
                         <div>
                           <dt>{t("Dry Leaf", "乾茶外觀")}</dt>

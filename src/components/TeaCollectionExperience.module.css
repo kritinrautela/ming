@@ -193,6 +193,14 @@
   letter-spacing: -0.01em;
 }
 
+.tea-price {
+  font-family: ui-sans-serif, -apple-system, sans-serif;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--cz-clay, #6f4a32);
+  margin: 0.2rem 0 0;
+}
+
 .tea-curator-actions {
   display: grid;
   gap: 1rem;
