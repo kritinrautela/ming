@@ -336,149 +336,149 @@ const questions: Record<string, AssessmentQuestion> = {
   },
   goal: {
     id: "goal",
-    question: "What brings you to this tea assessment?",
-    questionZh: "甚麼原因令你來做這個茶測試？",
-    context: "Choose the answer that feels closest.",
-    contextZh: "選擇最接近你的答案。",
+    question: "What are you really hoping this cup will do for you?",
+    questionZh: "此刻，你真正希望一杯茶能為你做到甚麼？",
+    context: "Choose whichever feels closest, even if none feels exact.",
+    contextZh: "選擇最接近的答案，即使沒有一個完全貼切。",
     options: [
-      { id: "energy", label: "I want more steady energy", labelZh: "我想有更穩定的精神", scores: { restore: 1 }, next: "morning", insight: "You want steadier energy", insightZh: "你希望精神更加穩定" },
-      { id: "unwind", label: "I want to slow down and unwind", labelZh: "我想慢下來、放鬆一下", scores: { release: 1 }, next: "morning", insight: "You want more room to unwind", insightZh: "你希望有更多放鬆空間" },
-      { id: "focus", label: "I want to focus more easily", labelZh: "我想更容易集中", scores: { harmony: 1 }, next: "morning", insight: "You want easier focus", insightZh: "你希望更容易集中" },
-      { id: "meals", label: "I want something gentle after meals", labelZh: "我想找一款飯後較柔和的茶", scores: { light: 1 }, next: "morning", insight: "You want a gentler after-meal cup", insightZh: "你想找一杯較柔和的飯後茶" },
-      { id: "discover", label: "I am curious which tea suits me", labelZh: "我想知道哪款茶適合自己", scores: { harmony: 1 }, next: "morning", insight: "You are here to discover your tea", insightZh: "你想探索適合自己的茶" }
+      { id: "energy", label: "Steadier energy, not another jolt", labelZh: "更穩定的精神，而不是另一輪刺激", scores: { restore: 1 }, next: "morning", insight: "You want steadier energy", insightZh: "你希望精神更加穩定" },
+      { id: "unwind", label: "Permission to slow down and actually unwind", labelZh: "一個可以真正慢下來的許可", scores: { release: 1 }, next: "morning", insight: "You want more room to unwind", insightZh: "你希望有更多放鬆空間" },
+      { id: "focus", label: "A clearer head, less scattered", labelZh: "更清晰的頭腦，減少分心", scores: { harmony: 1 }, next: "morning", insight: "You want easier focus", insightZh: "你希望更容易集中" },
+      { id: "meals", label: "Something gentle for after I eat", labelZh: "一款飯後較柔和的茶", scores: { light: 1 }, next: "morning", insight: "You want a gentler after-meal cup", insightZh: "你想找一杯較柔和的飯後茶" },
+      { id: "discover", label: "Honestly, I just want to know what suits me", labelZh: "老實說，我只是想知道甚麼適合自己", scores: { harmony: 1 }, next: "morning", insight: "You are here to discover your tea", insightZh: "你想探索適合自己的茶" }
     ]
   },
   morning: {
     id: "morning",
-    question: "Over the past seven days, how have you usually felt shortly after waking up?",
-    questionZh: "過去七天，起床後不久你通常感覺如何？",
+    question: "In the last week, what has the first hour after waking actually felt like?",
+    questionZh: "過去一星期，醒來後的第一個小時，實際上是怎樣的？",
     bodySignal: true,
     options: [
-      { id: "refreshed", label: "Awake and refreshed", labelZh: "清醒而有精神", scores: { harmony: 2 }, next: "optimise", insight: "You usually wake feeling refreshed", insightZh: "你起床時通常感覺精神良好" },
-      { id: "fine", label: "A little sleepy, but generally fine", labelZh: "有點睏，但整體還好", scores: { harmony: 1, restore: 1 }, next: "afternoon", insight: "You need a little time, then feel fine", insightZh: "你需要少許時間，之後整體還好" },
-      { id: "slow", label: "Tired and slow to start", labelZh: "疲倦，啟動得比較慢", scores: { restore: 2 }, next: "sleep-pattern", insight: "Mornings have felt slow", insightZh: "你最近早上啟動得比較慢" },
-      { id: "exhausted", label: "Very tired, even after sleeping", labelZh: "即使睡過仍然很疲倦", scores: { restore: 3 }, next: "sleep-pattern", insight: "You still feel tired after sleeping", insightZh: "即使睡過，你仍然感到疲倦" },
-      { id: "variable", label: "It changes from day to day", labelZh: "每天的情況都不同", next: "changing-pattern", insight: "Your mornings vary from day to day", insightZh: "你的早晨狀態每天不同" }
+      { id: "refreshed", label: "Awake, and glad to be", labelZh: "清醒，而且是樂意清醒的那種", scores: { harmony: 2 }, next: "optimise", insight: "You usually wake feeling refreshed", insightZh: "你起床時通常感覺精神良好" },
+      { id: "fine", label: "A little slow, but I come round", labelZh: "有點慢熱，但很快就緩過來", scores: { harmony: 1, restore: 1 }, next: "afternoon", insight: "You need a little time, then feel fine", insightZh: "你需要少許時間，之後整體還好" },
+      { id: "slow", label: "Tired, and the day takes a while to start", labelZh: "疲倦，這一天需要一段時間才能真正開始", scores: { restore: 2 }, next: "sleep-pattern", insight: "Mornings have felt slow", insightZh: "你最近早上啟動得比較慢" },
+      { id: "exhausted", label: "Tired in a way sleep didn't fix", labelZh: "一種睡眠並沒有修復的疲倦", scores: { restore: 3 }, next: "sleep-pattern", insight: "You still feel tired after sleeping", insightZh: "即使睡過，你仍然感到疲倦" },
+      { id: "variable", label: "It changes more than I'd like", labelZh: "變化比我想要的還要大", next: "changing-pattern", insight: "Your mornings vary from day to day", insightZh: "你的早晨狀態每天不同" }
     ]
   },
   optimise: {
     id: "optimise",
-    question: "What would make a good day feel even better?",
-    questionZh: "甚麼會令原本不錯的一天變得更好？",
+    question: "If today is already fine, what would make it unmistakably good?",
+    questionZh: "如果今天已經還不錯，甚麼會令它變得明確地美好？",
     options: [
-      { id: "clearer", label: "Easier concentration", labelZh: "更容易集中", scores: { harmony: 1 }, next: "temperature", insight: "You want to sharpen a good rhythm", insightZh: "你想令良好節奏更加清晰" },
-      { id: "fresher", label: "A fresher, brighter feeling", labelZh: "更清新明亮的感覺", scores: { harmony: 1 }, next: "temperature", insight: "You want a fresher cup", insightZh: "你想要更清新的茶感" },
-      { id: "quieter", label: "More space to unwind", labelZh: "更多放鬆空間", scores: { release: 2 }, next: "tension", insight: "You want more space to unwind", insightZh: "你希望有更多放鬆空間" },
-      { id: "meal", label: "A gentler feeling after meals", labelZh: "飯後感覺更柔和", scores: { light: 2 }, next: "digestion", insight: "After-meal comfort matters to you", insightZh: "你重視飯後的舒適感" },
-      { id: "explore", label: "A new tea experience", labelZh: "一種新的茶體驗", scores: { harmony: 2 }, next: "temperature", insight: "You want to explore without fixing a problem", insightZh: "你想探索茶，而不是修補問題" }
+      { id: "clearer", label: "A mind that stays where I put it", labelZh: "一個能專注在原地、不亂跑的頭腦", scores: { harmony: 1 }, next: "temperature", insight: "You want to sharpen a good rhythm", insightZh: "你想令良好節奏更加清晰" },
+      { id: "fresher", label: "A brighter, cleaner feeling", labelZh: "更明亮、更清爽的感覺", scores: { harmony: 1 }, next: "temperature", insight: "You want a fresher cup", insightZh: "你想要更清新的茶感" },
+      { id: "quieter", label: "More room to breathe", labelZh: "更多呼吸的空間", scores: { release: 2 }, next: "tension", insight: "You want more space to unwind", insightZh: "你希望有更多放鬆空間" },
+      { id: "meal", label: "Ease after I eat, not heaviness", labelZh: "飯後是輕鬆，而不是沉重", scores: { light: 2 }, next: "digestion", insight: "After-meal comfort matters to you", insightZh: "你重視飯後的舒適感" },
+      { id: "explore", label: "Simply a new tea to meet", labelZh: "單純遇見一款新的茶", scores: { harmony: 2 }, next: "temperature", insight: "You want to explore without fixing a problem", insightZh: "你想探索茶，而不是修補問題" }
     ]
   },
   afternoon: {
     id: "afternoon",
-    question: "How does your energy usually change after lunch?",
-    questionZh: "午餐後，你的精神通常有甚麼變化？",
+    question: "After lunch, where does your energy actually go?",
+    questionZh: "午餐後，你的精神實際上去了哪裡？",
     bodySignal: true,
     options: [
-      { id: "steady", label: "It stays fairly steady", labelZh: "大致保持穩定", scores: { harmony: 2 }, next: "temperature", insight: "Your energy stays fairly steady after lunch", insightZh: "午餐後你的精神大致穩定" },
-      { id: "slight", label: "It drops slightly", labelZh: "有少許下降", scores: { restore: 1 }, next: "digestion", insight: "You notice a small post-lunch dip", insightZh: "你午餐後有輕微精神下降" },
-      { id: "sleepy", label: "I become noticeably sleepy", labelZh: "我會明顯眼睏", scores: { restore: 2, light: 1 }, next: "digestion", insight: "Lunch is followed by noticeable sleepiness", insightZh: "午餐後你會明顯眼睏" },
-      { id: "heavy", label: "I feel heavy or bloated", labelZh: "我會感到沉重或脹氣", scores: { light: 3 }, next: "digestion", insight: "Heaviness follows some meals", insightZh: "部分餐後你會感到沉重" },
-      { id: "varies", label: "It depends on the meal", labelZh: "視乎吃了甚麼", next: "digestion", insight: "Your response changes with the meal", insightZh: "你的狀態會隨食物而改變" }
+      { id: "steady", label: "It holds", labelZh: "維持不變", scores: { harmony: 2 }, next: "temperature", insight: "Your energy stays fairly steady after lunch", insightZh: "午餐後你的精神大致穩定" },
+      { id: "slight", label: "It dips, just slightly", labelZh: "有輕微下降", scores: { restore: 1 }, next: "digestion", insight: "You notice a small post-lunch dip", insightZh: "你午餐後有輕微精神下降" },
+      { id: "sleepy", label: "It disappears — I could sleep", labelZh: "完全消失——我可以馬上睡著", scores: { restore: 2, light: 1 }, next: "digestion", insight: "Lunch is followed by noticeable sleepiness", insightZh: "午餐後你會明顯眼睏" },
+      { id: "heavy", label: "It's replaced by heaviness", labelZh: "被沉重感取代", scores: { light: 3 }, next: "digestion", insight: "Heaviness follows some meals", insightZh: "部分餐後你會感到沉重" },
+      { id: "varies", label: "Entirely depends what I ate", labelZh: "完全視乎吃了甚麼", next: "digestion", insight: "Your response changes with the meal", insightZh: "你的狀態會隨食物而改變" }
     ]
   },
   "sleep-pattern": {
     id: "sleep-pattern",
-    question: "Which sleep pattern is closest to yours?",
-    questionZh: "哪種睡眠模式最接近你？",
+    question: "Which of these is closer to your nights than you'd like?",
+    questionZh: "以下哪一種，比你想像中更貼近你最近的夜晚？",
     bodySignal: true,
     options: [
-      { id: "short", label: "I usually do not get enough sleep", labelZh: "我通常睡眠不足", scores: { restore: 2 }, next: "recovery", insight: "Your sleep time is often too short", insightZh: "你的睡眠時間經常不足" },
-      { id: "waking", label: "I often wake during the night", labelZh: "我夜間經常醒來", scores: { settle: 2, replenish: 1 }, next: "tension", insight: "Your sleep is often interrupted", insightZh: "你的睡眠經常中斷" },
-      { id: "enough-tired", label: "I sleep enough but still wake tired", labelZh: "睡眠時間足夠，但醒來仍然疲倦", scores: { restore: 3 }, next: "energy-context", insight: "Enough sleep does not always feel restorative", insightZh: "足夠睡眠未必令你感覺恢復" },
-      { id: "switch-off", label: "I find it hard to switch off before sleep", labelZh: "睡前很難令腦袋停下來", scores: { settle: 3, release: 1 }, next: "tension", insight: "Your mind stays active before sleep", insightZh: "睡前你的腦袋仍然活躍" },
-      { id: "inconsistent", label: "There is no consistent pattern", labelZh: "沒有固定模式", next: "temperature", insight: "Your sleep has no single pattern", insightZh: "你的睡眠沒有單一固定模式" }
+      { id: "short", label: "I usually don't get enough sleep, full stop", labelZh: "我通常就是睡眠不足，沒有其他原因", scores: { restore: 2 }, next: "recovery", insight: "Your sleep time is often too short", insightZh: "你的睡眠時間經常不足" },
+      { id: "waking", label: "Sleep starts fine, then breaks apart", labelZh: "睡眠一開始還好，之後就斷斷續續", scores: { settle: 2, replenish: 1 }, next: "tension", insight: "Your sleep is often interrupted", insightZh: "你的睡眠經常中斷" },
+      { id: "enough-tired", label: "Enough hours, wrong kind of rest", labelZh: "時數足夠，但不是真正的休息", scores: { restore: 3 }, next: "energy-context", insight: "Enough sleep does not always feel restorative", insightZh: "足夠睡眠未必令你感覺恢復" },
+      { id: "switch-off", label: "My mind won't clock out before I do", labelZh: "腦袋比我更晚才願意下班", scores: { settle: 3, release: 1 }, next: "tension", insight: "Your mind stays active before sleep", insightZh: "睡前你的腦袋仍然活躍" },
+      { id: "inconsistent", label: "No real pattern to point to", labelZh: "沒有一個固定可以指出的模式", next: "temperature", insight: "Your sleep has no single pattern", insightZh: "你的睡眠沒有單一固定模式" }
     ]
   },
   "changing-pattern": {
     id: "changing-pattern",
-    question: "What seems most connected to those changes?",
-    questionZh: "這些變化似乎最受甚麼影響？",
+    question: "When your rhythm shifts, what does it usually follow?",
+    questionZh: "當你的節奏出現變化，通常跟甚麼有關？",
     context: "You do not need to know the exact cause.",
     contextZh: "你不需要知道確實原因。",
     bodySignal: true,
     options: [
       { id: "sleep", label: "How much I slept", labelZh: "睡眠時間", scores: { restore: 2 }, next: "recovery", insight: "Your rhythm changes with sleep", insightZh: "你的節奏會隨睡眠改變" },
       { id: "meals", label: "What or when I ate", labelZh: "吃了甚麼或進食時間", scores: { light: 2 }, next: "digestion", insight: "Meals appear connected to the change", insightZh: "進食似乎與狀態變化有關" },
-      { id: "stress", label: "How much pressure I was under", labelZh: "當日壓力程度", scores: { release: 2 }, next: "tension", insight: "Your rhythm changes with pressure", insightZh: "你的節奏會隨壓力改變" },
+      { id: "stress", label: "How much pressure I was carrying", labelZh: "當日承載的壓力有多少", scores: { release: 2 }, next: "tension", insight: "Your rhythm changes with pressure", insightZh: "你的節奏會隨壓力改變" },
       { id: "weather", label: "The weather or temperature", labelZh: "天氣或溫度", scores: { warm: 1, cool: 1 }, next: "temperature", insight: "Temperature appears to affect your rhythm", insightZh: "溫度似乎會影響你的節奏" },
-      { id: "unclear", label: "I am not sure", labelZh: "我不確定", next: "temperature", insight: "There is no obvious trigger yet", insightZh: "目前未有明顯觸發因素" }
+      { id: "unclear", label: "Honestly, I'm not sure", labelZh: "老實說，我不確定", next: "temperature", insight: "There is no obvious trigger yet", insightZh: "目前未有明顯觸發因素" }
     ]
   },
   temperature: {
     id: "temperature",
-    question: "Which body-temperature pattern is closest to yours lately?",
-    questionZh: "最近哪種冷熱感最接近你？",
+    question: "Lately, which temperature does your body seem to be asking for?",
+    questionZh: "最近，你的身體似乎在為哪一種溫度爭取？",
     bodySignal: true,
     options: [
-      { id: "comfortable", label: "Generally comfortable", labelZh: "大致舒適", scores: { harmony: 2 }, next: "inner", insight: "Your body temperature feels comfortable", insightZh: "你的冷熱感大致舒適" },
-      { id: "cold", label: "I feel cold easily", labelZh: "我比較容易怕冷", scores: { warm: 3 }, next: "inner", insight: "You tend to prefer warmth", insightZh: "你較容易怕冷、偏好溫暖" },
-      { id: "hot", label: "I feel hot or restless easily", labelZh: "我比較容易覺得熱或煩躁", scores: { cool: 3 }, next: "inner", insight: "Warmth or restlessness is noticeable", insightZh: "燥熱或煩躁感較明顯" },
-      { id: "dry", label: "Dryness is more noticeable than heat", labelZh: "乾燥感比熱感更明顯", scores: { replenish: 3 }, next: "inner", insight: "Dryness is the clearer signal", insightZh: "乾燥感是較清晰的訊號" },
+      { id: "comfortable", label: "Generally comfortable, no complaints", labelZh: "大致舒適，沒有甚麼好抱怨", scores: { harmony: 2 }, next: "inner", insight: "Your body temperature feels comfortable", insightZh: "你的冷熱感大致舒適" },
+      { id: "cold", label: "Warmth. I feel cold easily", labelZh: "溫暖。我比較容易怕冷", scores: { warm: 3 }, next: "inner", insight: "You tend to prefer warmth", insightZh: "你較容易怕冷、偏好溫暖" },
+      { id: "hot", label: "Cool. I run hot and restless", labelZh: "清涼。我容易覺得燥熱不安", scores: { cool: 3 }, next: "inner", insight: "Warmth or restlessness is noticeable", insightZh: "燥熱或煩躁感較明顯" },
+      { id: "dry", label: "Moisture — dryness is the louder signal", labelZh: "滋潤——乾燥感是更明顯的訊號", scores: { replenish: 3 }, next: "inner", insight: "Dryness is the clearer signal", insightZh: "乾燥感是較清晰的訊號" },
       { id: "variable", label: "It changes too much to say", labelZh: "變化太大，難以判斷", next: "inner", insight: "Your temperature pattern varies", insightZh: "你的冷熱感並不固定" }
     ]
   },
   digestion: {
     id: "digestion",
-    question: "After a typical meal, what do you notice most?",
-    questionZh: "一般進食後，你最明顯留意到甚麼？",
+    question: "After an ordinary meal, what does your body actually report back?",
+    questionZh: "吃過普通一餐後，你的身體實際上給你甚麼回饋？",
     bodySignal: true,
     options: [
-      { id: "comfortable", label: "I feel comfortable", labelZh: "感覺舒適", scores: { harmony: 2 }, next: "inner", insight: "Meals usually feel comfortable", insightZh: "你進食後通常感覺舒適" },
-      { id: "sleepy", label: "I feel sleepy", labelZh: "我會感到眼睏", scores: { restore: 1, light: 2 }, next: "inner", insight: "Sleepiness is noticeable after meals", insightZh: "進食後眼睏較為明顯" },
-      { id: "heavy", label: "I feel heavy or bloated", labelZh: "我會感到沉重或脹氣", scores: { light: 3 }, next: "inner", insight: "Heaviness or bloating follows meals", insightZh: "進食後會出現沉重或脹氣感" },
-      { id: "heartburn", label: "I sometimes get heartburn or discomfort", labelZh: "有時會胃酸或不適", stomachSensitive: true, next: "inner", insight: "Some meals are followed by stomach discomfort", insightZh: "部分餐後會出現胃部不適" },
-      { id: "varies", label: "It depends on the meal", labelZh: "視乎吃了甚麼", next: "inner", insight: "Your response depends on the meal", insightZh: "你的反應會隨食物改變" }
+      { id: "comfortable", label: "Comfortable, nothing to note", labelZh: "舒適，沒有特別要留意的", scores: { harmony: 2 }, next: "inner", insight: "Meals usually feel comfortable", insightZh: "你進食後通常感覺舒適" },
+      { id: "sleepy", label: "A pull toward sleep", labelZh: "一股想睡的拉力", scores: { restore: 1, light: 2 }, next: "inner", insight: "Sleepiness is noticeable after meals", insightZh: "進食後眼睏較為明顯" },
+      { id: "heavy", label: "Heaviness or bloating", labelZh: "沉重感或脹氣", scores: { light: 3 }, next: "inner", insight: "Heaviness or bloating follows meals", insightZh: "進食後會出現沉重或脹氣感" },
+      { id: "heartburn", label: "Sometimes heartburn or discomfort", labelZh: "有時會胃酸或不適", stomachSensitive: true, next: "inner", insight: "Some meals are followed by stomach discomfort", insightZh: "部分餐後會出現胃部不適" },
+      { id: "varies", label: "Entirely depends on the meal", labelZh: "完全視乎吃了甚麼", next: "inner", insight: "Your response depends on the meal", insightZh: "你的反應會隨食物改變" }
     ]
   },
   tension: {
     id: "tension",
-    question: "When your mind stays active, what is it usually holding onto?",
-    questionZh: "腦袋停不下來時，通常在承載甚麼？",
+    question: "When your mind won't switch off, what is it usually still holding?",
+    questionZh: "腦袋停不下來時，通常還在承載甚麼？",
     context: "You can choose “I prefer not to answer.”",
     contextZh: "你可以選擇「不想回答」。",
     bodySignal: true,
     options: [
-      { id: "work", label: "Work or unfinished tasks", labelZh: "工作或未完成的事情", scores: { release: 2, settle: 1 }, next: "inner", insight: "Unfinished tasks stay with you", insightZh: "未完成的事情會留在腦中" },
-      { id: "tomorrow", label: "Planning what comes next", labelZh: "計劃接下來的事情", scores: { settle: 2 }, next: "inner", insight: "Your mind keeps planning ahead", insightZh: "你的腦袋會不停計劃之後的事" },
-      { id: "conversations", label: "Conversations or feelings", labelZh: "對話或感受", scores: { release: 3 }, next: "inner", insight: "Conversations or feelings linger", insightZh: "對話或感受會留在心中" },
-      { id: "phone", label: "Whatever is on my phone", labelZh: "手機上的內容", scores: { settle: 2 }, next: "inner", insight: "Phone input keeps the mind active", insightZh: "手機資訊令腦袋保持活躍" },
-      { id: "skip", label: "I prefer not to answer", labelZh: "我不想回答", next: "inner", insight: "You chose to keep this private", insightZh: "你選擇保留這部分" }
+      { id: "work", label: "Work or something unfinished", labelZh: "工作，或一件未完成的事情", scores: { release: 2, settle: 1 }, next: "inner", insight: "Unfinished tasks stay with you", insightZh: "未完成的事情會留在腦中" },
+      { id: "tomorrow", label: "Whatever comes next", labelZh: "接下來要面對的事情", scores: { settle: 2 }, next: "inner", insight: "Your mind keeps planning ahead", insightZh: "你的腦袋會不停計劃之後的事" },
+      { id: "conversations", label: "A conversation or a feeling that stayed", labelZh: "一段留下來的對話或感受", scores: { release: 3 }, next: "inner", insight: "Conversations or feelings linger", insightZh: "對話或感受會留在心中" },
+      { id: "phone", label: "Whatever my phone last showed me", labelZh: "手機最後給我看的東西", scores: { settle: 2 }, next: "inner", insight: "Phone input keeps the mind active", insightZh: "手機資訊令腦袋保持活躍" },
+      { id: "skip", label: "I'd rather not say", labelZh: "我不想回答", next: "inner", insight: "You chose to keep this private", insightZh: "你選擇保留這部分" }
     ]
   },
   recovery: {
     id: "recovery",
-    question: "What is most often missing before you feel worn down?",
-    questionZh: "感到消耗之前，通常最缺少甚麼？",
+    question: "Right before you feel worn down, what's usually missing?",
+    questionZh: "在你感到被消耗之前，通常缺少了甚麼？",
     bodySignal: true,
     options: [
       { id: "sleep", label: "Enough sleep", labelZh: "足夠睡眠", scores: { restore: 3 }, next: "inner", insight: "Sleep is the clearest missing piece", insightZh: "睡眠是最明顯缺少的一環" },
-      { id: "quiet", label: "Quiet time", labelZh: "安靜時間", scores: { release: 2 }, next: "inner", insight: "Quiet time is often missing", insightZh: "你經常缺少安靜時間" },
-      { id: "meals", label: "Regular meals", labelZh: "定時進食", scores: { restore: 2 }, next: "inner", insight: "Regular meals are often missing", insightZh: "你經常未能定時進食" },
-      { id: "warmth", label: "Warmth and a slower start", labelZh: "溫暖和較慢的開始", scores: { warm: 2, restore: 1 }, next: "inner", insight: "Warmth and a slower start feel supportive", insightZh: "溫暖和慢慢開始對你較有幫助" },
-      { id: "unclear", label: "There is no clear pattern", labelZh: "沒有明顯模式", next: "inner", insight: "There is no single missing piece", insightZh: "目前沒有單一明顯缺少的部分" }
+      { id: "quiet", label: "Any real quiet", labelZh: "任何真正的安靜", scores: { release: 2 }, next: "inner", insight: "Quiet time is often missing", insightZh: "你經常缺少安靜時間" },
+      { id: "meals", label: "Meals at a decent hour", labelZh: "在合理時間好好吃一餐", scores: { restore: 2 }, next: "inner", insight: "Regular meals are often missing", insightZh: "你經常未能定時進食" },
+      { id: "warmth", label: "Warmth, and a slower start", labelZh: "溫暖，以及較慢的開始", scores: { warm: 2, restore: 1 }, next: "inner", insight: "Warmth and a slower start feel supportive", insightZh: "溫暖和慢慢開始對你較有幫助" },
+      { id: "unclear", label: "Honestly, no clear pattern", labelZh: "老實說，沒有明顯模式", next: "inner", insight: "There is no single missing piece", insightZh: "目前沒有單一明顯缺少的部分" }
     ]
   },
   "energy-context": {
     id: "energy-context",
-    question: "When is the tiredness most noticeable?",
-    questionZh: "疲倦感在甚麼時候最明顯？",
+    question: "That tiredness — when does it actually show up?",
+    questionZh: "那份疲倦——它實際上在甚麼時候出現？",
     bodySignal: true,
     options: [
-      { id: "morning", label: "Soon after waking", labelZh: "起床後不久", scores: { restore: 2 }, next: "inner", insight: "Tiredness is strongest in the morning", insightZh: "疲倦感在早上最明顯" },
-      { id: "meals", label: "After meals", labelZh: "進食後", scores: { light: 3 }, next: "inner", insight: "Tiredness is linked to meals", insightZh: "疲倦感與進食有關" },
-      { id: "busy", label: "After a demanding day", labelZh: "忙碌的一天之後", scores: { restore: 2, release: 1 }, next: "inner", insight: "Demanding days leave you depleted", insightZh: "忙碌的一天會令你感到消耗" },
-      { id: "allday", label: "Throughout most of the day", labelZh: "大部分時間", scores: { restore: 3 }, next: "inner", insight: "Tiredness lasts through much of the day", insightZh: "疲倦感持續大部分時間" },
-      { id: "variable", label: "There is no fixed time", labelZh: "沒有固定時間", next: "inner", insight: "Tiredness has no fixed timing", insightZh: "疲倦感沒有固定時間" }
+      { id: "morning", label: "Soon after I wake up", labelZh: "起床後不久", scores: { restore: 2 }, next: "inner", insight: "Tiredness is strongest in the morning", insightZh: "疲倦感在早上最明顯" },
+      { id: "meals", label: "Right after I eat", labelZh: "剛吃完之後", scores: { light: 3 }, next: "inner", insight: "Tiredness is linked to meals", insightZh: "疲倦感與進食有關" },
+      { id: "busy", label: "After a day that demanded too much", labelZh: "在一個要求過多的日子之後", scores: { restore: 2, release: 1 }, next: "inner", insight: "Demanding days leave you depleted", insightZh: "忙碌的一天會令你感到消耗" },
+      { id: "allday", label: "It just stays, most of the day", labelZh: "幾乎一整天都在", scores: { restore: 3 }, next: "inner", insight: "Tiredness lasts through much of the day", insightZh: "疲倦感持續大部分時間" },
+      { id: "variable", label: "No fixed time — it just arrives", labelZh: "沒有固定時間——它就是會出現", next: "inner", insight: "Tiredness has no fixed timing", insightZh: "疲倦感沒有固定時間" }
     ]
   },
   inner: {
@@ -492,27 +492,27 @@ const questions: Record<string, AssessmentQuestion> = {
       { id: "space", label: "Space", labelZh: "空間", scores: { release: 1 }, next: "rest", insight: "You leave little space for yourself", insightZh: "你留給自己的空間較少" },
       { id: "patience", label: "Patience", labelZh: "耐性", scores: { release: 1 }, next: "rest", insight: "Patience is harder to keep for yourself", insightZh: "你較難將耐性留給自己" },
       { id: "care", label: "Care", labelZh: "照顧", scores: { replenish: 1 }, next: "rest", insight: "You often put your own care last", insightZh: "你經常將照顧自己放到最後" },
-      { id: "enough", label: "I already have enough", labelZh: "我現在已經足夠", scores: { harmony: 2 }, next: "rest", insight: "You feel adequately supported", insightZh: "你感覺目前得到足夠支持" },
-      { id: "skip", label: "I prefer not to answer", labelZh: "我不想回答", next: "rest", insight: "You chose to keep this private", insightZh: "你選擇保留這部分" }
+      { id: "enough", label: "Honestly, I already have enough", labelZh: "老實說，我現在已經足夠", scores: { harmony: 2 }, next: "rest", insight: "You feel adequately supported", insightZh: "你感覺目前得到足夠支持" },
+      { id: "skip", label: "I'd rather not say", labelZh: "我不想回答", next: "rest", insight: "You chose to keep this private", insightZh: "你選擇保留這部分" }
     ]
   },
   rest: {
     id: "rest",
-    question: "When you have time to rest, what usually happens?",
-    questionZh: "有時間休息時，通常會發生甚麼？",
+    question: "When rest is finally available, what actually happens?",
+    questionZh: "當終於有時間休息，實際上會發生甚麼？",
     bodySignal: true,
     options: [
-      { id: "natural", label: "I can switch off naturally", labelZh: "我可以自然停下來", scores: { harmony: 2 }, next: "flavour", insight: "You can usually switch off naturally", insightZh: "你通常可以自然停下來" },
-      { id: "scroll", label: "I keep scrolling", labelZh: "我會繼續滑手機", scores: { settle: 1, release: 1 }, next: "flavour", insight: "Rest often turns into more phone input", insightZh: "休息時間經常變成更多手機資訊" },
-      { id: "mind", label: "My mind keeps working", labelZh: "腦袋仍然運轉", scores: { settle: 2, release: 1 }, next: "flavour", insight: "Your mind keeps working during rest", insightZh: "休息時你的腦袋仍然運轉" },
-      { id: "sleep", label: "I fall asleep quickly", labelZh: "我很快便睡著", scores: { restore: 2 }, next: "flavour", insight: "Rest quickly becomes sleep", insightZh: "一休息你便很快睡著" },
-      { id: "rarely", label: "I rarely get that time", labelZh: "我很少有這種時間", scores: { restore: 1, release: 1 }, next: "flavour", insight: "You rarely get uninterrupted rest", insightZh: "你很少有不受打擾的休息時間" }
+      { id: "natural", label: "I switch off, without trying to", labelZh: "我會自然停下來，不需要刻意嘗試", scores: { harmony: 2 }, next: "flavour", insight: "You can usually switch off naturally", insightZh: "你通常可以自然停下來" },
+      { id: "scroll", label: "I keep scrolling instead", labelZh: "我反而會繼續滑手機", scores: { settle: 1, release: 1 }, next: "flavour", insight: "Rest often turns into more phone input", insightZh: "休息時間經常變成更多手機資訊" },
+      { id: "mind", label: "My mind keeps running the day", labelZh: "腦袋仍在重播這一天", scores: { settle: 2, release: 1 }, next: "flavour", insight: "Your mind keeps working during rest", insightZh: "休息時你的腦袋仍然運轉" },
+      { id: "sleep", label: "Rest becomes sleep almost immediately", labelZh: "休息幾乎馬上變成睡眠", scores: { restore: 2 }, next: "flavour", insight: "Rest quickly becomes sleep", insightZh: "一休息你便很快睡著" },
+      { id: "rarely", label: "That time rarely actually arrives", labelZh: "這種時間其實很少真正出現", scores: { restore: 1, release: 1 }, next: "flavour", insight: "You rarely get uninterrupted rest", insightZh: "你很少有不受打擾的休息時間" }
     ]
   },
   flavour: {
     id: "flavour",
-    question: "Which tea experience sounds most appealing?",
-    questionZh: "哪種茶感最吸引你？",
+    question: "Which cup, just from the description, pulls you in?",
+    questionZh: "單憑描述，哪一杯茶最吸引你？",
     options: [
       { id: "fresh", label: "Fresh and bright", labelZh: "清新明亮", flavour: "fresh", next: "caffeine", insight: "You prefer a fresh, bright cup", insightZh: "你偏好清新明亮的茶感" },
       { id: "floral", label: "Soft and floral", labelZh: "柔和花香", flavour: "floral", next: "caffeine", insight: "You prefer a soft floral aroma", insightZh: "你偏好柔和花香" },
@@ -523,14 +523,14 @@ const questions: Record<string, AssessmentQuestion> = {
   },
   caffeine: {
     id: "caffeine",
-    question: "How does caffeine usually affect you?",
-    questionZh: "咖啡因通常對你有甚麼影響？",
+    question: "Last thing — how does caffeine usually treat you?",
+    questionZh: "最後一題——咖啡因通常怎樣對待你？",
     options: [
       { id: "comfortable", label: "No noticeable problem", labelZh: "沒有明顯問題", caffeine: "comfortable", insight: "Caffeine does not usually bother you", insightZh: "咖啡因通常不會令你不適" },
-      { id: "alert", label: "It can make me too alert", labelZh: "有時令我過度精神", caffeine: "alert", scores: { settle: 1 }, insight: "Caffeine can make you too alert", insightZh: "咖啡因有時令你過度精神" },
-      { id: "sleep", label: "It affects my sleep later", labelZh: "之後會影響睡眠", caffeine: "sleep", scores: { settle: 2 }, insight: "Caffeine can affect your sleep", insightZh: "咖啡因可能影響你的睡眠" },
-      { id: "sensitive", label: "I am quite sensitive to it", labelZh: "我對咖啡因比較敏感", caffeine: "sensitive", scores: { settle: 2 }, insight: "You are sensitive to caffeine", insightZh: "你對咖啡因比較敏感" },
-      { id: "unsure", label: "I am not sure", labelZh: "我不確定", caffeine: "unsure", insight: "Your caffeine response is unclear", insightZh: "你未確定咖啡因對自己的影響" }
+      { id: "alert", label: "It can tip me into too alert", labelZh: "有時會令我過度精神", caffeine: "alert", scores: { settle: 1 }, insight: "Caffeine can make you too alert", insightZh: "咖啡因有時令你過度精神" },
+      { id: "sleep", label: "It follows me into the night", labelZh: "它會跟著我到晚上", caffeine: "sleep", scores: { settle: 2 }, insight: "Caffeine can affect your sleep", insightZh: "咖啡因可能影響你的睡眠" },
+      { id: "sensitive", label: "I'm quite sensitive to it", labelZh: "我對咖啡因比較敏感", caffeine: "sensitive", scores: { settle: 2 }, insight: "You are sensitive to caffeine", insightZh: "你對咖啡因比較敏感" },
+      { id: "unsure", label: "Honestly, I've never tracked it", labelZh: "老實說，我從未留意過", caffeine: "unsure", insight: "Your caffeine response is unclear", insightZh: "你未確定咖啡因對自己的影響" }
     ]
   }
 };
@@ -918,43 +918,66 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
           )}
 
           {phase === "question" && (
-            <fieldset key={`${currentQuestion.id}-${answers.length}`} className="tea-mind-question-panel">
-              <legend>
-                <span>{t("Question", "問題")} {answers.length + 1}</span>
-                <strong>{t(currentQuestion.question, currentQuestion.questionZh)}</strong>
-                {currentQuestion.context ? (
-                  <em className="tea-mind-question-context">
-                    {t(currentQuestion.context, currentQuestion.contextZh ?? currentQuestion.context)}
-                  </em>
-                ) : null}
-              </legend>
-              <div className="tea-mind-options" role="radiogroup" aria-label={t(currentQuestion.question, currentQuestion.questionZh)}>
-                {currentQuestion.options.map((option, index) => (
-                  <button
-                    type="button"
-                    role="radio"
-                    aria-checked={selectedOptionId === option.id}
-                    key={`${currentQuestion.id}-${option.id}`}
-                    className={
-                      selectedOptionId
-                        ? selectedOptionId === option.id
-                          ? "is-selected"
-                          : "is-dimmed"
-                        : undefined
-                    }
-                    onClick={() => handleAnswer(option)}
-                  >
-                    <span className="tea-mind-option-mark">{String.fromCharCode(65 + index)}</span>
-                    <span>{t(option.label, option.labelZh)}</span>
+            <div className="tea-mind-split">
+              <aside
+                className="tea-mind-split-media"
+                style={{ backgroundImage: `url(${basePath}/images/chazen-shanshui-chapter-2.jpg)` }}
+              >
+                <div className="tea-mind-split-media-shade" aria-hidden="true" />
+                <div className="tea-mind-split-media-copy">
+                  <p className="tea-mind-split-kicker">{t("Tea State Reflection", "茶狀態反思")}</p>
+                  <h2>{t("Begin with your current state.", "從你目前的狀態開始。")}</h2>
+                  <p>
+                    {t(
+                      "Each answer refines the reading. Your result pairs a primary tea, an alternative, and the moment of day it fits best.",
+                      "每個答案都會令結果更準確。你會得到一款主茶、一個備選，以及最適合的飲用時刻。"
+                    )}
+                  </p>
+                </div>
+              </aside>
+              <fieldset key={`${currentQuestion.id}-${answers.length}`} className="tea-mind-question-panel">
+                <legend>
+                  <span>{t("Question", "問題")} {answers.length + 1}</span>
+                  <strong>{t(currentQuestion.question, currentQuestion.questionZh)}</strong>
+                  {currentQuestion.context ? (
+                    <em className="tea-mind-question-context">
+                      {t(currentQuestion.context, currentQuestion.contextZh ?? currentQuestion.context)}
+                    </em>
+                  ) : null}
+                </legend>
+                <div className="tea-mind-options" role="radiogroup" aria-label={t(currentQuestion.question, currentQuestion.questionZh)}>
+                  {currentQuestion.options.map((option, index) => (
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={selectedOptionId === option.id}
+                      key={`${currentQuestion.id}-${option.id}`}
+                      className={
+                        selectedOptionId
+                          ? selectedOptionId === option.id
+                            ? "is-selected"
+                            : "is-dimmed"
+                          : index % 2 === 0
+                            ? "is-tinted"
+                            : undefined
+                      }
+                      onClick={() => handleAnswer(option)}
+                    >
+                      <span className="tea-mind-option-mark">{String.fromCharCode(65 + index)}</span>
+                      <span className="tea-mind-option-copy">
+                        <strong>{t(option.label, option.labelZh)}</strong>
+                        <em>{t(option.insight, option.insightZh)}</em>
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                {answers.length > 0 ? (
+                  <button type="button" className="tea-mind-back-button" onClick={handleBack}>
+                    <ArrowLeft size={14} aria-hidden="true" /> {t("Back to the previous question", "回到上一題")}
                   </button>
-                ))}
-              </div>
-              {answers.length > 0 ? (
-                <button type="button" className="tea-mind-back-button" onClick={handleBack}>
-                  <ArrowLeft size={14} aria-hidden="true" /> {t("Back to the previous question", "回到上一題")}
-                </button>
-              ) : null}
-            </fieldset>
+                ) : null}
+              </fieldset>
+            </div>
           )}
 
           {phase === "loading" && (
