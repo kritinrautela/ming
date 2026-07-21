@@ -51,7 +51,7 @@ export const fiveCups: FiveCup[] = [
     ],
     visualDirection: "暗色茶室、第一道光照在建盞上、手慢慢捧起茶盞。",
     visualDirectionEn: "A dark tea room, the first light falling on a Jian Zhan cup, hands slowly cradling it.",
-    asset: "cup-faith-jian-zhan.webp",
+    asset: "cup-faith-jian-zhan.png",
     cta: {
       href: "/tea-ritual",
       label: "Begin With One Cup",
@@ -83,7 +83,7 @@ export const fiveCups: FiveCup[] = [
     ],
     visualDirection: "早晨光線、茶席準備、茶葉落入蓋碗、日常但有儀式感。",
     visualDirectionEn: "Morning light, a tea table being set, leaves settling into the gaiwan — everyday yet ceremonial.",
-    asset: "cup-effort-jian-zhan.webp",
+    asset: "cup-effort-jian-zhan.png",
     cta: {
       href: "/tea-ritual",
       label: "Build A Daily Ritual",
@@ -117,7 +117,7 @@ export const fiveCups: FiveCup[] = [
     ],
     visualDirection: "茶湯顏色特寫、香氣煙霧、慢鏡聞香、畫面有細緻文字浮現。",
     visualDirectionEn: "Close-up of tea liquor color, aromatic steam, slow-motion smelling, delicate text overlays.",
-    asset: "cup-mindfulness-jian-zhan.webp",
+    asset: "cup-mindfulness-jian-zhan.png",
     cta: {
       href: "/tea-test",
       label: "Observe Your Mind",
@@ -151,7 +151,7 @@ export const fiveCups: FiveCup[] = [
     ],
     visualDirection: "水流慢鏡、茶湯平靜、建盞內水面反光、背景聲音變安靜。",
     visualDirectionEn: "Slow-motion pouring water, a calm tea surface, reflections inside the Jian Zhan cup, background sound fading to quiet.",
-    asset: "cup-stillness-jian-zhan.webp",
+    asset: "cup-stillness-jian-zhan.png",
     cta: {
       href: "/tea-ritual",
       label: "Return To Stillness",
@@ -185,7 +185,7 @@ export const fiveCups: FiveCup[] = [
     ],
     visualDirection: "建盞內倒影、茶湯如鏡、人物安靜凝望、最後轉到 Chazen Tea Test。",
     visualDirectionEn: "A reflection inside the Jian Zhan cup, tea liquor like a mirror, a figure gazing quietly, transitioning to the Chazen Tea Test.",
-    asset: "cup-wisdom-jian-zhan.webp",
+    asset: "cup-wisdom-jian-zhan.png",
     cta: {
       href: "/tea-test",
       label: "Discover What You Need",
