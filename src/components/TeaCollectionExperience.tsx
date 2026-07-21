@@ -400,6 +400,29 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
           </div>
         </div>
       </section>
+
+      <section className="museum-section">
+        <div className={`museum-container ${styles["tea-packaging-feature"]}`}>
+          <div className={styles["tea-packaging-media"]}>
+            <Image
+              src={`${basePath}/images/chazen-pyramid-sachets.png`}
+              alt="Chazen black, green, and flower tea in individually sealed pyramid sachets, each stamped with the Chazen seal."
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+            />
+          </div>
+          <div>
+            <p className="museum-kicker">{t("Every Sachet, Sealed", "每一包，皆有印記")}</p>
+            <h2>{t("Whole leaves, not dust, folded into a pyramid mesh.", "完整茶葉，非茶末，摺入三角網袋之中。")}</h2>
+            <p lang={language === "zh" ? "zh-Hant" : undefined}>
+              {t(
+                "Each pyramid sachet gives the leaf room to unfurl the way it would in a gaiwan, sealed with the Chazen mark so every cup starts the same way.",
+                "每一只三角茶包都留有空間，讓茶葉如蓋碗沖泡般舒展，並印有 Chazen 印記，讓每一杯都從同樣的起點開始。"
+              )}
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

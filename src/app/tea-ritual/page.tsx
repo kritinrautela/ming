@@ -159,6 +159,53 @@ export default function TeaRitualPage() {
         </div>
       </ChazenContentSection>
 
+      <ChazenContentSection
+        eyebrow="The pour"
+        eyebrowZh="出湯"
+        title="出湯是儀式中最安靜的一刻"
+        english="The Pour Is the Quietest Moment"
+        tone="paper"
+      >
+        <div className="chazen-two-column">
+          <ChazenSubpageMedia
+            asset="chazen-gongfu-pour.jpeg"
+            alt="Close, backlit gongfu tea pour: hand tilting a clay teapot, tea streaming into a fairness pitcher with rising steam."
+          />
+          <article className="chazen-subpage-note">
+            <h3>{t("Watch the stream, not the clock", "看茶湯，而非看時鐘")}</h3>
+            <p lang={language === "zh" ? "zh-Hant" : undefined}>
+              {t(
+                "A good pour is steady and unhurried — the light catching the steam matters as much as the timing. Let the stream, not a stopwatch, tell you when the cup is ready.",
+                "好的出湯，穩定且不急促——光影映在茶煙上，與時間同等重要。讓茶湯本身，而不是碼表，告訴你何時可以入杯。"
+              )}
+            </p>
+          </article>
+        </div>
+      </ChazenContentSection>
+
+      <ChazenContentSection
+        eyebrow="Somewhere quiet"
+        eyebrowZh="尋一處安靜"
+        title="找一處安靜的地方，讓茶自己完成"
+        english="Find a Quiet Place, and Let the Tea Finish Itself"
+      >
+        <div className="chazen-two-column">
+          <article className="chazen-subpage-note">
+            <h3>{t("The ritual doesn't need a tea house", "儀式不需要茶館")}</h3>
+            <p lang={language === "zh" ? "zh-Hant" : undefined}>
+              {t(
+                "A garden path, a windowsill, or a corner of a balcony is enough. What the ritual asks for isn't a special room — it's a few minutes where nothing else is more urgent than this cup.",
+                "一條花園小徑、一扇窗台，或陽台一角，已經足夠。儀式所需要的並非特別的房間，而是幾分鐘裡，沒有任何事比這杯茶更急迫。"
+              )}
+            </p>
+          </article>
+          <ChazenSubpageMedia
+            asset="chazen-garden-tea-bowl.jpg"
+            alt="A tea bowl steaming on a wooden railing beside a quiet garden path, steam rising in the afternoon light."
+          />
+        </div>
+      </ChazenContentSection>
+
       <ChazenCtaBand
         title="開始你的茶儀式"
         titleEn="Begin Your Tea Ritual"

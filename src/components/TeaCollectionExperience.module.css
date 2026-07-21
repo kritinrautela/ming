@@ -272,6 +272,32 @@
   outline-offset: 2px;
 }
 
+/* Packaging feature section */
+.tea-packaging-feature {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.tea-packaging-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.tea-packaging-media img {
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .tea-packaging-feature {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
   .tea-scroll-gallery {
