@@ -593,6 +593,19 @@ body:has(.chazen-motion-home) .museum-site-footer {
   font-weight: 400;
 }
 
+.timeline-figure {
+  display: block;
+  margin-top: 0.35rem;
+  color: #d9bd86;
+  font-size: 0.82rem;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.dynasty-story-card .timeline-figure {
+  margin-bottom: 0.5rem;
+}
+
 .timeline-shadow-stage article p {
   margin: 0.75rem 0 0;
   color: rgba(251, 250, 246, 0.72);
@@ -15225,4 +15238,163 @@ body:has(.chazen-motion-home) .museum-site-footer {
   justify-content: center;
   gap: 0.9rem;
   margin-top: 1rem;
+}
+
+/* CHAZEN Film Room video modal */
+.media-modal-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  overscroll-behavior: contain;
+}
+
+.modal-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(16, 18, 15, 0.76);
+  cursor: pointer;
+  backdrop-filter: blur(18px);
+}
+
+.media-modal-panel {
+  position: relative;
+  z-index: 2;
+  width: min(1080px, 100%);
+  overflow: hidden;
+  border: 1px solid rgba(251, 250, 246, 0.16);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 70% 18%, rgba(217, 189, 134, 0.16), transparent 28%),
+    #10120f;
+  color: #fbfaf6;
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.34);
+}
+
+.media-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(251, 250, 246, 0.1);
+  padding: 1rem;
+}
+
+.media-modal-head .museum-kicker {
+  color: rgba(217, 189, 134, 0.86);
+}
+
+.video-modal-panel .media-modal-head h2 {
+  margin: 0.35rem 0 0;
+  color: #fbfaf6;
+  font-family: var(--font-serif), var(--font-cjk), Georgia, "Times New Roman", serif;
+  font-size: clamp(1.35rem, 2.2vw, 2.3rem);
+  font-weight: 400;
+}
+
+.media-modal-head button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(251, 250, 246, 0.14);
+  border-radius: 50%;
+  background: rgba(251, 250, 246, 0.06);
+  color: #fbfaf6;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.media-modal-head button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(217, 189, 134, 0.48);
+  background: rgba(251, 250, 246, 0.12);
+}
+
+.media-modal-head button:focus-visible {
+  outline: 2px solid rgba(217, 189, 134, 0.6);
+  outline-offset: 2px;
+}
+
+.media-modal-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #171713;
+}
+
+.media-modal-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.film-loading {
+  position: absolute;
+  inset: auto 1rem 1rem auto;
+  border: 1px solid rgba(217, 189, 134, 0.34);
+  border-radius: 999px;
+  background: rgba(23, 23, 19, 0.78);
+  color: #fbfaf6;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  padding: 0.55rem 0.75rem;
+  text-transform: uppercase;
+}
+
+.film-placeholder {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  align-content: center;
+  gap: 1rem;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  text-align: center;
+}
+
+.film-placeholder > span {
+  width: 84px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(217, 189, 134, 0.5);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(217, 189, 134, 0.22), transparent 58%),
+    rgba(251, 250, 246, 0.04);
+}
+
+.film-placeholder h3 {
+  margin: 0;
+  color: #fbfaf6;
+  font-family: var(--font-serif), var(--font-cjk), Georgia, "Times New Roman", serif;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 400;
+}
+
+.film-placeholder p,
+.film-placeholder small {
+  max-width: 480px;
+  margin: 0;
+  color: rgba(251, 250, 246, 0.68);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 640px) {
+  .media-modal-shell {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .media-modal-panel {
+    width: 100%;
+    max-height: 100svh;
+    border-radius: 0;
+  }
+
+  .media-modal-stage {
+    min-height: 56svh;
+    aspect-ratio: auto;
+  }
 }

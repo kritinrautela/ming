@@ -4,6 +4,8 @@ export type TeaHistoryItem = {
   chinese: string;
   copy: string;
   character: string;
+  figure?: string;
+  video?: string;
   context: string;
   object: string;
   visualLabel: string;
@@ -26,6 +28,7 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     chinese: "神農傳說",
     copy: "Tea began in legend as medicine and observation.",
     character: "藥",
+    figure: "神農 Shennong · the mythic first taster",
     context: "Mythic time / before written tea culture",
     object: "Wild leaf, heat, body",
     visualLabel: "Steam over mountain herb",
@@ -39,6 +42,7 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     chinese: "陸羽與《茶經》",
     copy: "Lu Yu and The Classic of Tea. Tea became written, studied, and systematised.",
     character: "經",
+    figure: "陸羽 Lu Yu · the Sage of Tea",
     context: "Tang dynasty / 618-907",
     object: "The Classic of Tea, water, fire, vessel",
     visualLabel: "Lu Yu and the written tea canon",
@@ -52,6 +56,8 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     chinese: "點茶、建盞、文人雅集",
     copy: "Dian Cha, Jian ware, and scholar tea culture. Tea became visual, tactile, and aesthetic.",
     character: "點",
+    figure: "宋徽宗 Emperor Huizong · the connoisseur",
+    video: "dianCha",
     context: "Song dynasty / 960-1279",
     object: "Jian bowl, bamboo whisk, powdered tea foam",
     visualLabel: "Powdered tea, foam, Jian bowl",
@@ -65,6 +71,7 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     chinese: "散茶與沖泡",
     copy: "Loose-leaf brewing shifted tea from powdered performance toward infusion and vessel clarity.",
     character: "散",
+    figure: "明太祖 the Hongwu Emperor · the reformer",
     context: "Ming dynasty / 1368-1644",
     object: "Loose leaf, teapot, infusion water",
     visualLabel: "Gongfu vessels and loose leaf",
@@ -91,6 +98,7 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     chinese: "當代茶禪",
     copy: "Tea returns as ritual, sound, meditation, and meaningful gifting.",
     character: "禪",
+    video: "chazenRitualFilm",
     context: "Now / tea, stillness, sound, gifting",
     object: "Gaiwan, singing bowl, gift vessel",
     visualLabel: "Tea room, sound, return",
