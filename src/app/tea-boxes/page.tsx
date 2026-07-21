@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect } from "react";
 import {
   ChazenContentSection,
@@ -37,8 +38,8 @@ const boxCards = [
   {
     title: { en: "First Pack", zh: "初次體驗包" },
     price: "A$25",
-    asset: "first-pack-mockup.webp",
-    visual: "Future visual: A$25 First Pack",
+    asset: "first-pack-mockup.png",
+    alt: "A clean white and walnut tea set on a stone table: teapot, four small cups, and a fairness pitcher.",
     items: [
       { en: "Curated starter tea", zh: "精選入門茶" },
       { en: "Tea-Mind result card", zh: "茶心測試結果卡" },
@@ -49,8 +50,8 @@ const boxCards = [
   {
     title: { en: "Starter Tea Box", zh: "入門茶盒" },
     price: "A$68",
-    asset: "starter-tea-box-mockup.webp",
-    visual: "Future visual: Starter Tea Box mockup",
+    asset: "starter-tea-box-mockup.png",
+    alt: "A full gongfu tea tray set with a clay teapot, five poured cups, a fairness pitcher, and loose leaves on a wooden scoop.",
     items: [
       { en: "Two entry tea directions", zh: "兩款入門茶方向" },
       { en: "Printed ritual guide", zh: "印製儀式指南" },
@@ -61,8 +62,8 @@ const boxCards = [
   {
     title: { en: "Lifetime Tea Box", zh: "一世茶盒" },
     price: "A$78",
-    asset: "lifetime-tea-box-mockup.webp",
-    visual: "Future visual: Lifetime cultural tea box",
+    asset: "lifetime-tea-box-mockup.png",
+    alt: "A complete navy and gold plum-blossom porcelain tea set: teapot, gaiwan, fairness pitcher, and five cups.",
     items: [
       { en: "Premium tea", zh: "頂級茶葉" },
       { en: "Cultural story cards", zh: "文化故事卡" },
@@ -73,8 +74,8 @@ const boxCards = [
   {
     title: { en: "B2B Cultural Gift Box", zh: "企業文化禮盒" },
     price: "Custom",
-    asset: "b2b-gift-box-mockup.webp",
-    visual: "Future visual: B2B settlement gift scene",
+    asset: "b2b-gift-box-mockup.png",
+    alt: "An ornate black and gold Jian Zhan gaiwan and cups with a landscape motif, arranged for a formal presentation.",
     items: [
       { en: "Corporate gifts", zh: "企業禮品" },
       { en: "Client appreciation", zh: "客戶答謝" },
@@ -130,6 +131,7 @@ const comparisonHeadings = [
 
 export default function TeaBoxesPage() {
   const { t, language } = useLanguage();
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
   useEffect(() => {
     document.title = language === "zh" ? "茶盒 | Chazen" : "Tea Boxes | Chazen";
@@ -180,15 +182,20 @@ export default function TeaBoxesPage() {
         <div className={styles["tea-boxes-grid"]}>
           {boxCards.map((box, index) => (
             <article key={box.title.en} className={styles["tea-box-card"]}>
-              <strong>{String(index + 1).padStart(2, "0")}</strong>
-              <div>
-                <h3>{t(box.title.en, box.title.zh)}</h3>
-                <span className={styles["tea-box-price"]}>{box.price}</span>
-                <ul>
-                  {box.items.map((item) => (
-                    <li key={item.en}>{t(item.en, item.zh)}</li>
-                  ))}
-                </ul>
+              <div className={styles["tea-box-media"]}>
+                <Image src={`${basePath}/images/${box.asset}`} alt={box.alt} fill sizes="(min-width: 1024px) 25vw, 50vw" />
+              </div>
+              <div className={styles["tea-box-body"]}>
+                <strong>{String(index + 1).padStart(2, "0")}</strong>
+                <div>
+                  <h3>{t(box.title.en, box.title.zh)}</h3>
+                  <span className={styles["tea-box-price"]}>{box.price}</span>
+                  <ul>
+                    {box.items.map((item) => (
+                      <li key={item.en}>{t(item.en, item.zh)}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </article>
           ))}
