@@ -1,7 +1,7 @@
 import { TeaAssessmentExperience } from "@/components/TeaAssessmentExperience";
 
 export const metadata = {
-  title: "Chazen Tea State Reflection"
+  title: "The Five Cups Reflection"
 };
 
 export default function TeaTestPage() {
