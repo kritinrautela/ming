@@ -168,8 +168,8 @@ export default function TeaRitualPage() {
       >
         <div className="chazen-two-column">
           <ChazenSubpageMedia
-            asset="chazen-gongfu-pour.jpeg"
-            alt="Close, backlit gongfu tea pour: hand tilting a clay teapot, tea streaming into a fairness pitcher with rising steam."
+            asset="chazen-gongfu-pour-v2.png"
+            alt="A hand lifting the lid of a painted porcelain gaiwan, tea streaming into a small cup below with rising steam."
           />
           <article className="chazen-subpage-note">
             <h3>{t("Watch the stream, not the clock", "看茶湯，而非看時鐘")}</h3>
@@ -200,8 +200,8 @@ export default function TeaRitualPage() {
             </p>
           </article>
           <ChazenSubpageMedia
-            asset="chazen-garden-tea-bowl.jpg"
-            alt="A tea bowl steaming on a wooden railing beside a quiet garden path, steam rising in the afternoon light."
+            asset="chazen-garden-bamboo-tea.png"
+            alt="A tea set laid out on a bamboo table on a shaded garden terrace, surrounded by bamboo stalks and greenery."
           />
         </div>
       </ChazenContentSection>
