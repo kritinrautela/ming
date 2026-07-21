@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import { knowledgeCards, teaHistoryItems } from "@/data/teaHistory";
+import { VideoModal } from "@/components/VideoModal";
+import { videoAssets, withBasePath } from "@/lib/media";
 
 type TeaHistoryTimelineProps = {
   onEnterTimeline: () => void;
@@ -12,9 +14,14 @@ const eraDates = ["Mythic", "618-907", "960-1279", "1368-1644", "1644-1912", "No
 
 export function TeaHistoryTimeline({ onEnterTimeline }: TeaHistoryTimelineProps) {
   const [activeItem, setActiveItem] = useState(teaHistoryItems[0]);
+  const [videoModal, setVideoModal] = useState<{ title: string; src: string } | null>(null);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const imageUrl = (name: string) => `${basePath}/images/${name}`;
   const activeIndex = teaHistoryItems.findIndex((item) => item.number === activeItem.number);
+
+  const openChapterVideo = (title: string, videoKey: string) => {
+    setVideoModal({ title, src: withBasePath(videoAssets[videoKey as keyof typeof videoAssets]) });
+  };
 
   return (
     <section id="tea-history" className="museum-section history-timeline-section">
@@ -42,6 +49,7 @@ export function TeaHistoryTimeline({ onEnterTimeline }: TeaHistoryTimelineProps)
               <p>{activeItem.visualLabel}</p>
               <h3>{activeItem.title}</h3>
               <strong lang="zh-Hant">{activeItem.chinese}</strong>
+              {activeItem.figure ? <em className="timeline-figure">{activeItem.figure}</em> : null}
               <dl className="timeline-era-meta">
                 <div>
                   <dt>Context</dt>
@@ -89,6 +97,7 @@ export function TeaHistoryTimeline({ onEnterTimeline }: TeaHistoryTimelineProps)
               </div>
               <h3>{activeItem.title}</h3>
               <strong lang="zh-Hant">{activeItem.chinese}</strong>
+              {activeItem.figure ? <em className="timeline-figure">{activeItem.figure}</em> : null}
               <p>{activeItem.story}</p>
               <dl>
                 <div>
@@ -100,6 +109,15 @@ export function TeaHistoryTimeline({ onEnterTimeline }: TeaHistoryTimelineProps)
                   <dd>{activeItem.chazenMeaning}</dd>
                 </div>
               </dl>
+              {activeItem.video ? (
+                <button
+                  type="button"
+                  className="museum-link-button"
+                  onClick={() => openChapterVideo(activeItem.title, activeItem.video!)}
+                >
+                  Watch this chapter <span lang="zh-Hant">觀看此篇</span>
+                </button>
+              ) : null}
             </article>
           </div>
         </div>
@@ -122,6 +140,12 @@ export function TeaHistoryTimeline({ onEnterTimeline }: TeaHistoryTimelineProps)
           </button>
         </div>
       </div>
+      <VideoModal
+        open={videoModal !== null}
+        title={videoModal?.title ?? ""}
+        src={videoModal?.src ?? ""}
+        onClose={() => setVideoModal(null)}
+      />
     </section>
   );
 }
