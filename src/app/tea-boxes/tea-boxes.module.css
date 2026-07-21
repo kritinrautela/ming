@@ -56,14 +56,31 @@
 }
 
 .tea-box-card {
-  display: grid;
-  grid-template-columns: 2.2rem minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 1.4rem;
-  align-items: start;
   border-bottom: 1px solid rgba(157, 129, 80, 0.35);
   border-right: 1px solid rgba(157, 129, 80, 0.35);
   padding: 2rem;
   transition: background-color 280ms cubic-bezier(0.22, 1, 0.36, 1), transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tea-box-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.tea-box-media img {
+  object-fit: cover;
+}
+
+.tea-box-body {
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: start;
 }
 
 .tea-box-card:nth-child(2n) {

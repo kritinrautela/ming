@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import {
   ChazenContentSection,
   ChazenCtaBand,
-  ChazenSubpageHero
+  ChazenSubpageHero,
+  ChazenSubpageMedia
 } from "@/components/ChazenSubpage";
 import { useLanguage } from "@/lib/language";
 import styles from "./b2b.module.css";
@@ -195,11 +196,18 @@ export default function B2BPage() {
                 <li key={item.en}>{t(item.en, item.zh)}</li>
               ))}
             </ul>
-          </article>
-          <article className="chazen-subpage-note">
             <h3>{t("Chazen × Your Brand", "Chazen × 你的品牌")}</h3>
-            <p>{t("Brand presence is applied through a restrained sleeve, message card, or settlement note—without overwhelming the gift experience.", "品牌可低調呈現在封套、訊息卡或交收賀卡上，不掩蓋禮物本身的體驗。")}</p>
+            <p>
+              {t(
+                "Brand presence is applied through a restrained sleeve, message card, or settlement note—without overwhelming the gift experience.",
+                "品牌可低調呈現在封套、訊息卡或交收賀卡上，不掩蓋禮物本身的體驗。"
+              )}
+            </p>
           </article>
+          <ChazenSubpageMedia
+            asset="chazen-blue-white-porcelain-set.png"
+            alt="A blue and white porcelain tea set with five poured cups on a dark wooden tray, in a traditional interior."
+          />
         </div>
       </ChazenContentSection>
 
@@ -224,11 +232,18 @@ export default function B2BPage() {
                 "它應該讓客戶記得這段關係。"
               )}
             </p>
-          </article>
-          <article className="chazen-subpage-note">
             <h3>{t("The First Evening", "第一個夜晚")}</h3>
-            <p>{t("A quiet ritual for the client's first evening at home—created to make the relationship memorable beyond settlement day.", "為客戶入住所準備的一場安靜儀式，讓這段關係在交收日之後仍被記住。")}</p>
+            <p>
+              {t(
+                "A quiet ritual for the client's first evening at home—created to make the relationship memorable beyond settlement day.",
+                "為客戶入住所準備的一場安靜儀式，讓這段關係在交收日之後仍被記住。"
+              )}
+            </p>
           </article>
+          <ChazenSubpageMedia
+            asset="chazen-first-evening-gaiwan.png"
+            alt="A close-up of a crackle-glaze gaiwan with loose tea leaves steeping, lid lifted, on a warm wooden table."
+          />
         </div>
       </ChazenContentSection>
 

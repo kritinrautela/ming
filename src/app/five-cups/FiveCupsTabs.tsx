@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useId, useMemo, useRef, useState } from "react";
@@ -114,6 +115,8 @@ function CupPanel({ cup, baseId, hidden }: { cup: FiveCup; baseId: string; hidde
     >
       <div className="five-cups-visual-wrap">
         <JianZhanVisual
+          asset={cup.asset}
+          alt={cup.visualDirectionEn}
           title={language === "zh" ? cup.tab : cup.english}
           label={t(cup.teaZenMeaningEn, cup.teaZenMeaning)}
         />
@@ -159,17 +162,29 @@ function CupPanel({ cup, baseId, hidden }: { cup: FiveCup; baseId: string; hidde
   );
 }
 
-function JianZhanVisual({ title, label }: { title: string; label: string }) {
+function JianZhanVisual({
+  asset,
+  alt,
+  title,
+  label
+}: {
+  asset: string;
+  alt: string;
+  title: string;
+  label: string;
+}) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
   return (
     <figure className="five-cups-visual">
-      <div className="five-cups-steam" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-      </div>
-      <div className="five-cups-bowl" aria-hidden="true">
-        <span />
-      </div>
+      <Image
+        src={`${basePath}/images/${asset}`}
+        alt={alt}
+        fill
+        sizes="(min-width: 1024px) 40vw, 100vw"
+        className="five-cups-visual-image"
+      />
+      <div className="five-cups-visual-shade" aria-hidden="true" />
       <figcaption>
         <span>{title}</span>
         <small>{label}</small>
