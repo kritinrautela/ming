@@ -7,6 +7,10 @@ import {
   ChazenCtaBand,
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
+import {
+  ChazenImageGallery,
+  type ChazenGalleryItem
+} from "@/components/ChazenImageGallery";
 import { useCart } from "@/lib/cart";
 import { useLanguage } from "@/lib/language";
 import styles from "./tea-boxes.module.css";
@@ -87,6 +91,148 @@ const boxCards = [
       { en: "Real estate settlement gifts", zh: "地產交收禮物" },
       { en: "Custom branding", zh: "品牌客製化" }
     ]
+  }
+];
+
+const teawareGallery: ChazenGalleryItem[] = [
+  {
+    asset: "starter-tea-box-mockup.png",
+    alt: "A complete clay gongfu tea set arranged on a carved wooden tray.",
+    altZh: "完整的陶製工夫茶具陳列於雕花木茶盤上。",
+    label: "The complete gongfu table",
+    labelZh: "完整工夫茶席",
+    shape: "feature"
+  },
+  {
+    asset: "tea-set-clay-pour.webp",
+    alt: "A red clay teapot pouring tea into small cups.",
+    altZh: "紅陶茶壺正把茶湯注入小茶杯。",
+    label: "Clay and the moving pour",
+    labelZh: "陶土與流動的茶湯"
+  },
+  {
+    asset: "tea-set-clay-steam.webp",
+    alt: "A warm clay teapot and cups in rising steam.",
+    altZh: "陶壺與茶杯籠罩在升起的熱氣中。",
+    label: "Warm earth",
+    labelZh: "溫潤陶土"
+  },
+  {
+    asset: "chazen-blue-white-porcelain-set.png",
+    alt: "A blue and white porcelain tea set on a carved wooden tray.",
+    altZh: "青花瓷茶具置於雕花木茶盤上。",
+    label: "Blue-and-white gathering",
+    labelZh: "青花雅聚",
+    shape: "square"
+  },
+  {
+    asset: "tea-set-white-still-life.webp",
+    alt: "A restrained white porcelain tea setting against an ink-wash wall.",
+    altZh: "白瓷茶席安靜地置於水墨牆前。",
+    label: "Porcelain stillness",
+    labelZh: "白瓷之靜"
+  },
+  {
+    asset: "chazen-garden-bamboo-tea.png",
+    alt: "A clay tea set prepared beside a bamboo garden.",
+    altZh: "陶製茶具設於竹林庭園旁。",
+    label: "Tea beside bamboo",
+    labelZh: "竹下茶席",
+    shape: "wide"
+  },
+  {
+    asset: "first-pack-mockup.png",
+    alt: "A pale porcelain travel tea set with four small cups.",
+    altZh: "淺色旅行茶具配四隻小茶杯。",
+    label: "A lighter beginning",
+    labelZh: "輕盈的開始"
+  },
+  {
+    asset: "tea-set-nocturne.webp",
+    alt: "A dark tea service glowing softly in a shadowed room.",
+    altZh: "幽暗茶室中泛著柔光的深色茶具。",
+    label: "Nocturne tea",
+    labelZh: "夜色茶席"
+  },
+  {
+    asset: "lifetime-tea-box-mockup.png",
+    alt: "A navy porcelain tea set decorated with gold blossoms.",
+    altZh: "飾有金色花卉的深藍瓷茶具。",
+    label: "Midnight blossom",
+    labelZh: "夜色金花",
+    shape: "square"
+  },
+  {
+    asset: "tea-set-blue-white-gaiwan.webp",
+    alt: "A blue and white gaiwan ready on a wooden tea table.",
+    altZh: "青花蓋碗置於木茶席上。",
+    label: "The scholar's gaiwan",
+    labelZh: "文人蓋碗"
+  },
+  {
+    asset: "cup-faith-jian-zhan.png",
+    alt: "A celadon gaiwan catching soft window light.",
+    altZh: "青瓷蓋碗承接窗邊柔光。",
+    label: "Celadon light",
+    labelZh: "青瓷之光"
+  },
+  {
+    asset: "cup-wisdom-jian-zhan.png",
+    alt: "A white gaiwan in a quiet neutral still life.",
+    altZh: "白蓋碗置於安靜的中性色靜物場景中。",
+    label: "Form reduced to essence",
+    labelZh: "器形歸於本質"
+  },
+  {
+    asset: "chazen-gongfu-pour-v2.png",
+    alt: "Tea pouring from a decorated gaiwan into a tasting cup.",
+    altZh: "茶湯從花紋蓋碗注入品茗杯。",
+    label: "The attentive pour",
+    labelZh: "專注的一泡",
+    shape: "feature"
+  },
+  {
+    asset: "tea-set-blue-white-pair.webp",
+    alt: "Two blue and white gaiwans in a traditional tea room.",
+    altZh: "兩只青花蓋碗置於傳統茶室。",
+    label: "A pair in conversation",
+    labelZh: "雙盞相對"
+  },
+  {
+    asset: "cup-mindfulness-jian-zhan.png",
+    alt: "A pure white gaiwan presented as a single sculptural object.",
+    altZh: "純白蓋碗如一件雕塑般呈現。",
+    label: "White study",
+    labelZh: "白瓷習作"
+  },
+  {
+    asset: "tea-set-brown-gaiwan.webp",
+    alt: "A brown glazed gaiwan beside a glass fairness pitcher.",
+    altZh: "褐釉蓋碗與玻璃公道杯相伴。",
+    label: "Autumn glaze",
+    labelZh: "秋色釉光"
+  },
+  {
+    asset: "tea-set-garden-blue-white.webp",
+    alt: "A blue and white gaiwan prepared in a bamboo garden.",
+    altZh: "青花蓋碗設於竹林庭園中。",
+    label: "Garden infusion",
+    labelZh: "庭園一泡",
+    shape: "wide"
+  },
+  {
+    asset: "chazen-first-evening-gaiwan.png",
+    alt: "Loose tea leaves opening inside a crackle-glaze gaiwan.",
+    altZh: "茶葉在開片釉蓋碗中舒展。",
+    label: "Leaves opening",
+    labelZh: "茶葉初展"
+  },
+  {
+    asset: "b2b-gift-box-mockup.png",
+    alt: "A formal black and gold tea set arranged for presentation.",
+    altZh: "黑金茶具以正式禮贈方式陳列。",
+    label: "Ceremonial black and gold",
+    labelZh: "黑金禮器"
   }
 ];
 
@@ -232,6 +378,18 @@ export default function TeaBoxesPage() {
             </article>
           ))}
         </div>
+      </ChazenContentSection>
+
+      <ChazenContentSection
+        eyebrow="Teaware collection"
+        eyebrowZh="茶器收藏"
+        title="一席茶，可以有很多種器物語言"
+        english="Objects for Every Kind of Tea Moment"
+        copy="從溫潤陶土、青花瓷與安靜青瓷，到正式的黑釉茶器，所有 Chazen 茶器習作都在這裡匯成一席。"
+        copyEn="From warm clay and blue-and-white porcelain to quiet celadon and formal black glaze, this collection brings every Chazen teaware study into one place."
+        tone="paper"
+      >
+        <ChazenImageGallery items={teawareGallery} />
       </ChazenContentSection>
 
       <ChazenContentSection

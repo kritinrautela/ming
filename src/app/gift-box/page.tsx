@@ -5,6 +5,10 @@ import { useEffect } from "react";
 import { ArrowRight, Check, Package, Send } from "lucide-react";
 import { ProductVisual } from "@/components/ProductVisual";
 import { SectionHeading } from "@/components/SectionHeading";
+import {
+  ChazenImageGallery,
+  type ChazenGalleryItem
+} from "@/components/ChazenImageGallery";
 import { buildInquiryPath } from "@/lib/inquiry";
 import { giftBoxItems, site } from "@/lib/site";
 import { useLanguage } from "@/lib/language";
@@ -58,6 +62,111 @@ const perceivedValue = [
       en: "A gift with a sequence, sound cue, and story clients can retell.",
       zh: "一份有步驟、有聲音提示、有故事的禮物，讓客戶樂於分享。"
     }
+  }
+];
+
+const giftEditions: ChazenGalleryItem[] = [
+  {
+    asset: "gift-box-cylinders-black.webp",
+    alt: "A black Chazen presentation box with four tea canisters and ritual cards.",
+    altZh: "黑色 Chazen 禮盒內置四罐茶與儀式卡。",
+    label: "Ink black tea edition",
+    labelZh: "墨黑茶藏",
+    shape: "feature"
+  },
+  {
+    asset: "gift-box-cylinders-ivory.webp",
+    alt: "An ivory Chazen presentation box with green tea canisters and story cards.",
+    altZh: "象牙白 Chazen 禮盒內置綠色茶罐與故事卡。",
+    label: "Ivory mountain edition",
+    labelZh: "象牙山水",
+    shape: "square"
+  },
+  {
+    asset: "gift-box-cylinders-green.webp",
+    alt: "A deep green Chazen presentation box with four tea canisters.",
+    altZh: "深綠色 Chazen 禮盒內置四罐茶。",
+    label: "Forest green tea edition",
+    labelZh: "深林茶藏",
+    shape: "square"
+  },
+  {
+    asset: "gift-box-teaware-celadon.webp",
+    alt: "A pale celadon travel tea set arranged inside a green gift box.",
+    altZh: "淺青瓷旅行茶具陳列於綠色禮盒中。",
+    label: "Celadon travel ritual",
+    labelZh: "青瓷旅行茶儀"
+  },
+  {
+    asset: "gift-box-teaware-ivory.webp",
+    alt: "A warm ivory box containing a white tea set and woven tea accessories.",
+    altZh: "暖象牙色禮盒內含白瓷茶具與編織茶席配件。",
+    label: "Soft ivory ritual",
+    labelZh: "柔白茶儀"
+  },
+  {
+    asset: "gift-box-teaware-nocturne.webp",
+    alt: "A black gift box containing dark teaware and tea canisters.",
+    altZh: "黑色禮盒內含深色茶具與茶罐。",
+    label: "Nocturne collector set",
+    labelZh: "夜色收藏組"
+  },
+  {
+    asset: "gift-box-moonlit-tea-set.webp",
+    alt: "A dark Jian Zhan tea set arranged before a moonlit round window.",
+    altZh: "深色建盞茶具陳列於月色圓窗前。",
+    label: "Moonlit first cup",
+    labelZh: "月下第一盞",
+    shape: "wide"
+  },
+  {
+    asset: "gift-box-teaware-pearl.webp",
+    alt: "A pearl-white gift box holding white teaware and two tea canisters.",
+    altZh: "珍珠白禮盒內置白瓷茶具與兩罐茶。",
+    label: "Pearl porcelain edition",
+    labelZh: "珠白瓷禮"
+  },
+  {
+    asset: "gift-box-teaware-terracotta.webp",
+    alt: "A terracotta book-style gift box with clay teaware and tea canisters.",
+    altZh: "陶土色書盒式禮盒內置陶製茶具與茶罐。",
+    label: "Terracotta story box",
+    labelZh: "陶色故事盒"
+  },
+  {
+    asset: "gift-box-teaware-midnight-blue.webp",
+    alt: "A midnight-blue gift box with dark blue teaware and tea canisters.",
+    altZh: "午夜藍禮盒內置深藍茶具與茶罐。",
+    label: "Midnight landscape edition",
+    labelZh: "午夜山水"
+  },
+  {
+    asset: "gift-box-teaware-mountain-green.webp",
+    alt: "A green mountain-print box containing a celadon tea set.",
+    altZh: "山水綠禮盒內含青瓷茶具。",
+    label: "Mountain celadon edition",
+    labelZh: "山色青瓷"
+  },
+  {
+    asset: "gift-box-teaware-linen.webp",
+    alt: "A linen-textured gift box containing a compact white tea service.",
+    altZh: "亞麻質感禮盒內置輕巧白瓷茶具。",
+    label: "Quiet linen edition",
+    labelZh: "靜麻禮盒"
+  },
+  {
+    asset: "gift-box-teaware-botanical.webp",
+    alt: "A botanical ivory gift box with delicate white teaware.",
+    altZh: "植物圖案象牙白禮盒內置精緻白瓷茶具。",
+    label: "Botanical tea edition",
+    labelZh: "草木茶禮"
+  },
+  {
+    asset: "gift-box-teaware-ink.webp",
+    alt: "A black presentation box with dark teaware and four tea canisters.",
+    altZh: "黑色展示禮盒內置深色茶具與四罐茶。",
+    label: "Ink collector edition",
+    labelZh: "墨藏珍選"
   }
 ];
 
@@ -119,6 +228,22 @@ export default function GiftBoxPage() {
                 <p>{t(item.en, item.zh)}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <SectionHeading
+            eyebrow="Gift editions"
+            eyebrowZh="禮盒收藏"
+            title="One ritual, expressed in many materials."
+            titleZh="同一場茶儀，以不同材質呈現。"
+            copy="Every Chazen gift-box study is gathered here—from tea-only presentation cases to complete teaware rituals for home, handover, and milestone moments."
+            copyZh="所有 Chazen 禮盒習作都匯聚於此，從純茶藏禮盒，到為居家、交收與重要時刻準備的完整茶器儀式。"
+          />
+          <div className="mt-12">
+            <ChazenImageGallery items={giftEditions} />
           </div>
         </div>
       </section>

@@ -7,6 +7,10 @@ import {
   ChazenCtaBand,
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
+import {
+  ChazenImageGallery,
+  type ChazenGalleryItem
+} from "@/components/ChazenImageGallery";
 import { useLanguage } from "@/lib/language";
 import { withBasePath } from "@/lib/media";
 import styles from "./about.module.css";
@@ -23,6 +27,41 @@ const pillars = [
   {
     en: ["Quiet, considered luxury", "We choose restraint over noise: thoughtful materials, useful details, honest storytelling, and gifts that feel personal rather than promotional."],
     zh: ["安靜而有分寸的質感", "我們選擇克制而非喧鬧：用心的材質、有用的細節、真誠的故事，以及有個人溫度而非宣傳式的禮物。"]
+  }
+];
+
+const atmosphereStudies: ChazenGalleryItem[] = [
+  {
+    asset: "chazen-atmosphere-first-evening.webp",
+    alt: "A white gaiwan and two dark cups beside a window at dusk.",
+    altZh: "黃昏窗邊的白蓋碗與兩只深色茶杯。",
+    label: "The first evening",
+    labelZh: "第一個夜晚",
+    shape: "feature"
+  },
+  {
+    asset: "chazen-atmosphere-gift-study.webp",
+    alt: "A black and celadon Chazen tea gift presented by candlelight.",
+    altZh: "燭光下陳列的黑色與青瓷 Chazen 茶禮。",
+    label: "A gift with a room around it",
+    labelZh: "一份有空間感的茶禮",
+    shape: "square"
+  },
+  {
+    asset: "chazen-atmosphere-shanshui-gold.webp",
+    alt: "A warm gold ink-wash mountain landscape.",
+    altZh: "暖金色的水墨山水長卷。",
+    label: "Landscape as a state of mind",
+    labelZh: "山水即心境",
+    shape: "wide"
+  },
+  {
+    asset: "chazen-atmosphere-tea-room-study.webp",
+    alt: "A candlelit tea room with dark teaware, bamboo, and scrolls.",
+    altZh: "燭光茶室內陳列深色茶器、竹枝與卷軸。",
+    label: "The imagined tea room",
+    labelZh: "想像中的茶室",
+    shape: "wide"
   }
 ];
 
@@ -92,6 +131,18 @@ export default function AboutPage() {
             </article>
           ))}
         </div>
+      </ChazenContentSection>
+
+      <ChazenContentSection
+        eyebrow="Atmosphere studies"
+        eyebrowZh="意境習作"
+        title="品牌不只是一件物品，也是一種空間感"
+        english="A Brand Is Also a Sense of Place"
+        copy="這些 Chazen 意境作品把黃昏、山水、器物與一間想像中的茶室連在一起，呈現品牌希望保留的安靜與深度。"
+        copyEn="These Chazen atmosphere studies connect dusk, landscape, objects, and an imagined tea room—the quiet sense of place the brand is designed to preserve."
+        tone="paper"
+      >
+        <ChazenImageGallery items={atmosphereStudies} />
       </ChazenContentSection>
 
       <ChazenCtaBand

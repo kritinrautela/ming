@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { ArrowRight, Gift, MessageCircle, Sparkles } from "lucide-react";
 import { SectionHeading } from "@/components/SectionHeading";
 import { aiPromptCards } from "@/lib/site";
 import { useLanguage } from "@/lib/language";
+import { withBasePath } from "@/lib/media";
 import styles from "./ai-guide.module.css";
 
 export default function AITeaGuidePage() {
@@ -31,16 +33,30 @@ export default function AITeaGuidePage() {
               )}
             </p>
           </div>
-          <div className={styles.heroBox}>
-            <Sparkles className="text-stone" size={26} />
-            <p className="display-title mt-6 text-3xl">{t("Guidance with a quieter tone.", "更安靜的引導方式。")}</p>
-            <p className="mt-5 text-base leading-8 text-porcelain/70">
-              {t(
-                "Cha helps customers understand tea, choose a thoughtful gift, and begin a few minutes of breathing, sound, and reflection without turning the ritual into another screen-heavy task.",
-                "茶幫助顧客了解茶葉、選擇貼心的禮物，並開始幾分鐘的呼吸、聲音與反思，而不會讓儀式變成另一項耗費螢幕時間的任務。"
+          <figure className={styles.heroVisual}>
+            <Image
+              src={withBasePath("/images/chazen-ai-tea-guide-v1.webp")}
+              alt={t(
+                "A steaming Jian Zhan bowl and clay teapot in a quiet dusk tea room, with steam forming a subtle guiding circle.",
+                "黃昏茶室中的建盞與陶壺，茶煙化作微妙的引導圓環。"
               )}
-            </p>
-          </div>
+              fill
+              priority
+              sizes="(min-width: 1024px) 55vw, 100vw"
+            />
+            <figcaption className={styles.heroCaption}>
+              <Sparkles aria-hidden="true" size={20} />
+              <div>
+                <p className="display-title">{t("Guidance with a quieter tone.", "更安靜的引導方式。")}</p>
+                <span>
+                  {t(
+                    "Tea remains the focus; intelligence stays quietly in the background.",
+                    "茶始終是主角，智能則安靜地留在背景。"
+                  )}
+                </span>
+              </div>
+            </figcaption>
+          </figure>
         </div>
       </section>
       <section className="section">
