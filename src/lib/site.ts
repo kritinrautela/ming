@@ -7,14 +7,67 @@ export const site = {
   email: process.env.NEXT_PUBLIC_CHAZEN_INQUIRY_EMAIL ?? "chazen24tz@gmail.com"
 };
 
-export const navItems = [
+export type NavChild = { label: string; labelZh: string; href: string };
+export type NavItem = { label: string; labelZh: string; href: string; children?: NavChild[] };
+
+export const navItems: NavItem[] = [
   { label: "Tea Test", labelZh: "茶測試", href: "/tea-test" },
-  { label: "Ritual", labelZh: "茶儀式", href: "/tea-ritual" },
-  { label: "Brew", labelZh: "沖泡室", href: "/brew-simulator" },
-  { label: "Tea", labelZh: "茶品", href: "/tea-collection" },
-  { label: "Culture", labelZh: "茶文化", href: "/tea-culture" },
-  { label: "Five Cups", labelZh: "五盞", href: "/five-cups" },
-  { label: "Gifting", labelZh: "文化贈禮", href: "/b2b" }
+  {
+    label: "Ritual",
+    labelZh: "茶儀式",
+    href: "/tea-ritual",
+    children: [
+      { label: "Ritual Guide", labelZh: "茶儀式指南", href: "/tea-ritual" },
+      { label: "Stillness Mode", labelZh: "靜心模式", href: "/stillness-mode" },
+      { label: "Song Room", labelZh: "點茶室", href: "/song-room" }
+    ]
+  },
+  {
+    label: "Brew",
+    labelZh: "沖泡室",
+    href: "/brew-simulator",
+    children: [
+      { label: "Brewing Room", labelZh: "沖泡室", href: "/brew-simulator" },
+      { label: "AI Tea Guide", labelZh: "AI 茶導師", href: "/ai-tea-guide" }
+    ]
+  },
+  {
+    label: "Tea",
+    labelZh: "茶品",
+    href: "/tea-collection",
+    children: [
+      { label: "Tea Collection", labelZh: "茶品收藏", href: "/tea-collection" },
+      { label: "Tea Boxes", labelZh: "茶盒", href: "/tea-boxes" },
+      { label: "Tea Atlas", labelZh: "茶地圖", href: "/tea-atlas" }
+    ]
+  },
+  {
+    label: "Culture",
+    labelZh: "茶文化",
+    href: "/tea-culture",
+    children: [
+      { label: "Tea Culture", labelZh: "茶文化", href: "/tea-culture" },
+      { label: "Our Story", labelZh: "品牌故事", href: "/about" }
+    ]
+  },
+  {
+    label: "Five Cups",
+    labelZh: "五盞",
+    href: "/five-cups",
+    children: [
+      { label: "Cup Collection", labelZh: "五盞收藏", href: "/five-cups" },
+      { label: "Tea Set", labelZh: "茶具組", href: "/tea-boxes" }
+    ]
+  },
+  {
+    label: "Gifting",
+    labelZh: "文化贈禮",
+    href: "/b2b",
+    children: [
+      { label: "B2B Gifts", labelZh: "企業茶禮", href: "/b2b" },
+      { label: "Gift Box", labelZh: "禮盒", href: "/gift-box" }
+    ]
+  }
 ];
 
 export const footerItems = [
