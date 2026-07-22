@@ -139,7 +139,7 @@ export default function TeaRitualPage() {
         <div className="chazen-two-column">
           <article className="chazen-subpage-note">
             <h3>{t("Common mistakes", "常見錯誤")}</h3>
-            <ul>
+            <ul className={styles.mistakesList}>
               {commonMistakes.map((mistake) => (
                 <li key={mistake.en} lang={language === "zh" ? "zh-Hant" : undefined}>
                   {t(mistake.en, mistake.zh)}
