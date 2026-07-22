@@ -13809,7 +13809,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 
 .five-cups-section {
   background:
-    radial-gradient(circle at 82% 12%, rgba(185, 130, 58, 0.14), transparent 20rem),
+    radial-gradient(circle at 82% 12%, rgba(157, 129, 80, 0.14), transparent 20rem),
     rgba(251, 247, 239, 0.72);
 }
 
@@ -13825,8 +13825,8 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .five-cups-tablist {
   display: grid;
   gap: 0.55rem;
-  border: 1px solid rgba(91, 58, 36, 0.14);
-  border-radius: 8px;
+  border: 1px solid rgba(157, 129, 80, 0.14);
+  border-radius: 2px;
   background: rgba(244, 239, 230, 0.68);
   padding: 0.55rem;
   box-shadow: 0 18px 48px rgba(46, 29, 18, 0.06);
@@ -13837,7 +13837,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
   gap: 0.18rem;
   min-height: 72px;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 2px;
   background: rgba(251, 247, 239, 0.56);
   padding: 0.82rem 0.9rem;
   color: rgba(42, 39, 34, 0.68);
@@ -13848,7 +13848,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 
 .five-cups-tablist button:hover,
 .five-cups-tablist button:focus-visible {
-  border-color: rgba(185, 130, 58, 0.42);
+  border-color: rgba(157, 129, 80, 0.42);
   background: rgba(251, 247, 239, 0.92);
   box-shadow: 0 12px 26px rgba(46, 29, 18, 0.06);
   outline: none;
@@ -13856,10 +13856,10 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .five-cups-tablist button.is-active {
-  border-color: rgba(185, 130, 58, 0.5);
-  background: linear-gradient(135deg, rgba(185, 130, 58, 0.18), rgba(251, 247, 239, 0.92));
-  color: var(--deep-wood);
-  box-shadow: inset 4px 0 0 rgba(185, 130, 58, 0.78), 0 16px 34px rgba(46, 29, 18, 0.08);
+  border-color: rgba(157, 129, 80, 0.5);
+  background: linear-gradient(135deg, rgba(157, 129, 80, 0.18), rgba(251, 247, 239, 0.92));
+  color: var(--cz-ink);
+  box-shadow: inset 4px 0 0 rgba(157, 129, 80, 0.78), 0 16px 34px rgba(46, 29, 18, 0.08);
 }
 
 .five-cups-tablist button span {
@@ -13877,19 +13877,38 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .five-cups-panel {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(280px, 0.45fr) minmax(0, 1fr);
   gap: clamp(1rem, 3vw, 2rem);
   width: 100%;
   min-width: 0;
-  border: 1px solid rgba(91, 58, 36, 0.16);
-  border-radius: 8px;
-  background:
-    linear-gradient(135deg, rgba(251, 247, 239, 0.94), rgba(244, 239, 230, 0.7)),
-    repeating-linear-gradient(90deg, rgba(91, 58, 36, 0.04) 0 1px, transparent 1px 42px);
+  overflow: hidden;
+  border-top: 1px solid rgba(157, 129, 80, 0.35);
+  border-radius: 2px;
+  background: linear-gradient(135deg, rgba(251, 247, 239, 0.94), rgba(244, 239, 230, 0.7));
   padding: clamp(1rem, 2.4vw, 1.8rem);
-  box-shadow: 0 28px 76px rgba(46, 29, 18, 0.1);
+  box-shadow: 0 24px 64px rgba(111, 74, 50, 0.1);
   animation: five-cups-panel-enter 260ms ease both;
+}
+
+.five-cups-panel-glyph {
+  position: absolute;
+  right: -0.06em;
+  bottom: -0.14em;
+  z-index: 0;
+  font-family: var(--cz-serif);
+  font-size: clamp(9rem, 15vw, 15rem);
+  line-height: 1;
+  color: rgba(157, 129, 80, 0.08);
+  pointer-events: none;
+  user-select: none;
+}
+
+.five-cups-visual-wrap,
+.five-cups-copy {
+  position: relative;
+  z-index: 1;
 }
 
 .five-cups-panel[hidden] {
@@ -13901,7 +13920,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .five-cups-panel:focus-visible {
-  box-shadow: 0 0 0 3px rgba(185, 130, 58, 0.22), 0 28px 76px rgba(46, 29, 18, 0.1);
+  box-shadow: 0 0 0 3px rgba(157, 129, 80, 0.22), 0 28px 76px rgba(46, 29, 18, 0.1);
 }
 
 .five-cups-visual-wrap {
@@ -13914,9 +13933,9 @@ body:has(.chazen-motion-home) .museum-site-footer {
   min-height: 420px;
   margin: 0;
   overflow: hidden;
-  border: 1px solid rgba(91, 58, 36, 0.18);
-  border-radius: 8px;
-  box-shadow: inset 0 0 64px rgba(111, 127, 85, 0.08);
+  border: 1px solid rgba(157, 129, 80, 0.22);
+  border-radius: 2px;
+  box-shadow: inset 0 0 64px rgba(63, 89, 69, 0.08);
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
@@ -13932,8 +13951,8 @@ body:has(.chazen-motion-home) .museum-site-footer {
 
 .five-cups-panel:hover .five-cups-visual,
 .five-cups-panel:focus-within .five-cups-visual {
-  border-color: rgba(185, 130, 58, 0.44);
-  box-shadow: inset 0 0 68px rgba(185, 130, 58, 0.12), 0 18px 46px rgba(46, 29, 18, 0.08);
+  border-color: rgba(157, 129, 80, 0.44);
+  box-shadow: inset 0 0 68px rgba(157, 129, 80, 0.12), 0 18px 46px rgba(46, 29, 18, 0.08);
 }
 
 .five-cups-visual figcaption {
@@ -13941,13 +13960,13 @@ body:has(.chazen-motion-home) .museum-site-footer {
   left: 1rem;
   right: 1rem;
   bottom: 1rem;
-  border-top: 1px solid rgba(91, 58, 36, 0.14);
+  border-top: 1px solid rgba(157, 129, 80, 0.14);
   padding-top: 0.85rem;
 }
 
 .five-cups-visual figcaption span {
   display: block;
-  color: var(--tea-amber);
+  color: var(--cz-brass);
   font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -13977,7 +13996,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .five-cups-copy > strong {
   display: block;
   margin-top: 0.6rem;
-  color: var(--wood);
+  color: var(--cz-clay);
   font-family: var(--font-serif), var(--font-cjk), Georgia, "Times New Roman", serif;
   font-size: clamp(1.12rem, 2vw, 1.65rem);
   font-weight: 400;
@@ -13991,14 +14010,14 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .five-cups-meaning-list div {
-  border: 1px solid rgba(91, 58, 36, 0.14);
-  border-radius: 8px;
+  border: 1px solid rgba(157, 129, 80, 0.14);
+  border-radius: 2px;
   background: rgba(251, 247, 239, 0.58);
   padding: 0.85rem;
 }
 
 .five-cups-meaning-list dt {
-  color: var(--tea-amber);
+  color: var(--cz-brass);
   font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -14024,7 +14043,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .five-cups-poetry p:first-child {
-  color: var(--deep-wood);
+  color: var(--cz-ink);
   font-family: var(--font-serif), var(--font-cjk), Georgia, "Times New Roman", serif;
   font-size: 1.4rem;
 }
@@ -14037,7 +14056,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .five-cups-direction span {
-  color: var(--wood);
+  color: var(--cz-clay);
   font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -14060,8 +14079,8 @@ body:has(.chazen-motion-home) .museum-site-footer {
 .five-cups-summary > div {
   display: grid;
   gap: 0.8rem;
-  border: 1px solid rgba(91, 58, 36, 0.14);
-  border-radius: 8px;
+  border: 1px solid rgba(157, 129, 80, 0.14);
+  border-radius: 2px;
   background: rgba(251, 247, 239, 0.72);
   padding: clamp(1rem, 2vw, 1.5rem);
   box-shadow: 0 18px 48px rgba(46, 29, 18, 0.06);

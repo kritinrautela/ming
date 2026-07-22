@@ -113,6 +113,9 @@ function CupPanel({ cup, baseId, hidden }: { cup: FiveCup; baseId: string; hidde
       aria-labelledby={`${baseId}-${cup.key}-tab`}
       hidden={hidden}
     >
+      <span className="five-cups-panel-glyph" lang="zh-Hant" aria-hidden="true">
+        {cup.tab}
+      </span>
       <div className="five-cups-visual-wrap">
         <JianZhanVisual
           asset={cup.asset}
