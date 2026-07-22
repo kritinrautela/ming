@@ -6,6 +6,10 @@ import { buildInquiryPath } from "@/lib/inquiry";
 import { useLanguage } from "@/lib/language";
 import styles from "./TeaCollectionExperience.module.css";
 
+const checkoutApiUrl =
+  process.env.NEXT_PUBLIC_CHECKOUT_API_URL ??
+  "https://chazen-website.vercel.app/api/checkout/";
+
 const filters = [
   { en: "All", zh: "全部" },
   { en: "Oolong", zh: "烏龍" },
@@ -32,14 +36,8 @@ type Tea = {
   caffeine: { en: string; zh: string };
   liquor: string;
   palette: string;
-  // Checkout: this site is a static export (no server), so purchases go
-  // through Stripe Payment Links, not a custom checkout session. Create a
-  // Payment Link per tea in the Stripe Dashboard (Payment Links -> New),
-  // then set priceLabel and stripeLink here. Left undefined, the tea simply
-  // shows "Request This Tea" instead of "Buy Now" -- nothing breaks while
-  // pricing is still being finalized.
-  priceLabel?: string;
-  stripeLink?: string;
+  productId: string;
+  priceLabel: string;
 };
 
 const teas: Tea[] = [
@@ -67,7 +65,9 @@ const teas: Tea[] = [
     gift: { en: "VIP client, mentor, or ceremonial host gift.", zh: "適合貴賓客戶、導師或正式主人贈禮。" },
     caffeine: { en: "Medium-high intensity", zh: "中高強度" },
     liquor: "#9b4f2d",
-    palette: "rock"
+    palette: "rock",
+    productId: "da-hong-pao",
+    priceLabel: "A$32"
   },
   {
     slug: "longjing",
@@ -87,7 +87,9 @@ const teas: Tea[] = [
     gift: { en: "Study, career, focus, or new-beginning gift.", zh: "適合學業、事業、專注或新開始的贈禮。" },
     caffeine: { en: "Medium intensity", zh: "中等強度" },
     liquor: "#c9c36a",
-    palette: "green"
+    palette: "green",
+    productId: "longjing",
+    priceLabel: "A$26"
   },
   {
     slug: "bai-hao-yin-zhen",
@@ -104,7 +106,9 @@ const teas: Tea[] = [
     gift: { en: "Family, elder, wellness, or soft blessing gift.", zh: "適合家人、長輩、養生或溫柔祝福的贈禮。" },
     caffeine: { en: "Low-medium intensity", zh: "低至中等強度" },
     liquor: "#d8c88f",
-    palette: "white"
+    palette: "white",
+    productId: "bai-hao-yin-zhen",
+    priceLabel: "A$36"
   },
   {
     slug: "tie-guan-yin",
@@ -124,7 +128,9 @@ const teas: Tea[] = [
     gift: { en: "Hospitality, partner, or fragrant welcome gift.", zh: "適合待客、伴侶或芬芳迎賓的贈禮。" },
     caffeine: { en: "Medium intensity", zh: "中等強度" },
     liquor: "#d2b35f",
-    palette: "orchid"
+    palette: "orchid",
+    productId: "tie-guan-yin",
+    priceLabel: "A$22"
   },
   {
     slug: "puer",
@@ -144,7 +150,9 @@ const teas: Tea[] = [
     gift: { en: "Elder, family continuity, or long-memory gift.", zh: "適合長輩、家族傳承或長久記憶的贈禮。" },
     caffeine: { en: "Medium intensity", zh: "中等強度" },
     liquor: "#6f3826",
-    palette: "aged"
+    palette: "aged",
+    productId: "puer",
+    priceLabel: "A$20"
   },
   {
     slug: "high-mountain-oolong",
@@ -164,7 +172,9 @@ const teas: Tea[] = [
     gift: { en: "Personal stillness, partner, or calm reset gift.", zh: "適合個人靜心、伴侶或平靜重整的贈禮。" },
     caffeine: { en: "Medium intensity", zh: "中等強度" },
     liquor: "#d7c36c",
-    palette: "mountain"
+    palette: "mountain",
+    productId: "high-mountain-oolong",
+    priceLabel: "A$30"
   },
   {
     slug: "lapsang-souchong",
@@ -187,7 +197,9 @@ const teas: Tea[] = [
     gift: { en: "Courage, protection, or bold new-beginning gift.", zh: "適合勇氣、守護或大膽新開始的贈禮。" },
     caffeine: { en: "Medium-high intensity", zh: "中高強度" },
     liquor: "#8a3726",
-    palette: "ember"
+    palette: "ember",
+    productId: "lapsang-souchong",
+    priceLabel: "A$24"
   },
   {
     slug: "uji-matcha",
@@ -207,7 +219,9 @@ const teas: Tea[] = [
     gift: { en: "Creative focus, meditation, or cross-cultural tea gift.", zh: "適合創作專注、冥想或跨文化茶禮的贈禮。" },
     caffeine: { en: "High intensity", zh: "高強度" },
     liquor: "#4f6f3b",
-    palette: "matcha"
+    palette: "matcha",
+    productId: "uji-matcha",
+    priceLabel: "A$34"
   }
 ];
 
@@ -219,10 +233,36 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
   const { t, language } = useLanguage();
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedTea, setSelectedTea] = useState(teas[0]);
+  const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
+  const [checkoutErrorProductId, setCheckoutErrorProductId] = useState<string | null>(null);
   const visibleTeas = useMemo(
     () => teas.filter((tea) => activeFilter === "All" || tea.family.en === activeFilter),
     [activeFilter]
   );
+
+  async function handleBuyNow(productId: string) {
+    setLoadingProductId(productId);
+    setCheckoutErrorProductId(null);
+
+    try {
+      const response = await fetch(checkoutApiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId })
+      });
+      const result = (await response.json()) as { url?: string };
+
+      if (!response.ok || !result.url) {
+        throw new Error("Checkout could not be started");
+      }
+
+      window.location.assign(result.url);
+    } catch {
+      setCheckoutErrorProductId(productId);
+    } finally {
+      setLoadingProductId(null);
+    }
+  }
 
   return (
     <main className="tea-collection-page tea-collection-cinematic">
@@ -287,9 +327,7 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
               <p className="museum-kicker">Selected Tea / 選中茶品</p>
               <h3>{selectedTea.name}</h3>
               <strong lang="zh-Hant">{selectedTea.chinese}</strong>
-              {selectedTea.priceLabel ? (
-                <p className={styles["tea-price"]}>{selectedTea.priceLabel}</p>
-              ) : null}
+              <p className={styles["tea-price"]}>{selectedTea.priceLabel}</p>
               <p>{t(selectedTea.note.en, selectedTea.note.zh)}</p>
               <dl>
                 <div>
@@ -314,22 +352,24 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
                 </div>
               </dl>
               <div className={styles["tea-curator-actions"]}>
-                {selectedTea.stripeLink ? (
-                  <a href={selectedTea.stripeLink} target="_blank" rel="noopener noreferrer">
-                    {t(`Buy Now — ${selectedTea.priceLabel ?? ""}`, `立即購買 — ${selectedTea.priceLabel ?? ""}`)}
-                  </a>
-                ) : (
-                  <a
-                    href={buildInquiryPath({
-                      basePath,
-                      type: "Tea recommendation",
-                      message: `I would like to purchase or be notified when ${selectedTea.name} is available to buy directly.`,
-                      source: "Tea collection"
-                    })}
-                  >
-                    {t("Request This Tea", "索取這款茶")}
-                  </a>
-                )}
+                <button
+                  type="button"
+                  onClick={() => handleBuyNow(selectedTea.productId)}
+                  disabled={loadingProductId !== null}
+                  aria-busy={loadingProductId === selectedTea.productId}
+                >
+                  {loadingProductId === selectedTea.productId
+                    ? t("Opening secure checkout…", "正在開啟安全結帳…")
+                    : t(`Buy Now — ${selectedTea.priceLabel}`, `立即購買 — ${selectedTea.priceLabel}`)}
+                </button>
+                {checkoutErrorProductId === selectedTea.productId ? (
+                  <p className={styles["tea-checkout-error"]} role="alert">
+                    {t(
+                      "Checkout is temporarily unavailable. Please try again.",
+                      "結帳服務暫時無法使用，請稍後再試。"
+                    )}
+                  </p>
+                ) : null}
                 <a href={`${basePath}/tea-test/`}>{t("Add to Assessment Profile", "加入測評檔案")}</a>
                 <a
                   href={buildInquiryPath({
@@ -365,7 +405,7 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
                       <span>{t(tea.family.en, tea.family.zh)}</span>
                       <h2>{tea.name}</h2>
                       <strong lang="zh-Hant">{tea.chinese}</strong>
-                      {tea.priceLabel ? <span className={styles["tea-price"]}>{tea.priceLabel}</span> : null}
+                      <span className={styles["tea-price"]}>{tea.priceLabel}</span>
                       <dl>
                         <div>
                           <dt>{t("Dry Leaf", "乾茶外觀")}</dt>
