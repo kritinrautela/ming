@@ -127,7 +127,7 @@
 }
 
 .scope :global(.tea-mind-primary-action:hover) {
-  background: #2d4a37;
+  background: #2b4d38;
   transform: translateY(-3px);
   box-shadow: 0 16px 36px rgba(63, 89, 69, 0.25);
 }
@@ -183,7 +183,7 @@
 .scope :global(.tea-mind-full-plan h3) {
   max-width: 690px;
   margin: 0.55rem 0 0;
-  color: #171713;
+  color: var(--cz-ink);
   font-family: var(--cz-serif);
   font-size: clamp(2rem, 4vw, 3.35rem);
   font-weight: 300;
@@ -272,7 +272,7 @@
 .scope :global(.tea-mind-result-actions a:hover) {
   transform: translateY(-2px);
   box-shadow: 0 14px 32px rgba(63, 89, 69, 0.22);
-  background: #2d4a37;
+  background: #2b4d38;
 }
 
 .scope :global(.tea-mind-result-actions button) {
@@ -342,7 +342,7 @@
 }
 
 .scope :global(.tea-mind-plan-includes strong) {
-  color: #171713;
+  color: var(--cz-ink);
   font-family: var(--cz-serif);
   font-size: 0.95rem;
   font-weight: 300;
