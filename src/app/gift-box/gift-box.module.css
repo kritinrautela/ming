@@ -50,7 +50,7 @@
 
 .gift-content-item strong {
   display: block;
-  color: #9f3f2f;
+  color: var(--cz-seal);
   font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.16em;
@@ -81,7 +81,7 @@
 }
 
 .gift-ritual-step-number {
-  color: #9f3f2f;
+  color: var(--cz-seal);
   font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.16em;
@@ -116,7 +116,7 @@
 
 .gift-value-card {
   padding: 2rem;
-  background: #fbfaf6;
+  background: var(--cz-porcelain);
   border: none;
   border-top: 1px solid rgba(157, 129, 80, 0.35);
   border-radius: 2px;

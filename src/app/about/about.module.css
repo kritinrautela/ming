@@ -1,14 +1,5 @@
 /* About page — editorial storytelling with pull statements and visual hierarchy */
 
-.storySection {
-  display: grid;
-  gap: 2rem;
-  border-top: 1px solid rgba(23, 23, 19, 0.1);
-  border-bottom: 1px solid rgba(23, 23, 19, 0.1);
-  padding: 2.5rem 0;
-  margin: 2rem 0;
-}
-
 .storyGrid {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
@@ -99,46 +90,4 @@
   line-height: 1.65;
   color: rgba(23, 23, 19, 0.62);
   margin: 0;
-}
-
-.missionPanel {
-  background: var(--cz-porcelain);
-  border-radius: 2px;
-  padding: clamp(1.75rem, 5vw, 2.5rem);
-  margin-top: 2rem;
-  border-top: 2px solid var(--cz-brass);
-}
-
-.missionEyebrow {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(23, 23, 19, 0.6);
-  margin: 0 0 1rem 0;
-}
-
-.missionHeading {
-  font-family: var(--cz-serif);
-  font-size: clamp(1.5rem, 4vw, 2.2rem);
-  font-weight: 400;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: var(--cz-ink);
-  margin: 0 0 1.25rem 0;
-  text-wrap: balance;
-}
-
-.missionCopy {
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: rgba(23, 23, 19, 0.68);
-  margin: 0 0 1.75rem 0;
-  max-width: 65ch;
-}
-
-.missionActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
 }

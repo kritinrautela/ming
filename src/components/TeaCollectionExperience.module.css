@@ -19,7 +19,7 @@
 
 .tea-scroll-gallery::-webkit-scrollbar-thumb {
   background: rgba(157, 129, 80, 0.3);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .tea-scroll-gallery::-webkit-scrollbar-thumb:hover {
@@ -145,7 +145,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #9f3f2f;
+  color: var(--cz-seal);
   margin-bottom: 0.4rem;
 }
 
