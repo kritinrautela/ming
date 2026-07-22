@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Instrument_Sans, Noto_Serif_TC } from "next/font/google";
 import "./globals.css";
+import { CartDrawer } from "@/components/CartDrawer";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { TeaCompanion } from "@/components/TeaCompanion";
+import { CartProvider } from "@/lib/cart";
 import { LanguageProvider } from "@/lib/language";
 import { site } from "@/lib/site";
 
@@ -72,15 +74,18 @@ export default function RootLayout({
     <html lang="en" className={`${displaySerif.variable} ${cjkSerif.variable} ${interfaceSans.variable}`}>
       <body>
         <LanguageProvider>
-          <div className="page-shell">
-            <a href="#main-content" className="skip-link">
-              Skip to content
-            </a>
-            <Header />
-            <div id="main-content">{children}</div>
-            <Footer />
-            <TeaCompanion />
-          </div>
+          <CartProvider>
+            <div className="page-shell">
+              <a href="#main-content" className="skip-link">
+                Skip to content
+              </a>
+              <Header />
+              <div id="main-content">{children}</div>
+              <Footer />
+              <TeaCompanion />
+              <CartDrawer />
+            </div>
+          </CartProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -10,7 +10,6 @@ const footerGroups = [
     heading: { en: "Discover", zh: "探索" },
     links: [
       { label: "Tea Test", labelZh: "茶測試", href: "/tea-test" },
-      { label: "Five Cups", labelZh: "五盞", href: "/five-cups" },
       { label: "Tea Ritual", labelZh: "茶儀式", href: "/tea-ritual" },
       { label: "Tea Culture", labelZh: "茶文化", href: "/tea-culture" },
       { label: "Tea Atlas", labelZh: "茶地圖", href: "/tea-atlas" },
@@ -18,8 +17,9 @@ const footerGroups = [
     ]
   },
   {
-    heading: { en: "Tea & gifts", zh: "茶與贈禮" },
+    heading: { en: "Collection & gifts", zh: "收藏與贈禮" },
     links: [
+      { label: "Five Cups", labelZh: "五盞收藏", href: "/five-cups" },
       { label: "Tea Collection", labelZh: "茶品收藏", href: "/tea-collection" },
       { label: "Tea Boxes", labelZh: "茶盒", href: "/tea-boxes" },
       { label: "Gift Box", labelZh: "禮盒", href: "/gift-box" },

@@ -7,12 +7,9 @@ import {
   ChazenCtaBand,
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
+import { useCart } from "@/lib/cart";
 import { useLanguage } from "@/lib/language";
 import styles from "./tea-boxes.module.css";
-
-const checkoutApiUrl =
-  process.env.NEXT_PUBLIC_CHECKOUT_API_URL ??
-  "https://chazen-website.vercel.app/api/checkout/";
 
 const journeys = [
   {
@@ -139,36 +136,22 @@ const comparisonHeadings = [
 
 export default function TeaBoxesPage() {
   const { t, language } = useLanguage();
+  const { addItem } = useCart();
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-  const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
-  const [checkoutErrorProductId, setCheckoutErrorProductId] = useState<string | null>(null);
+  const [addedProductId, setAddedProductId] = useState<string | null>(null);
 
   useEffect(() => {
     document.title = language === "zh" ? "茶盒 | Chazen" : "Tea Boxes | Chazen";
   }, [language]);
 
-  async function handleBuyNow(productId: string) {
-    setLoadingProductId(productId);
-    setCheckoutErrorProductId(null);
-
-    try {
-      const response = await fetch(checkoutApiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId })
-      });
-      const result = (await response.json()) as { url?: string };
-
-      if (!response.ok || !result.url) {
-        throw new Error("Checkout could not be started");
-      }
-
-      window.location.assign(result.url);
-    } catch {
-      setCheckoutErrorProductId(productId);
-    } finally {
-      setLoadingProductId(null);
-    }
+  function handleAddToCart(box: (typeof boxCards)[number]) {
+    if (!box.productId) return;
+    addItem({ productId: box.productId, name: t(box.title.en, box.title.zh), priceLabel: box.price });
+    setAddedProductId(box.productId);
+    window.setTimeout(
+      () => setAddedProductId((current) => (current === box.productId ? null : current)),
+      1800
+    );
   }
 
   return (
@@ -230,27 +213,15 @@ export default function TeaBoxesPage() {
                     ))}
                   </ul>
                   {box.productId ? (
-                    <>
-                      <button
-                        type="button"
-                        className={styles["tea-box-buy-button"]}
-                        onClick={() => handleBuyNow(box.productId)}
-                        disabled={loadingProductId !== null}
-                        aria-busy={loadingProductId === box.productId}
-                      >
-                        {loadingProductId === box.productId
-                          ? t("Opening secure checkout…", "正在開啟安全結帳…")
-                          : t("Buy Now", "立即購買")}
-                      </button>
-                      {checkoutErrorProductId === box.productId ? (
-                        <p className={styles["tea-box-checkout-error"]} role="alert">
-                          {t(
-                            "Checkout is temporarily unavailable. Please try again.",
-                            "結帳服務暫時無法使用，請稍後再試。"
-                          )}
-                        </p>
-                      ) : null}
-                    </>
+                    <button
+                      type="button"
+                      className={styles["tea-box-buy-button"]}
+                      onClick={() => handleAddToCart(box)}
+                    >
+                      {addedProductId === box.productId
+                        ? t("Added ✓", "已加入 ✓")
+                        : t("Add to Cart", "加入購物車")}
+                    </button>
                   ) : (
                     <a className={styles["tea-box-enquire-link"]} href={`${basePath}/b2b/`}>
                       {t("Enquire", "查詢")}

@@ -246,12 +246,6 @@
   opacity: 0.7;
 }
 
-.tea-checkout-error {
-  margin: -0.5rem 0 0;
-  color: #9f3f2f;
-  font-size: 0.8rem;
-}
-
 /* Tea catalogue head (filters) */
 .tea-filter-tabs {
   display: flex;

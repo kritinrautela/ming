@@ -191,13 +191,6 @@
   justify-content: center;
 }
 
-.tea-box-checkout-error {
-  margin: 0.65rem 0 0;
-  color: #9f3f2f;
-  font-size: 0.8rem;
-  line-height: 1.5;
-}
-
 /* Comparison table editorial treatment */
 .tea-comparison-table {
   overflow-x: auto;

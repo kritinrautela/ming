@@ -2,13 +2,10 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { useCart } from "@/lib/cart";
 import { buildInquiryPath } from "@/lib/inquiry";
 import { useLanguage } from "@/lib/language";
 import styles from "./TeaCollectionExperience.module.css";
-
-const checkoutApiUrl =
-  process.env.NEXT_PUBLIC_CHECKOUT_API_URL ??
-  "https://chazen-website.vercel.app/api/checkout/";
 
 const filters = [
   { en: "All", zh: "全部" },
@@ -231,37 +228,19 @@ type TeaCollectionExperienceProps = {
 
 export function TeaCollectionExperience({ basePath }: TeaCollectionExperienceProps) {
   const { t, language } = useLanguage();
+  const { addItem } = useCart();
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedTea, setSelectedTea] = useState(teas[0]);
-  const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
-  const [checkoutErrorProductId, setCheckoutErrorProductId] = useState<string | null>(null);
+  const [addedProductId, setAddedProductId] = useState<string | null>(null);
   const visibleTeas = useMemo(
     () => teas.filter((tea) => activeFilter === "All" || tea.family.en === activeFilter),
     [activeFilter]
   );
 
-  async function handleBuyNow(productId: string) {
-    setLoadingProductId(productId);
-    setCheckoutErrorProductId(null);
-
-    try {
-      const response = await fetch(checkoutApiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId })
-      });
-      const result = (await response.json()) as { url?: string };
-
-      if (!response.ok || !result.url) {
-        throw new Error("Checkout could not be started");
-      }
-
-      window.location.assign(result.url);
-    } catch {
-      setCheckoutErrorProductId(productId);
-    } finally {
-      setLoadingProductId(null);
-    }
+  function handleAddToCart(tea: Tea) {
+    addItem({ productId: tea.productId, name: tea.name, priceLabel: tea.priceLabel });
+    setAddedProductId(tea.productId);
+    window.setTimeout(() => setAddedProductId((current) => (current === tea.productId ? null : current)), 1800);
   }
 
   return (
@@ -352,24 +331,11 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
                 </div>
               </dl>
               <div className={styles["tea-curator-actions"]}>
-                <button
-                  type="button"
-                  onClick={() => handleBuyNow(selectedTea.productId)}
-                  disabled={loadingProductId !== null}
-                  aria-busy={loadingProductId === selectedTea.productId}
-                >
-                  {loadingProductId === selectedTea.productId
-                    ? t("Opening secure checkout…", "正在開啟安全結帳…")
-                    : t(`Buy Now — ${selectedTea.priceLabel}`, `立即購買 — ${selectedTea.priceLabel}`)}
+                <button type="button" onClick={() => handleAddToCart(selectedTea)}>
+                  {addedProductId === selectedTea.productId
+                    ? t("Added ✓", "已加入 ✓")
+                    : t(`Add to Cart — ${selectedTea.priceLabel}`, `加入購物車 — ${selectedTea.priceLabel}`)}
                 </button>
-                {checkoutErrorProductId === selectedTea.productId ? (
-                  <p className={styles["tea-checkout-error"]} role="alert">
-                    {t(
-                      "Checkout is temporarily unavailable. Please try again.",
-                      "結帳服務暫時無法使用，請稍後再試。"
-                    )}
-                  </p>
-                ) : null}
                 <a href={`${basePath}/tea-test/`}>{t("Add to Assessment Profile", "加入測評檔案")}</a>
                 <a
                   href={buildInquiryPath({
