@@ -23,7 +23,8 @@ const teaWorlds = [
       en: "Faith isn't blind belief — it's the willingness to pause first, trusting you can still return to clarity."
     },
     cta: { zh: "由一杯茶開始", en: "Begin with trust" },
-    href: "/five-cups/faith"
+    href: "/five-cups/faith",
+    image: "cup-faith-jian-zhan.png"
   },
   {
     key: "effort",
@@ -38,7 +39,8 @@ const teaWorlds = [
       en: "Real effort isn't forcing yourself to move faster — it's gently recalibrating your rhythm through small daily rituals."
     },
     cta: { zh: "進入茶儀式", en: "Enter the ritual" },
-    href: "/five-cups/effort"
+    href: "/five-cups/effort",
+    image: "cup-effort-jian-zhan.png"
   },
   {
     key: "mindfulness",
@@ -53,7 +55,8 @@ const teaWorlds = [
       en: "Mindfulness means knowing you're drinking tea while you drink it — and noticing where your mind is drifting."
     },
     cta: { zh: "觀察此刻心境", en: "Observe your tea state" },
-    href: "/five-cups/mindfulness"
+    href: "/five-cups/mindfulness",
+    image: "cup-mindfulness-jian-zhan.png"
   },
   {
     key: "stillness",
@@ -68,7 +71,8 @@ const teaWorlds = [
       en: "Stillness isn't the absence of thought — it's no longer being swept away by every thought. As the tea pours, the mind finds a place to rest."
     },
     cta: { zh: "尋找安住", en: "Find stillness" },
-    href: "/five-cups/stillness"
+    href: "/five-cups/stillness",
+    image: "cup-stillness-jian-zhan.png"
   },
   {
     key: "wisdom",
@@ -83,7 +87,8 @@ const teaWorlds = [
       en: "Wisdom isn't knowing more — it's seeing more clearly. When you slow down, the tea reflects back what you truly need."
     },
     cta: { zh: "照見所需", en: "See what you need" },
-    href: "/five-cups/wisdom"
+    href: "/five-cups/wisdom",
+    image: "cup-wisdom-jian-zhan.png"
   }
 ];
 
@@ -381,6 +386,14 @@ export default function Home() {
           {teaWorlds.map((world, index) => (
             <motion.article className="cz-cup" key={world.key} variants={fadeUp}>
               <Link href={world.href} className="cz-cup-link">
+                <Image
+                  src={withBasePath(`/images/${world.image}`)}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 20vw, 100vw"
+                  className="cz-cup-photo"
+                />
+                <div className="cz-cup-veil" aria-hidden="true" />
                 <span className="cz-cup-index">0{index + 1}</span>
                 <span className="cz-cup-char" lang="zh-Hant" aria-hidden="true">
                   {world.title}
