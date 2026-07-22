@@ -45,6 +45,8 @@ export default function AboutPage() {
       />
 
       <ChazenContentSection
+        eyebrow="What we are building"
+        eyebrowZh="我們正在建立"
         title="茶禪一味"
         english="Tea and Zen, one flavor"
         tone="ivory"
