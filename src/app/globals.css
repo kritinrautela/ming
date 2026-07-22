@@ -14511,7 +14511,27 @@ body:has(.chazen-motion-home) .museum-site-footer {
   padding: clamp(1.6rem, 2.5vw, 2.4rem) clamp(1.1rem, 1.8vw, 1.8rem) clamp(2rem, 3vw, 2.6rem);
 }
 
+.cz-cup-photo {
+  z-index: 0;
+  object-fit: cover;
+  transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cz-cup-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(14, 16, 13, 0.55) 0%, rgba(14, 16, 13, 0.55) 40%, rgba(14, 16, 13, 0.92) 100%);
+  pointer-events: none;
+}
+
+.cz-cup:hover .cz-cup-photo,
+.cz-cup:focus-within .cz-cup-photo {
+  transform: scale(1.04);
+}
+
 .cz-cup-index {
+  z-index: 2;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -14521,12 +14541,13 @@ body:has(.chazen-motion-home) .museum-site-footer {
 
 .cz-cup-char {
   position: absolute;
+  z-index: 2;
   right: -0.08em;
   bottom: -0.18em;
   font-family: var(--cz-serif);
   font-size: clamp(7rem, 11vw, 11rem);
   line-height: 1;
-  color: rgba(200, 167, 101, 0.1);
+  color: rgba(200, 167, 101, 0.16);
   pointer-events: none;
   transition: color 400ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -14538,6 +14559,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .cz-cup h3 {
+  z-index: 2;
   margin-top: auto;
   font-size: clamp(1.25rem, 1.7vw, 1.6rem);
   font-weight: 500;
@@ -14546,6 +14568,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .cz-cup strong {
+  z-index: 2;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -14554,6 +14577,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .cz-cup p {
+  z-index: 2;
   margin: 0;
   font-size: 0.88rem;
   line-height: 1.65;
@@ -14561,6 +14585,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .cz-cup-support {
+  z-index: 2;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -14574,6 +14599,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 }
 
 .cz-cup-cta {
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -15105,6 +15131,7 @@ body:has(.chazen-motion-home) .museum-site-footer {
 
   .cz-cup,
   .cz-cup-support,
+  .cz-cup-photo,
   .cz-culture-media img {
     transition: none;
   }
