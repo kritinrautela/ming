@@ -1161,3 +1161,100 @@
   }
 }
 
+/* ============================================================
+   Tea Test — redesign v3: contain the quiz as ONE premium stage
+   (fixes the "loose elements floating in a beige void" feel)
+   ============================================================ */
+
+/* Section band: a soft warm wash, not a flat beige void */
+.scope :global(.tea-mind-room) {
+  background:
+    radial-gradient(130% 80% at 50% -8%, rgba(216, 208, 194, 0.55), transparent 62%),
+    var(--cz-paper);
+  padding-top: clamp(2.4rem, 6vw, 4.5rem);
+  padding-bottom: clamp(3rem, 7vw, 5.5rem);
+}
+
+/* The shell becomes one deliberate, contained panel floating on the paper */
+.scope :global(.tea-mind-shell) {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: clamp(1.5rem, 3.5vw, 2.75rem) clamp(1.4rem, 4vw, 3rem) clamp(2rem, 5vw, 3.25rem);
+  background: linear-gradient(180deg, var(--cz-porcelain), rgba(246, 241, 231, 0.82));
+  border: 1px solid rgba(157, 129, 80, 0.16);
+  border-top: 2px solid rgba(157, 129, 80, 0.55);
+  border-radius: 3px;
+  box-shadow: 0 48px 110px -34px rgba(111, 74, 50, 0.3), 0 6px 20px rgba(111, 74, 50, 0.05);
+}
+
+/* Progress: a clean bar at the top of the panel (drop the inner-card look) */
+.scope :global(.tea-mind-progress) {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(157, 129, 80, 0.2);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 0 clamp(1rem, 2.4vw, 1.5rem);
+  margin-bottom: clamp(1.6rem, 3.5vw, 2.5rem);
+}
+
+/* Question: one focused column; the art becomes a slim atmospheric header */
+.scope :global(.tea-mind-split) {
+  grid-template-columns: 1fr;
+  gap: clamp(1.4rem, 3vw, 2rem);
+}
+
+.scope :global(.tea-mind-split-media) {
+  min-height: 0;
+  height: clamp(120px, 18vw, 168px);
+  border-radius: 2px;
+  border-top: none;
+}
+
+.scope :global(.tea-mind-split-media-copy) {
+  padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.2rem, 3vw, 1.8rem);
+}
+
+.scope :global(.tea-mind-split-media-copy h2) {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-bottom: 0;
+}
+
+.scope :global(.tea-mind-split-media-copy p) {
+  display: none;
+}
+
+.scope :global(.tea-mind-split-media-character) {
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+}
+
+/* Question panel + options fill the panel width; the panel provides the frame */
+.scope :global(.tea-mind-question-panel) {
+  max-width: 100%;
+  border-top: none;
+  padding-top: clamp(0.4rem, 1.5vw, 0.9rem);
+}
+
+.scope :global(.tea-mind-question-panel legend) {
+  margin-bottom: clamp(1.3rem, 2.6vw, 1.9rem);
+}
+
+.scope :global(.tea-mind-options) {
+  max-width: 100%;
+  gap: 0.75rem;
+}
+
+.scope :global(.tea-mind-options button) {
+  min-height: 76px;
+  padding: 1.35rem 1.6rem;
+}
+
+/* Intro + result also sit cleanly inside the panel */
+.scope :global(.tea-mind-intro-panel),
+.scope :global(.tea-mind-result) {
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
