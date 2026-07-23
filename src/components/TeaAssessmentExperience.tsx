@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Share2 } from "lucide-react";
 import { buildInquiryPath } from "@/lib/inquiry";
 import { useLanguage } from "@/lib/language";
@@ -65,6 +66,7 @@ type ComfortProfile = {
 };
 
 const TOTAL_QUESTIONS = 8;
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const cupProfiles: Record<CupKey, CupProfile> = {
   faith: {
@@ -358,6 +360,7 @@ function calculateResult(answers: Answer[]): QuizResult {
 
 export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
   const { t } = useLanguage();
+  const reduce = useReducedMotion();
   const [phase, setPhase] = useState<QuizPhase>("intro");
   const [currentQuestionId, setCurrentQuestionId] = useState("q1");
   const [answers, setAnswers] = useState<Answer[]>([]);
@@ -563,47 +566,59 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                   </p>
                 </div>
               </aside>
-              <fieldset key={currentQuestion.id} className="tea-mind-question-panel">
-                <legend>
-                  <span>{t("Question", "問題")} {Math.min(answers.length + 1, TOTAL_QUESTIONS)}</span>
-                  <strong>{t(currentQuestion.question, currentQuestion.questionZh)}</strong>
-                </legend>
-                <div
-                  className="tea-mind-options"
-                  role="radiogroup"
-                  aria-label={t(currentQuestion.question, currentQuestion.questionZh)}
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.fieldset
+                  key={currentQuestion.id}
+                  className="tea-mind-question-panel"
+                  initial={reduce ? false : { opacity: 0, x: 26 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={reduce ? { opacity: 0 } : { opacity: 0, x: -26 }}
+                  transition={{ duration: reduce ? 0.15 : 0.4, ease: EASE }}
                 >
-                  {currentQuestion.options.map((option, index) => (
-                    <button
-                      type="button"
-                      role="radio"
-                      aria-checked={selectedOptionId === option.id}
-                      key={`${currentQuestion.id}-${option.id}`}
-                      className={
-                        selectedOptionId
-                          ? selectedOptionId === option.id
-                            ? "is-selected"
-                            : "is-dimmed"
-                          : index % 2 === 0
-                            ? "is-tinted"
-                            : undefined
-                      }
-                      onClick={() => handleAnswer(option)}
-                    >
-                      <span className="tea-mind-option-mark">{String.fromCharCode(65 + index)}</span>
-                      <span className="tea-mind-option-copy">
-                        <strong>{t(option.label, option.labelZh)}</strong>
-                        <em>{t(option.insight, option.insightZh)}</em>
-                      </span>
+                  <legend>
+                    <span>{t("Question", "問題")} {Math.min(answers.length + 1, TOTAL_QUESTIONS)}</span>
+                    <strong>{t(currentQuestion.question, currentQuestion.questionZh)}</strong>
+                  </legend>
+                  <div
+                    className="tea-mind-options"
+                    role="radiogroup"
+                    aria-label={t(currentQuestion.question, currentQuestion.questionZh)}
+                  >
+                    {currentQuestion.options.map((option, index) => (
+                      <motion.button
+                        type="button"
+                        role="radio"
+                        aria-checked={selectedOptionId === option.id}
+                        key={`${currentQuestion.id}-${option.id}`}
+                        className={
+                          selectedOptionId
+                            ? selectedOptionId === option.id
+                              ? "is-selected"
+                              : "is-dimmed"
+                            : index % 2 === 0
+                              ? "is-tinted"
+                              : undefined
+                        }
+                        onClick={() => handleAnswer(option)}
+                        initial={reduce ? false : { opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: reduce ? 0 : 0.16 + index * 0.06, duration: reduce ? 0 : 0.42, ease: EASE }}
+                      >
+                        <span className="tea-mind-option-mark">{String.fromCharCode(65 + index)}</span>
+                        <span className="tea-mind-option-copy">
+                          <strong>{t(option.label, option.labelZh)}</strong>
+                          <em>{t(option.insight, option.insightZh)}</em>
+                        </span>
+                      </motion.button>
+                    ))}
+                  </div>
+                  {answers.length > 0 ? (
+                    <button type="button" className="tea-mind-back-button" onClick={handleBack}>
+                      <ArrowLeft size={14} aria-hidden="true" /> {t("Back to the previous question", "回到上一題")}
                     </button>
-                  ))}
-                </div>
-                {answers.length > 0 ? (
-                  <button type="button" className="tea-mind-back-button" onClick={handleBack}>
-                    <ArrowLeft size={14} aria-hidden="true" /> {t("Back to the previous question", "回到上一題")}
-                  </button>
-                ) : null}
-              </fieldset>
+                  ) : null}
+                </motion.fieldset>
+              </AnimatePresence>
             </div>
           )}
 
@@ -619,7 +634,13 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
           )}
 
           {phase === "result" && result.type === "cup" && (
-            <section className={`tea-mind-result tea-mind-tone-${result.primary.key}`} aria-live="polite">
+            <motion.section
+              className={`tea-mind-result tea-mind-tone-${result.primary.key}`}
+              aria-live="polite"
+              initial={reduce ? false : { opacity: 0, y: 26 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduce ? 0.15 : 0.6, ease: EASE }}
+            >
               <div className="tea-mind-report-heading">
                 <span>{t("Your Five Cups result", "你的五盞結果")}</span>
                 <em>{t("Included with your test", "完成測試即可查看")}</em>
@@ -639,12 +660,22 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
               </div>
 
               <div className="tea-mind-split-bar" role="img" aria-label={`${result.primaryPercent}% ${result.primary.englishName}, ${result.supportingPercent}% ${result.supporting.englishName}`}>
-                <div style={{ width: `${result.primaryPercent}%` }} className="tea-mind-split-bar-primary">
+                <motion.div
+                  className="tea-mind-split-bar-primary"
+                  initial={reduce ? false : { width: 0 }}
+                  animate={{ width: `${result.primaryPercent}%` }}
+                  transition={{ duration: reduce ? 0 : 0.9, ease: EASE, delay: reduce ? 0 : 0.35 }}
+                >
                   <span>{result.primaryPercent}% {t(result.primary.character, result.primary.character)}</span>
-                </div>
-                <div style={{ width: `${result.supportingPercent}%` }} className="tea-mind-split-bar-supporting">
+                </motion.div>
+                <motion.div
+                  className="tea-mind-split-bar-supporting"
+                  initial={reduce ? false : { width: 0 }}
+                  animate={{ width: `${result.supportingPercent}%` }}
+                  transition={{ duration: reduce ? 0 : 0.9, ease: EASE, delay: reduce ? 0 : 0.5 }}
+                >
                   <span>{result.supportingPercent}% {t(result.supporting.character, result.supporting.character)}</span>
-                </div>
+                </motion.div>
               </div>
 
               <div className="tea-mind-result-grid">
@@ -715,7 +746,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                   )}
                 </p>
               </article>
-            </section>
+            </motion.section>
           )}
 
           {phase === "result" && result.type === "comfort" && (
