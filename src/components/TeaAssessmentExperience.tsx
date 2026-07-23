@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Share2 } from "lucide-react";
 import { buildInquiryPath } from "@/lib/inquiry";
@@ -361,6 +361,7 @@ function calculateResult(answers: Answer[]): QuizResult {
 export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
   const { t } = useLanguage();
   const reduce = useReducedMotion();
+  const shellRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<QuizPhase>("intro");
   const [currentQuestionId, setCurrentQuestionId] = useState("q1");
   const [answers, setAnswers] = useState<Answer[]>([]);
@@ -369,6 +370,13 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
   const currentQuestion = questions[currentQuestionId];
   const result = useMemo(() => calculateResult(answers), [answers]);
   const progress = phase === "intro" ? 0 : Math.min((answers.length / TOTAL_QUESTIONS) * 100, 100);
+
+  // Focus the viewport on the active question / result so the quiz plays as a
+  // guided flow instead of leaving the visitor stranded above the fold.
+  useEffect(() => {
+    if (phase !== "question" && phase !== "result") return;
+    shellRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  }, [phase, reduce]);
 
   function handleStart() {
     setAnswers([]);
@@ -503,7 +511,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
       </section>
 
       <section className="museum-section tea-mind-room" aria-label="Five Cups reflection">
-        <div className="museum-container tea-mind-shell">
+        <div className="museum-container tea-mind-shell" ref={shellRef} style={{ scrollMarginTop: 90 }}>
           <div className="tea-mind-progress" aria-label="Assessment progress" style={{ scrollMarginTop: 96 }}>
             <div>
               <span>
