@@ -378,6 +378,13 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
     shellRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   }, [phase, reduce]);
 
+  const heroStagger = reduce
+    ? { hidden: {}, show: {} }
+    : { hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.12 } } };
+  const heroItem = reduce
+    ? { hidden: { opacity: 1, y: 0 }, show: { opacity: 1, y: 0 } }
+    : { hidden: { opacity: 0, y: 26 }, show: { opacity: 1, y: 0, transition: { duration: 0.85, ease: EASE } } };
+
   function handleStart() {
     setAnswers([]);
     setCurrentQuestionId("q1");
@@ -469,45 +476,55 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
   return (
     <main className={`assessment-page tea-mind-page ${styles.scope}`}>
       <section className="assessment-hero tea-mind-hero" aria-labelledby="assessment-title">
-        <Image
-          src={`${basePath}/images/chazen-hero-gongfu-room-v3.jpg`}
-          alt="A quiet Chinese tea room prepared for a reflective tea assessment."
-          fill
-          priority
-          sizes="100vw"
-        />
+        <div className={styles.heroMedia}>
+          <Image
+            src={`${basePath}/images/chazen-hero-gongfu-room-v3.jpg`}
+            alt="A quiet Chinese tea room prepared for a reflective tea assessment."
+            fill
+            priority
+            sizes="100vw"
+            className={styles.heroKenBurns}
+          />
+        </div>
         <div className="assessment-hero-shade tea-mind-hero-shade" />
-        <div className="assessment-hero-inner tea-mind-hero-inner">
-          <p className="museum-kicker">{t("The Five Cups Reflection", "五盞反思")}</p>
-          <h1 id="assessment-title">{t("Which of the five cups is yours today?", "今天，五盞之中，哪一盞是你的？")}</h1>
-          <p>
+        <span className={styles.heroWatermark} aria-hidden="true" lang="zh-Hant">盞</span>
+        <motion.div
+          className="assessment-hero-inner tea-mind-hero-inner"
+          variants={heroStagger}
+          initial="hidden"
+          animate="show"
+        >
+          <motion.p variants={heroItem} className="museum-kicker">{t("The Five Cups Reflection", "五盞反思")}</motion.p>
+          <motion.h1 variants={heroItem} id="assessment-title">{t("Which of the five cups is yours today?", "今天，五盞之中，哪一盞是你的？")}</motion.h1>
+          <motion.p variants={heroItem}>
             {t(
               "Chazen maps five Jian Zhan cups to the Five Spiritual Faculties — Faith, Effort, Stillness, Mindfulness, Wisdom. A few honest questions, and a cup that answers back.",
               "Chazen 以五盞建盞，對應五根：信、精進、定、念、慧。幾個誠實的問題，換來一盞回應你的茶。"
             )}
-          </p>
-          <div className="tea-mind-character-rail" aria-label="Five cups">
+          </motion.p>
+          <motion.div variants={heroItem} className="tea-mind-character-rail" aria-label="Five cups">
             <span><strong>信</strong><em>{t("Faith", "信")}</em></span>
             <span><strong>精進</strong><em>{t("Effort", "精進")}</em></span>
             <span><strong>定</strong><em>{t("Stillness", "定")}</em></span>
             <span><strong>念</strong><em>{t("Mindfulness", "念")}</em></span>
             <span><strong>慧</strong><em>{t("Wisdom", "慧")}</em></span>
-          </div>
-          <p className="tea-mind-disclaimer">
+          </motion.div>
+          <motion.p variants={heroItem} className="tea-mind-disclaimer">
             {t(
               "The Five Cups is a lifestyle and cultural guide, offered in the spirit of tradition — it is not medical advice.",
               "五盞之說是一份生活與文化的指引，承傳統之意而作——並非醫療建議。"
             )}
-          </p>
-          <div className="assessment-hero-meta">
+          </motion.p>
+          <motion.div variants={heroItem} className="assessment-hero-meta">
             <span>{t("8 Questions", "八條問題")}</span>
             <span>{t("About 2 Minutes", "約兩分鐘")}</span>
             <span>{t("Immediate Result", "即時結果")}</span>
-          </div>
-          <button type="button" className="tea-mind-start-button" onClick={handleStart}>
-            {t("Begin", "開始")}
-          </button>
-        </div>
+          </motion.div>
+          <motion.button variants={heroItem} type="button" className="tea-mind-start-button" onClick={handleStart}>
+            {t("Begin the reflection", "開始這場反思")}
+            <ArrowRight size={16} aria-hidden="true" />
+          </motion.button>
+        </motion.div>
       </section>
 
       <section className="museum-section tea-mind-room" aria-label="Five Cups reflection">
